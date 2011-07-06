@@ -1,0 +1,39 @@
+<h1>Listing messages</h1>
+
+<table>
+  <tr>
+    <th>Cipher</th>
+    <th>Body</th>
+    <th>Stub</th>
+    <th>Expires at</th>
+    <th>Read at</th>
+    <th>Sender email</th>
+    <th>Sender ip</th>
+    <th>Recipient email</th>
+    <th>Recipient ip</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @messages.each do |message| %>
+  <tr>
+    <td><%= message.cipher %></td>
+    <td><%= message.body %></td>
+    <td><%= message.stub %></td>
+    <td><%= message.expires_at %></td>
+    <td><%= message.read_at %></td>
+    <td><%= message.sender_email %></td>
+    <td><%= message.sender_ip %></td>
+    <td><%= message.recipient_email %></td>
+    <td><%= message.recipient_ip %></td>
+    <td><%= link_to 'Show', message %></td>
+    <td><%= link_to 'Edit', edit_message_path(message) %></td>
+    <td><%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Message', new_message_path %>

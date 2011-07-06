@@ -1,0 +1,53 @@
+<%= form_for(@message) do |f| %>
+  <% if @message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+      <% @message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :cipher %><br />
+    <%= f.text_field :cipher %>
+  </div>
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="field">
+    <%= f.label :stub %><br />
+    <%= f.text_field :stub %>
+  </div>
+  <div class="field">
+    <%= f.label :expires_at %><br />
+    <%= f.datetime_select :expires_at %>
+  </div>
+  <div class="field">
+    <%= f.label :read_at %><br />
+    <%= f.datetime_select :read_at %>
+  </div>
+  <div class="field">
+    <%= f.label :sender_email %><br />
+    <%= f.text_field :sender_email %>
+  </div>
+  <div class="field">
+    <%= f.label :sender_ip %><br />
+    <%= f.text_field :sender_ip %>
+  </div>
+  <div class="field">
+    <%= f.label :recipient_email %><br />
+    <%= f.text_field :recipient_email %>
+  </div>
+  <div class="field">
+    <%= f.label :recipient_ip %><br />
+    <%= f.text_field :recipient_ip %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

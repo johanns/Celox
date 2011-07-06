@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  cipher: MyString
+  body: MyText
+  stub: MyString
+  expires_at: 2011-07-05 22:44:58
+  read_at: 2011-07-05 22:44:58
+  sender_email: MyString
+  sender_ip: MyString
+  recipient_email: MyString
+  recipient_ip: MyString
+
+two:
+  cipher: MyString
+  body: MyText
+  stub: MyString
+  expires_at: 2011-07-05 22:44:58
+  read_at: 2011-07-05 22:44:58
+  sender_email: MyString
+  sender_ip: MyString
+  recipient_email: MyString
+  recipient_ip: MyString
