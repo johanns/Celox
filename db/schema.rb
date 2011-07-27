@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(:version => 20110706054458) do
 
   create_table "messages", :force => true do |t|
-    t.string   "cipher"
     t.text     "body"
     t.string   "stub"
     t.datetime "expires_at"

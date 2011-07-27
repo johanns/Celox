@@ -1,6 +1,8 @@
 Celox::Application.routes.draw do
   resources :messages
 
+  match '/:stub' => "messages#show_by_stub", :as => :stub
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

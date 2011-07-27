@@ -21,6 +21,18 @@ class MessagesController < ApplicationController
     end
   end
 
+  def show_by_stub
+    @message = Message.find_by_stub(Message.hash_key(params[:stub]))
+    
+    if @message
+      @decrypted_body = Message.read_message(params[:stub], @message)
+      
+      respond_to do |format|
+        format.html
+      end
+    end
+  end
+
   # GET /messages/new
   # GET /messages/new.json
   def new
@@ -41,10 +53,12 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
+    @key = Message.new_message(@message)
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to @message, notice: "Message was successfully created. 
+          Secret: #{request.protocol + request.host_with_port}/#{@key}" }
         format.json { render json: @message, status: :created, location: @message }
       else
         format.html { render action: "new" }
