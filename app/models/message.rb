@@ -23,13 +23,13 @@ class Message < ActiveRecord::Base
       return m.save && key
     end
     
-    def read_message(key, m)
-      debugger
+    def retrive_message(key, m)
+      #debugger
       read = false
       body = String.new
       
-      if m.read_at.nil? or m.body
-        body = Message.decrypt(m.cipher, key, m.body)
+      unless (m.body == 'READ')
+        body = Message.decrypt(key, m.body)
         m.read_at = Time.now
         m.body = "READ" # => body cannot be blank
         m.save

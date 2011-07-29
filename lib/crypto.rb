@@ -5,7 +5,7 @@ require 'base64'
 module Crypto 
   module ClassMethods
     # Cipher_name: aes-128-cbc, aes-192-cbc, aes-256-cbc
-    def encrypt(key, data)
+    def encrypt(cipher_name, key, data)
       cipher = OpenSSL::Cipher::Cipher.new(cipher_name)
 
       # Generate random salt

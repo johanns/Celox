@@ -20,12 +20,13 @@ class MessagesController < ApplicationController
       format.json { render json: @message }
     end
   end
-
+  
+  # GET /stub
   def show_by_stub
     @message = Message.find_by_stub(Message.hash_key(params[:stub]))
     
     if @message
-      @decrypted_body = Message.read_message(params[:stub], @message)
+      @decrypted_body = Message.retrive_message(params[:stub], @message)
       
       respond_to do |format|
         format.html
