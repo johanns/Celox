@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
     @message = Message.find_by_stub(Message.hash_key(params[:stub]))
     
     if @message
-      @decrypted_body = Message.retrive_message(params[:stub], @message)
+      @decrypted_body = Message.retrive_message(params[:stub], @message, request.remote_ip)
       
       respond_to do |format|
         format.html
@@ -54,13 +54,19 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
-    @key = Message.new_message(@message)
+    @key = Message.new_message(@message, request.remote_ip)
 
     respond_to do |format|
       if @message.save
+        key_url = "#{request.protocol + request.host_with_port}/#{@key}"
+        
         format.html { redirect_to @message, notice: "Message was successfully created. 
-          Secret: #{request.protocol + request.host_with_port}/#{@key}" }
+          Secret: #{key_url}" }
         format.json { render json: @message, status: :created, location: @message }
+        
+        if (Rails.env == 'development')
+          Rails.logger.info key_url
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @message.errors, status: :unprocessable_entity }
