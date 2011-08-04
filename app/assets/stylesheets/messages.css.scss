@@ -6,31 +6,3 @@ body.messages {
   // Add the messages class to your body tag
   // Then, place scoped styles here.
 }
-
-table {
-    width: 300px;
-    caption-side: bottom;
-    border: thin solid black;
-    table-layout: fixed;
-    border-spacing: 0;
-    margin: 5px;
-}
-th, td {
-    border: thin solid black;
-    text-align: center;
-    font-weight: bold;
-    overflow: hidden;
-}
-th {
-    background: lightgrey;
-}
-td {
-    vertical-align: top;
-}
-caption {
-    font-size: 90%;
-    text-align: right;
-}
-td, th, caption {
-    padding: 5px;
-}
