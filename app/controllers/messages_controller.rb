@@ -24,13 +24,15 @@ class MessagesController < ApplicationController
   # GET /stub
   def show_by_stub
     @message = Message.find_by_stub(Message.hash_key(params[:stub]))
-    
-    if @message
-      @decrypted_body = Message.retrive_message(params[:stub], @message, request.remote_ip)
+
+    unless @message.nil?
+      @decrypted_body = Message.retreive_message(params[:stub], @message, request.remote_ip)
       
       respond_to do |format|
         format.html
       end
+    else
+       render action: "not_found", notice: "Message not found!"
     end
   end
 
