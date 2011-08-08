@@ -2,12 +2,6 @@ Celox::Application.routes.draw do
   devise_for :users
   mount RailsAdmin::Engine => "/admin"
 
-<<<<<<< Updated upstream
-  resources :messages
-  root :to => "messages#new"
-  match '/:stub' => "messages#show_by_stub", :as => :stub
-
-=======
   # Note: Preserve the following root, post, match order.
   controller :messages do           
     root :to => :new, :as => :messages        
@@ -19,8 +13,6 @@ Celox::Application.routes.draw do
   # root :to => "messages#new", :as => :messages, :via => [:get, :post]
   # match '/n' => "messages#new", :as => :stub
   # match '/:stub' => "messages#show_by_stub", :as => :stub
->>>>>>> Stashed changes
-
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
