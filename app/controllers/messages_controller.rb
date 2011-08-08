@@ -8,9 +8,13 @@ class MessagesController < ApplicationController
       
       respond_to do |format|
         format.html
+        format.json { render json: @decrypted_body.to_json }
       end
     else
-       render action: "not_found", notice: "Message not found!"
+      respond_to do |format|
+        format.html { render action: "not_found", notice: "Message not found!" }
+        format.json { render json: '3r3', status: :unprocessable_entity }
+      end
     end
   end
 
@@ -21,7 +25,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @message }
+      format.json { render json: @message.as_json }
     end
   end
 
@@ -35,9 +39,8 @@ class MessagesController < ApplicationController
       if @message.save
         key_url = "#{request.protocol + request.host_with_port}/#{@key}"
         
-        format.html { redirect_to @message, notice: "Message was successfully created. 
-          Secret: #{key_url}" }
-        format.json { render json: @message, status: :created, location: @message }
+        format.html { render action: "success", notice: "Message was successfully created. Secret: #{key_url}" }
+        format.json { render json: key_url.to_json }
         
         if (Rails.env == 'development')
           Rails.logger.info key_url
