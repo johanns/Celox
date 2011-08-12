@@ -14,7 +14,7 @@ class Message < ActiveRecord::Base
     KEY_SIZE = 8
   end
   
-  unless defined? READ_MARKER
+  unless defined? READ_MARKER 
     READ_MARKER = '!--READ--!'
   end
 
@@ -22,7 +22,7 @@ class Message < ActiveRecord::Base
     TRACK_IP = true
   end
 
-  # Overrode Message (model) to_json via as_json to limit returned fields
+  # Overrode to_json via as_json to limit returned fields
   def as_json(options = {})
     # this example ignores the user's options
     super(:only => [:body, :sender_email, :recipient_email, :read_at])
@@ -59,19 +59,10 @@ class Message < ActiveRecord::Base
 
         m.save
       else
-        body = "Message was read " 
-
-        if TRACK_IP 
-          body << "by #{m.recipient_ip}"
-        end 
-
-        body << " at #{m.read_at}"
-        minutes = ((Time.now - m.read_at.to_time) / 1.minute).round
-
-        if (minutes <= 0)
-          body << " (less than a minute ago)"
+        if TRACK_IP
+          body = I18n.translate(:message_was_read_at_by_ip, :read_at => m.read_at, :remote_ip => m.recipient_ip)
         else
-          body << " (about #{minutes} minute(s) ago)"  
+          body = I18n.translate(:message_was_read_at, :read_at => m.read_at)
         end
       end
 

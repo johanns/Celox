@@ -3,16 +3,10 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.0.rc5'
 gem 'ruby-debug19', :require => 'ruby-debug'
 
-#gem 'warden'
-#gem 'orm_adapter'
-#gem 'meta_search'
-#gem 'will_paginate'
-#gem 'responders'
-#gem 'has_scope'
-#gem 'inherited_resources'
-#gem 'inherited_views'
+# Why '2.1.4', and not '2.1.5'? Because: undefined method `visitor' for #<ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
+gem 'arel', '2.1.4'
+
 gem 'devise'
-#gem 'activeadmin'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 # Bundle edge Rails instead:
@@ -20,6 +14,7 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 gem 'sqlite3'
 gem 'pg'
+gem 'thin'
 
 # Asset template engines
 gem 'sass-rails', "~> 3.1.0.rc4"
@@ -40,8 +35,4 @@ gem 'jquery-rails'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
-end
-
-group :development, :test do
-  gem 'web-app-theme', '>= 0.6.2'
 end

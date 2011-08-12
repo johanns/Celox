@@ -1,5 +1,35 @@
 class MessagesController < ApplicationController
+  before_filter :set_locale
+   
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  # Ref: http://paydrotalks.com/posts/45-standard-json-response-for-rails-and-jquery
+  def render_json_response(type, hash)
+    unless [ :ok, :redirect, :error ].include?(type)
+      raise "Invalid json response type: #{type}"
+    end
+
+    # To keep the structure consistent, we'll build the json 
+    # structure with the default properties.
+    #
+    # This will also help other developers understand what 
+    # is returned by the server by looking at this method.
+    default_json_structure = { 
+      :status => type, 
+      :html => nil, 
+      :message => nil, 
+      :to => nil }.merge(hash)
+
+    render_options = {:json => default_json_structure}  
+    render_options[:status] = 400 if type == :error
+
+    render(render_options)
+  end
+
   # GET /stub
+  # GET /stub.json
   def show_by_stub
     @message = Message.find_by_stub(Message.hash_key(params[:stub]))
 
@@ -8,29 +38,29 @@ class MessagesController < ApplicationController
       
       respond_to do |format|
         format.html
-        format.json { render json: @decrypted_body.to_json }
+        format.json { render_json_response :ok, :message => @decrypted_body }
       end
     else
       respond_to do |format|
-        format.html { render action: "not_found", notice: "Message not found!" }
-        format.json { render json: '3r3', status: :unprocessable_entity }
+        format.html { render action: "not_found", notice: t(:message_not_found) }
+        format.json { render_json_response :error, :message => t(:message_not_found_json) }
       end
     end
   end
 
-  # GET /messages/new
-  # GET /messages/new.json
+  # GET /n
+  # GET /n.json
   def new
     @message = Message.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @message.as_json }
+      format.json { render_json_response :ok, :message=> @message }
     end
   end
 
-  # POST /messages
-  # POST /messages.json
+  # POST /n
+  # POST /n.json
   def create
     @message = Message.new(params[:message])
     @key = Message.new_message(@message, request.remote_ip)
@@ -39,8 +69,8 @@ class MessagesController < ApplicationController
       if @message.save
         key_url = "#{request.protocol + request.host_with_port}/#{@key}"
         
-        format.html { render action: "success", notice: "Message was successfully created. Secret: #{key_url}" }
-        format.json { render json: key_url.to_json }
+        format.html { render action: "success" }
+        format.json { render_json_response :ok, :message => key_url }
         
         if (Rails.env == 'development')
           Rails.logger.info key_url

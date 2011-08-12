@@ -1,0 +1,11 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  message_not_found: "Oops; I couldn't find your message! You can try again, but I can't promise anything."
+  message_not_found_json: "Oops; I couldn't find your message!"
+  message_was_read_at: "Message was read at %{read_at}"
+  message_was_read_at_by_ip: "Message was read at %{read_at} by %{remote_ip}"
+  messages:
+    form:
+      body: "Enter you Message here"
