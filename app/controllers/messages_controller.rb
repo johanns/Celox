@@ -71,6 +71,7 @@ class MessagesController < ApplicationController
         
         format.html { render action: "success" }
         format.json { render_json_response :ok, :message => key_url }
+        format.js { render action: "success"}
         
         if (Rails.env == 'development')
           Rails.logger.info key_url

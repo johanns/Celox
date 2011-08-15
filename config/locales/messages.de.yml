@@ -6,6 +6,8 @@ de:
   message_not_found_json: "German: Oops; I couldn't find your message!"
   message_was_read_at: "German: Message was read at %{read_at}"
   message_was_read_at_by_ip: "German: Message was read at %{read_at} by %{remote_ip}"
+  message_body_not_present: "German: I need something to encrypt. Feed me!"
   messages:
     form:
       body: "German: Enter you Message here"
+      ask_senders_email: "German: Would you like to be notified? Enter your e-mail here"

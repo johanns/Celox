@@ -1,31 +1,27 @@
-<%= form_for(@message) do |f| %>
-	<% if @message.errors.any? %>
-	<div id="error_explanation">
-		<h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+<div id="form">
+	<%= form_for(@message, :remote => true) do |f| %>
+		<% if @message.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
 
-		<ul>
-			<% @message.errors.full_messages.each do |msg| %>
-			<li><%= msg %></li>
-			<% end %>
-		</ul>
-	</div>
+			<ul>
+				<% @message.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
+
+		<div id="fields">
+			<div class="field">
+				<%= f.text_area :body, :cols => 100, :rows => 20 %>
+			</div>
+			<div class="field">
+				<%= f.text_field :sender_email, :onclick => "this.select()" %>
+			</div>
+			<div class="actions">
+				<%= f.submit %>
+			</div>
+		</div>
 	<% end %>
-
-	<div>
-		<div class="field">
-			<%= f.label t('.body') %><br />
-			<%= f.text_area :body %>
-		</div>
-		<div class="field">
-			<%= f.label :sender_email %><br />
-			<%= f.text_field :sender_email %>
-		</div>
-		<div class="field">
-			<%= f.label :recipient_email %><br />
-			<%= f.text_field :recipient_email %>
-		</div>
-		<div class="actions">
-			<%= f.submit %>
-		</div>
-	</div>
-<% end %>
+</div>

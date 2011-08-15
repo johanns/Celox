@@ -3,8 +3,7 @@ require 'crypto'
 class Message < ActiveRecord::Base
   include Crypto  
 
-  validates_presence_of :body
-
+  validates :body, :presence => { :message => I18n.t(:message_body_not_present) }
   
   unless defined? CIPHER
     CIPHER = 'aes-256-cbc'
@@ -22,10 +21,10 @@ class Message < ActiveRecord::Base
     TRACK_IP = true
   end
 
-  # Overrode to_json via as_json to limit returned fields
+  # Overrode to_json via as_json to limit returned fields on GET
   def as_json(options = {})
     # this example ignores the user's options
-    super(:only => [:body, :sender_email, :recipient_email, :read_at])
+    super(:only => [:body, :sender_email, :recipient_email])
   end
 
   class << self
