@@ -1,16 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
   <title>Celox</title>
- 
-   <!-- Framework CSS -->  
-  <link rel="stylesheet" href="assets/blueprint/screen.css" type="text/css" media="screen, projection" />  
-  <link rel="stylesheet" href="assets/blueprint/print.css" type="text/css" media="print" />  
-  <!--[if IE]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->  
-
-  <!-- Import fancy-type plugin. -->  
-  <link rel="stylesheet" href="assets/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />
-
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -18,20 +9,13 @@
 <body>
   <div id="header">
     <img src="/assets/logo.png" style="margin:5px;" />
-  </div>  
-  <div class="container">  
-    <div id="col_left" class="span-4">
-      <p/>
-    </div>
-    <div id="content" class="span-16">
-      <%= yield %>
-    </div>
-    <div id="col_right" class="span-4 last">
-      <p/>
-    </div>
   </div>
-  <div id="footer"> 
-    <br/>
+  
+  <div id="main">
+    <%= yield %>
+  </div>
+  
+  <div id="footer">
   </div>
 </body>
 </html>

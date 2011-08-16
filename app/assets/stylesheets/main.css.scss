@@ -1,35 +1,4 @@
-.showgrid { background:url('/assets/grid.png'); }
-
 body
 {
   background: black;
-}
-
-#header
-{
-  background-image: url("header_background.png");
-  height: 70px;
-  width: 100%;
-
-  //border-top-right-radius: 10px;
-  //border-top-left-radius: 10px;
-}
-
-#content
-{
-  height: 400px;
-
-  #message_body
-  {
-    width: 390px;
-  }
-}
-
-#footer
-{
-  background: #CCCCCC;
-  height: 120px;
-
-  //border-bottom-right-radius: 5px;
-  //border-bottom-left-radius: 5px;
 }
