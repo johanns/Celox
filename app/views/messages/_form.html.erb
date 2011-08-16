@@ -14,7 +14,7 @@
 
 		<div id="fields">
 			<div class="field">
-				<%= f.text_area :body, :cols => 100, :rows => 20 %>
+				<%= f.text_area :body, :onfocus => "if(this.value == 'Test') {this.value='';}", :rows => 0, :cols => 0 %>
 			</div>
 			<div class="field">
 				<%= f.text_field :sender_email, :onclick => "this.select()" %>
