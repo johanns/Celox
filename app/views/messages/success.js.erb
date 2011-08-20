@@ -1,2 +1,2 @@
-$("#new_message").fadeOut();
-$('body').html("<h1><%= escape_javascript(request.protocol + request.host_with_port + '/' + @key) %></h1>");
+$("#fields").fadeOut('slow');
+$("#text_stub").show().val("<%= escape_javascript(request.protocol + request.host_with_port + '/' + @key) %>");

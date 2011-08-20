@@ -14,14 +14,18 @@
 
 		<div id="fields">
 			<div class="field">
-				<%= f.text_area :body, :cols => 100, :rows => 20 %>
+				<%= f.text_area :body, :class => "span-18 last" %>
 			</div>
+			
 			<div class="field">
 				<%= f.text_field :sender_email, :onclick => "this.select()" %>
 			</div>
+			
 			<div class="actions">
 				<%= f.submit %>
 			</div>
+		
 		</div>
 	<% end %>
+	<input id="text_stub" />
 </div>

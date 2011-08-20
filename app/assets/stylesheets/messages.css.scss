@@ -1,34 +1,3 @@
 // Place all the styles related to the messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-#header
-{
-  background: black ("header_background.png") repeat-x scroll top transparent;
-  height: 70px;
-  width: 100%;
-  z-index: 999;
-
-  //border-top-right-radius: 10px;
-  //border-top-left-radius: 10px;
-}
-
-#main
-{
-  background-image:url("main_background.png"); 
-  
-  #form
-  {
-    width: 50%;
-    margin: auto;
-  } 
-}
-
-#footer
-{
-  background-image:url("footer_background.png");
-  height: 120px;
-
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
