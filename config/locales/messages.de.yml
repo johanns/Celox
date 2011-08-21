@@ -8,6 +8,7 @@ de:
   message_was_read_at_by_ip: "German: Message was read at %{read_at} by %{remote_ip}"
   message_body_not_present: "German: I need something to encrypt. Feed me!"
   message_notify_me: "German: Notify Me"
+  message_new: "German: Create a new message"
   messages:
     form:
       body: "German: Enter you Message here"

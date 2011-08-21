@@ -36,7 +36,7 @@ class MessagesController < ApplicationController
     unless @message.nil?
       read, @data = Message.retreive_message(params[:stub], @message, request.remote_ip)
       
-      if read
+      unless read
         respond_to do |format|
           format.html
           format.json { render_json_response :ok, :message => @data }

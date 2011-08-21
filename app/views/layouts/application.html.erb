@@ -3,50 +3,48 @@
 <html>
 <head>
   <title>Celox</title>
-  <link rel="stylesheet" href="assets/blueprint/screen.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="assets/blueprint/print.css" type="text/css" media="print"> 
-  <!--[if lt IE 8]>
-    <link rel="stylesheet" href="assets/blueprint/ie.css" type="text/css" media="screen, projection">
-  <![endif]-->
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+  <link rel="stylesheet" href="assets/bootstrap-1.0.0.min.css" type="text/css">
+  <%= stylesheet_link_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <a href="http://github.com/johanns/celox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a> 
-  
   <div id="header">
-    <img src="/assets/logo.png" style="margin-top:5px;" />
+    <img src="/assets/logo.png" style="margin-top: 20px;" />
   </div>
   
-  <div id="banner">
-    <div class="container">
-      <div id="col_left" class="span-8"> <p> 1 </p> </div>
-      <div id="col_center" class="span-8">  <p> 2 </p></div>
-      <div id="col_right" class="span-8 last"> <p> 3 </p> </div>    
-    </div>  
-  </div>
-
   <div id="main">
     <div class="container">
-      <div id="col_left" class="span-2"> 
-        <p> Left </p> 
-      </div>
-      <div id="col_center" class="span-18" style="height: 330px">
-        <%= yield %> 
-      </div>
-      <div id="col_right" class="span-2 last"> 
-        <p> Right </p> 
-      </div>  
+      <section id="banner">
+        <div class="row">
+          <div class="span8 columns">
+            Banner Section 1
+          </div>
+          <div class="span8 columns">
+            Banner Section 2
+          </div>
+        </div>
+      </section>
+      <section id="content">
+        <div class="row">
+          <div class="span16"> <%= yield %> </div>
+        </div>
+      </section>
     </div>
   </div>
-  
-  <div id="footer">
+
+  <div id="footer" style="padding: 20px; height: 100%">
     <div class="container">
-      <div class="span-24"> <br/> </div>
-      <div class="span-12"> <p>SOME TEXT</p> </div>
-      <div class="span-12 last"> <p>SOME TEXT</p> </div>
+      <section id="footer_bits">
+        <div class="row">
+          <div class="span8 columns"> <p>Footer Text Left</p> </div>
+          <div class="span8 columns"> <p>Footer Text Right</p> </div>
+        </div>
+      </section>
     </div>
   </div>
+
+  <%= javascript_include_tag "application" %>
+
+  <a href="http://github.com/johanns/celox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a> 
 </body>
 </html>
