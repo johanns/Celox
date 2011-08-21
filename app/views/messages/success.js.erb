@@ -1,2 +1,3 @@
-$("#fields").fadeOut('slow');
-$("#text_stub").show().val("<%= escape_javascript(request.protocol + request.host_with_port + '/' + @key) %>");
+$("#fields").hide();
+$("#stub_link").val("<%= escape_javascript(@key_url) %>");
+$("#links").fadeIn('slow');

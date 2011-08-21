@@ -58,6 +58,8 @@ class Message < ActiveRecord::Base
 
         m.save
       else
+        read = true
+        
         if TRACK_IP
           body = I18n.translate(:message_was_read_at_by_ip, :read_at => m.read_at, :remote_ip => m.recipient_ip)
         else
@@ -65,7 +67,7 @@ class Message < ActiveRecord::Base
         end
       end
 
-      return body
+      return [read, body]
     end
   end
 end

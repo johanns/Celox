@@ -34,15 +34,22 @@ class MessagesController < ApplicationController
     @message = Message.find_by_stub(Message.hash_key(params[:stub]))
 
     unless @message.nil?
-      @decrypted_body = Message.retreive_message(params[:stub], @message, request.remote_ip)
+      read, @data = Message.retreive_message(params[:stub], @message, request.remote_ip)
       
-      respond_to do |format|
-        format.html
-        format.json { render_json_response :ok, :message => @decrypted_body }
+      if read
+        respond_to do |format|
+          format.html
+          format.json { render_json_response :ok, :message => @data }
+        end
+      else
+        respond_to do |format|
+          format.html { render action: "was_read", :notice => @data }
+          format.json { reneder_json_response :error, :messsage => @data }
+        end
       end
     else
       respond_to do |format|
-        format.html { render action: "not_found", notice: t(:message_not_found) }
+        format.html { render action: "error", notice: t(:message_not_found) }
         format.json { render_json_response :error, :message => t(:message_not_found_json) }
       end
     end
@@ -55,7 +62,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render_json_response :ok, :message=> @message }
+      format.json { render_json_response :ok, :message => @message }
     end
   end
 
@@ -67,14 +74,13 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        key_url = "#{request.protocol + request.host_with_port}/#{@key}"
+        @key_url = "#{request.protocol + request.host_with_port}/#{@key}"
         
-        format.html { render action: "success" }
-        format.json { render_json_response :ok, :message => key_url }
+        format.json { render_json_response :ok, :message => @key_url }
         format.js { render action: "success"}
         
         if (Rails.env == 'development')
-          Rails.logger.info key_url
+          Rails.logger.info @key_url
         end
       else
         format.html { render action: "new" }

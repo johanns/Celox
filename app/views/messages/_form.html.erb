@@ -13,19 +13,26 @@
 		<% end %>
 
 		<div id="fields">
-			<div class="field">
+			<div id="sec_body" class="fields">
 				<%= f.text_area :body, :class => "span-18 last" %>
 			</div>
-			
-			<div class="field">
-				<%= f.text_field :sender_email, :onclick => "this.select()" %>
+
+			<div class="span-9 fields">
+				<input id="notify_me" type="checkbox" onclick="if(this.checked){$('#message_sender_email').slideDown();}else{$('#message_sender_email').slideUp();}" />
+				<label for="notify_me"> <%= t(:notify_me) %> </label>
+				<%= f.text_field :sender_email, :onclick => "this.select()", :style => "font-size: 1.2em; width: 220px; display: none" %>
 			</div>
 			
-			<div class="actions">
+			<div class="span-9 last actions">
 				<%= f.submit %>
 			</div>
-		
 		</div>
 	<% end %>
-	<input id="text_stub" />
+
+	<div id="links" class="span-18 last" style="display: none;">
+		<div style="padding: 120px">
+			<input id="stub_link" type="text" onfocus="this.select();" style="font-size: 1.8em; width: 430px" />
+			<input value="Create new a message" type="button" style="width: 430px; size=30px;" onclick="location.href='<%= escape_javascript(request.protocol + request.host_with_port) %>'" />
+		</div>
+	</div>
 </div>

@@ -7,6 +7,7 @@ en:
   message_was_read_at: "Message was read at %{read_at}"
   message_was_read_at_by_ip: "Message was read at %{read_at} by %{remote_ip}"
   message_body_not_present: "I need something to encrypt. Feed me!"
+  message_notify_me: "Notify Me"
   messages:
     form:
       body: "What would you like me to protect for you? Enter it here"
