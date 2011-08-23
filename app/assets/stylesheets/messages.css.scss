@@ -2,41 +2,65 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body
-{
-  background: black;
-  margin: 0;
-  padding: 0;
+html, body {
+  background-color: #333333;
+  position: relative;
 }
-
-#header
-{
-  background: url("header_background.png") white;
-  height: 100px;
-  width: 100%;
-
-  //border-top-right-radius: 10px;
-  //border-top-left-radius: 10px;
+section {
+  padding-top: 60px;
 }
-
-#banner
-{
+#banner {
+  background-color: #6699CC;
+  background-repeat: no-repeat;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#6699CC));
+  background-image: -webkit-linear-gradient(#666666, #6699CC);
+  background-image: -moz-linear-gradient(#666666, #6699CC);
+  background-image: -o-linear-gradient(top, #666666, #6699CC);
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#666666), to(#6699CC));
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#666666', EndColorStr='#6699CC', GradientType=0);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#6699CC', GradientType=0))";
+}
+#banner div.inner {
+  padding: 25px 0;
+  -webkit-box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.3);
+     -moz-box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.3);
+          box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+#banner h1,
+#footer h1,
+#banner p,
+#footer p {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.3);
+}
+#banner p a,
+#footer p a {
+  color: #fff;
+  font-weight: bold;
+}
+#banner {
+  margin-top: -20px;
+}
+#banner h1,
+#banner p {
+  text-align: center;
+  margin-bottom: 9px;
+}
+#banner h1 {
+  font-size: 54px;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+#banner p {
+  font-weight: 300;
+}
+#banner p.lead {
+  font-size: 20px;
+  line-height: 27px;
+}
+#main {
   background: white;
 }
-
-#main
-{
-  background: white;
-
-  #fields
-  {
-    margin: 5px;
-  }
-}
-
-#footer
-{
-  background: lightgray;
-  //border-bottom-right-radius: 10px;
-  //border-bottom-left-radius: 10px;
+#footer{
+  margin-top: 15px;
 }

@@ -1,4 +1,15 @@
-<p id="notice"><%= notice %></p>
-<p>
-	<%= @data %>
-</p>
+<div id="banner">
+  <div class="inner">
+    <div class="container">
+      <h1><%= t(:message_show_banner_heading) %></h1>
+      <p class="lead"><%= t(:message_show_banner_info1) %></p>
+    </div>
+  </div>
+</div>
+
+<div id="content" style="height: 650px">
+  <div class="container">
+      <textarea style="height: 600px; width:100%;" disabled="disabled"><%= @data %></textarea>
+    </div>
+  </div>
+</div>

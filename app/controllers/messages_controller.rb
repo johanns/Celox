@@ -39,18 +39,18 @@ class MessagesController < ApplicationController
       unless read
         respond_to do |format|
           format.html
-          format.json { render_json_response :ok, :message => @data }
+          format.json { render_json_response :ok, message: @data }
         end
       else
         respond_to do |format|
-          format.html { render action: "was_read", :notice => @data }
-          format.json { reneder_json_response :error, :messsage => @data }
+          format.html { render action: "was_read", notice: @data }
+          format.json { reneder_json_response :error, messsage: @data }
         end
       end
     else
       respond_to do |format|
         format.html { render action: "error", notice: t(:message_not_found) }
-        format.json { render_json_response :error, :message => t(:message_not_found_json) }
+        format.json { render_json_response :error, message: t(:message_not_found_json) }
       end
     end
   end
@@ -76,7 +76,7 @@ class MessagesController < ApplicationController
       if @message.save
         @key_url = "#{request.protocol + request.host_with_port}/#{@key}"
         
-        format.json { render_json_response :ok, :message => @key_url }
+        format.json { render_json_response :ok, message: @key_url }
         format.js { render action: "success"}
         
         if (Rails.env == 'development')

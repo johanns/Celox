@@ -2,14 +2,21 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 de:
-  message_not_found: "German: Oops; I couldn't find your message! You can try again, but I can't promise anything."
-  message_not_found_json: "German: Oops; I couldn't find your message!"
-  message_was_read_at: "German: Message was read at %{read_at}"
-  message_was_read_at_by_ip: "German: Message was read at %{read_at} by %{remote_ip}"
-  message_body_not_present: "German: I need something to encrypt. Feed me!"
-  message_notify_me: "German: Notify Me"
-  message_new: "German: Create a new message"
+  message_menu_new_message: "(DE: new message)"
+  message_banner_heading: "DE: Celox.ME: Self Destructing Message"
+  message_banner_info1: "DE: 1: Enter your message in the provide space, and click Save Message."
+  message_banner_info2: "2: Copy generate link, and share generated link."
+  message_banner_info3: ""
+  message_not_found: "DE: Oops; I couldn't find your message! You can try again, but I can't promise anything."
+  message_notify_me_label: "DE: Notify me when message is read"
+  message_sender_email_label: "DE: Your e-mail"
+  message_not_found_json: "DE: Oops; I couldn't find your message!"
+  message_was_read_at: "DE: Message was read at %{read_at}"
+  message_was_read_at_by_ip: "DE: Message was read at %{read_at} by %{remote_ip}"
+  message_body_not_present: "DE: I need something to encrypt. Feed me!"
+  message_notify_me: "DE: Notify Me"
+  message_new: "DE: Create a new message"
   messages:
     form:
-      body: "German: Enter you Message here"
-      ask_senders_email: "German: Would you like to be notified? Enter your e-mail here"
+      body: "DE: Enter you Message here"
+      ask_senders_email: "DE: Would you like to be notified? Enter your e-mail here"

@@ -1,17 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc6', :branch => '3-1-stable'
-gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'rails', '3.1.0.rc6'
 
-# Why '2.1.4', and not '2.1.5'? Because: undefined method `visitor' for #<ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
-gem 'arel'
-
-gem 'devise'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+# Bundle edge Rails instead:
+# gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'pg'
-gem 'thin'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -37,3 +31,10 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
+
+# My Gems
+gem 'devise'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+
+gem 'pg'
+gem 'thin'
