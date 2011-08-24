@@ -8,15 +8,6 @@ GIT
       fssm (>= 0.2.7)
       sass (~> 3.1)
 
-GIT
-  remote: git://github.com/sferik/rails_admin.git
-  revision: 2dbd52eccf807a5e5c514fee06c020024eaec573
-  specs:
-    rails_admin (0.0.1)
-      builder (~> 3.0.0)
-      haml (>= 3.1.0, < 3.3.0)
-      rails (~> 3.1.0.rc6)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -63,16 +54,11 @@ GEM
       execjs
     coffee-script-source (1.1.2)
     daemons (1.1.4)
-    devise (1.4.2)
-      bcrypt-ruby (~> 2.1.2)
-      orm_adapter (~> 0.0.3)
-      warden (~> 1.0.3)
     erubis (2.7.0)
     eventmachine (0.12.10)
     execjs (1.2.4)
       multi_json (~> 1.0)
     fssm (0.2.7)
-    haml (3.1.2)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.13)
@@ -86,7 +72,6 @@ GEM
       ruby_parser (>= 2.0.5)
     mime-types (1.16)
     multi_json (1.0.3)
-    orm_adapter (0.0.5)
     pg (0.11.0)
     polyglot (0.3.2)
     pry (0.9.3)
@@ -148,8 +133,6 @@ GEM
     uglifier (1.0.1)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    warden (1.0.5)
-      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -157,12 +140,10 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.1.0.rc)
   compass!
-  devise
   jquery-rails
   pg
   pry
   rails (= 3.1.0.rc6)
-  rails_admin!
   sass-rails (~> 3.1.0.rc)
   thin
   turn

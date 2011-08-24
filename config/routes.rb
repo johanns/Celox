@@ -1,9 +1,4 @@
 Celox::Application.routes.draw do
-  if Rails.env == 'development' 
-    devise_for :users
-    mount RailsAdmin::Engine => "/admin"
-  end
-
   # Note: Preserve the following root, get, post, and match order.
   controller :messages do           
     root :to => :new        
