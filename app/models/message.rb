@@ -2,8 +2,8 @@ require 'crypto'
 
 class Message < ActiveRecord::Base
   include Crypto  
-
-  validates :body, :presence => { :message => I18n.t(:message_body_not_present) }
+  
+  validates :body, presence: { message: I18n.t(:message_body_not_present) }
   
   # Overrode to_json via as_json to limit returned fields on GET
   def as_json(options = {})

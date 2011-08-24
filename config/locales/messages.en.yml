@@ -2,22 +2,21 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  message_menu_new_message: "(New Message)"
+  message_menu_new_message: "New Message"
   message_banner_heading: "Celox.ME: Self Destructing Message"
   message_banner_info1: "Create a new Secure Message."
   message_banner_info2: "Share the link to your Secure Message."
   message_banner_info3: "Message will Self Destruct as soon as it's read!"
   message_not_found: "Oops; I couldn't find your message! You can try again, but I can't promise anything."
-  message_notify_me_label: "Notify me when message is read"
   message_sender_email_label: "Your e-mail"
   message_not_found_json: "Oops; I couldn't find your message!"
   message_was_read_at: "Message was read at %{read_at}"
   message_was_read_at_by_ip: "Message was read at %{read_at} by %{remote_ip}"
   message_body_not_present: "I need something to encrypt. Feed me!"
-  message_notify_me: "Notify me"
-  message_new: "Create a new message"
+  message_here_your_link: "This is your secret link. Copy, and Share. But remember, this is a one-time deal. Don't lose this."
+  message_new: "New Message"
   message_show_banner_heading: "Here is your message!"
-  message_show_banner_info1: "Be sure to copy the content; message has already been destroyed!"
+  message_show_banner_info1: "Be sure to copy the content -- Message has already been destroyed!"
   messages:
     form:
       body: "What would you like me to protect for you? Enter it here"

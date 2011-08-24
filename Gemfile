@@ -32,9 +32,10 @@ group :test do
   gem 'turn', :require => false
 end
 
-# My Gems
+#### My Gems
 gem 'devise'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :group => :development
 
 gem 'pg'
 gem 'thin'
+gem 'pry', :group => :development
