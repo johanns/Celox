@@ -36,14 +36,12 @@ class Message < ActiveRecord::Base
         m.read_at = Time.now
         m.body = APP_READ_MARKER # => body cannot be blank
         
-        if APP_TRACK_IP
-          m.recipient_ip = remote_ip
-        end
+        m.recipient_ip = remote_ip if APP_TRACK_IP
 
         m.save
       else
         read = true
-        
+
         if APP_TRACK_IP
           body = I18n.translate(:message_was_read_at_by_ip, read_at: m.read_at, remote_ip: m.recipient_ip)
         else

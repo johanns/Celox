@@ -16,7 +16,7 @@ APP_KEY_LENGTH = 12
 APP_READ_MARKER = '!**READ**!'
 
 # Keep a record of IP addresses (sender and reader) in the database
-APP_TRACK_IP = true
+APP_TRACK_IP = false
 
 # Remember to change this for production or your particular environment
 APP_URL = 'http://localhost:3000'
