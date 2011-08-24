@@ -19,5 +19,10 @@ APP_READ_MARKER = '!**READ**!'
 APP_TRACK_IP = false
 
 # Remember to change this for production or your particular environment
-APP_URL = 'http://localhost:3000'
+if Rails.env == 'production'
+  APP_URL = 'http://electric-water-921.herokuapp.com/'
+else
+  APP_URL = 'http://localhost:3000'
+end
+
 APP_FROM_ADDRESS = 'noreply@celox.me'
