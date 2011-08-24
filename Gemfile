@@ -33,7 +33,7 @@ group :test do
 end
 
 #### My Gems
-gem 'devise'
+gem 'devise', :group => :development
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :group => :development
 
 gem 'pg'
