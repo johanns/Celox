@@ -19,6 +19,7 @@ section {
   background-image: -khtml-gradient(linear, left top, left bottom, from(#666666), to(#6699CC));
   filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#666666', EndColorStr='#6699CC', GradientType=0);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#6699CC', GradientType=0))";
+  margin-top: 40px;
 }
 #banner div.inner {
   padding: 25px 0;
@@ -37,9 +38,6 @@ section {
 #footer p a {
   color: #fff;
   font-weight: bold;
-}
-#banner {
-  margin-top: -20px;
 }
 #banner h1,
 #banner p {
