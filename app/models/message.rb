@@ -5,10 +5,10 @@ class Message < ActiveRecord::Base
   
   validates :body, presence: { message: I18n.t(:message_body_not_present) }
   
-  # Overrode to_json via as_json to limit returned fields on GET
+  # Override json response to limit fields returned
   def as_json(options = {})
     # this example ignores the user's options
-    super(:only => [:body, :sender_email, :recipient_email])
+    super(:only => [:body])
   end
 
   class << self
