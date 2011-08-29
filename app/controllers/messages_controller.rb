@@ -69,11 +69,18 @@ class MessagesController < ApplicationController
   # POST /n
   # POST /n.json
   def create
-    @message = Message.new(params[:message])
-    @key = Message.new_message(@message, request.remote_ip)
-
     respond_to do |format|
-      if @message.save
+      @message = Message.new(params[:message])
+
+      failed = false
+      failed = true unless @message.valid?
+
+      unless failed
+        @key = Message.new_message(@message, request.remote_ip)
+      end
+
+
+      if not failed and @message.save
         @key_url = "#{request.protocol + request.host_with_port}/#{@key}"
         
         format.json { render_json_response :ok, message: @key_url }
@@ -85,6 +92,7 @@ class MessagesController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.js { render action: "failure" }
       end
     end
   end

@@ -20,7 +20,7 @@ APP_TRACK_IP = false
 
 # Remember to change this for production or your particular environment
 if Rails.env == 'production'
-  APP_URL = 'http://electric-water-921.herokuapp.com/'
+  APP_URL = 'https://celox.me/'
 else
   APP_URL = 'http://localhost:3000'
 end

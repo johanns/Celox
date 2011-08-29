@@ -1,10 +1,12 @@
+# Change the new_message; idea: before_save/create filter.
+
 require 'crypto'
 
 class Message < ActiveRecord::Base
   include Crypto  
   
-  validates :body, presence: { message: I18n.t(:message_body_not_present) }
-  
+  validates :body, presence: true
+
   # Override json response to limit fields returned
   def as_json(options = {})
     # this example ignores the user's options
