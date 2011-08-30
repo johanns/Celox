@@ -39,18 +39,18 @@ class MessagesController < ApplicationController
       unless read
         respond_to do |format|
           format.html
-          format.json { render_json_response :ok, message: @data }
+          format.json { render_json_response :ok, :message => @data }
         end
       else
         respond_to do |format|
-          format.html { render action: "was_read", notice: @data }
-          format.json { reneder_json_response :error, messsage: @data }
+          format.html { render :action => "was_read", :notice => @data }
+          format.json { reneder_json_response :error, :messsage => @data }
         end
       end
     else
       respond_to do |format|
-        format.html { render action: "error", notice: t(:message_not_found) }
-        format.json { render_json_response :error, message: t(:message_not_found_json) }
+        format.html { render :action => "error", :notice => t(:message_not_found) }
+        format.json { render_json_response :error, :message => t(:message_not_found_json) }
       end
     end
   end
@@ -69,29 +69,21 @@ class MessagesController < ApplicationController
   # POST /n
   # POST /n.json
   def create
-    respond_to do |format|
-      @message = Message.new(params[:message])
+    @message = Message.new(params[:message])
 
-      failed = false
-      failed = true unless @message.valid?
-
-      unless failed
-        @key = Message.new_message(@message, request.remote_ip)
-      end
-
-
-      if not failed and @message.save
-        @key_url = "#{request.protocol + request.host_with_port}/#{@key}"
+    respond_to do |format|      
+      if @message.save
+        @key_url = "#{request.protocol + request.host_with_port}/#{@message.key}"
         
-        format.json { render_json_response :ok, message: @key_url }
-        format.js { render action: "success"}
+        format.json { render_json_response :ok, :message => @key_url }
+        format.js { render :action => "success"}
         
         if (Rails.env == 'development')
           Rails.logger.info @key_url
         end
       else
         format.html { render action: "new" }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.json { render json: @message.errors, :status => :unprocessable_entity }
         format.js { render action: "failure" }
       end
     end
