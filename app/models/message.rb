@@ -4,54 +4,51 @@ require 'crypto'
 
 class Message < ActiveRecord::Base
   include Crypto  
-  
-  validates :body, presence: true
+
+  validates :body, :presence => true
+  before_create :set_and_protect
+
+  attr_accessor :key
+
+  def self.retreive_message(key, m, remote_ip)
+    read = false
+    body = String.new
+    
+    unless m.read_at
+      body = CeloxCrypto.decrypt(key, m.body)
+      m.read_at = Time.now
+      m.body = APP_READ_MARKER # => body cannot be blank
+      
+      m.recipient_ip = remote_ip if APP_TRACK_IP
+
+      m.save
+    else
+      read = true
+
+      body = APP_TRACK_IP ? I18n.t(:message_was_read_at_by_ip, :read_at => m.read_at, :remote_ip => m.recipient_ip) : 
+                         I18n.t(:message_was_read_at, :read_at => m.read_at)
+    end
+      
+    return [read, body]
+  end
 
   # Override json response to limit fields returned
   def as_json(options = {})
-    # this example ignores the user's options
     super(:only => [:body])
   end
 
-  class << self
-    def new_message(m, remote_ip)
-      #debugger
-      key = Message.generate_key(APP_KEY_LENGTH)
-      m.body = Message.encrypt(APP_CIPHER, key, m.body)
-      m.stub = Message.hash_key(key)
-      m.created_at = Time.now
+private
+  def set_and_protect
+    begin
+      self.key = CeloxCrypto.generate_key(APP_KEY_LENGTH)
+      self.body = CeloxCrypto.encrypt(APP_CIPHER, @key, body)
+      self.stub = CeloxCrypto.hash_key(key)
+      self.created_at = Time.now
+      self.sender_ip = remote_ip if APP_TRACK_IP
+   rescue
+     return false
+   end
 
-      if APP_TRACK_IP
-        m.sender_ip = remote_ip
-      end
-
-      return m.save && key
-    end
-    
-    def retreive_message(key, m, remote_ip)
-      #debugger
-      read = false
-      body = String.new
-      
-      unless m.read_at
-        body = Message.decrypt(key, m.body)
-        m.read_at = Time.now
-        m.body = APP_READ_MARKER # => body cannot be blank
-        
-        m.recipient_ip = remote_ip if APP_TRACK_IP
-
-        m.save
-      else
-        read = true
-
-        if APP_TRACK_IP
-          body = I18n.translate(:message_was_read_at_by_ip, read_at: m.read_at, remote_ip: m.recipient_ip)
-        else
-          body = I18n.translate(:message_was_read_at, read_at: m.read_at)
-        end
-      end
-
-      return [read, body]
-    end
+    true
   end
 end
