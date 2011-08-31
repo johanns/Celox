@@ -1,9 +1,7 @@
+require 'crypto'
+
 class MessagesController < ApplicationController
-  before_filter :set_locale
-   
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
+  include Crypto
 
   # Ref: http://paydrotalks.com/posts/45-standard-json-response-for-rails-and-jquery
   def render_json_response(type, hash)
@@ -31,7 +29,7 @@ class MessagesController < ApplicationController
   # GET /stub
   # GET /stub.json
   def show_by_stub
-    @message = Message.find_by_stub(Message.hash_key(params[:stub]))
+    @message = Message.find_by_stub(CeloxCrypto.hash_key(params[:stub]))
 
     unless @message.nil?
       read, @data = Message.retreive_message(params[:stub], @message, request.remote_ip)
