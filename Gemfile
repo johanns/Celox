@@ -36,3 +36,4 @@ end
 gem 'pg'
 gem 'thin'
 gem 'pry', :group => :development
+gem 'locale_detector'
