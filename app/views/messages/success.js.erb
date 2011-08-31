@@ -1,8 +1,4 @@
-<% if @message.errors.any? %>
-  $("#form_error").show();
-<% else %>
-  $("#form_error").hide();
-  $("#fields").hide();
-  $("#stub_link").val("<%= escape_javascript(@key_url) %>");
-  $("#links").fadeIn('slow');
-<% end %>
+$("#form_error").hide();
+$("#fields").hide();
+$("#stub_link").val("<%= escape_javascript(@key_url) %>");
+$("#links").fadeIn('slow');

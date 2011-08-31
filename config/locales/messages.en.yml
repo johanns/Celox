@@ -3,7 +3,7 @@
 
 en:
   message_menu_new_message: "New Message"
-  message_banner_heading: "Celox.ME: Self Destructing Message"
+  message_banner_heading: "Self Destructing Message"
   message_banner_info1: "Create a new Secure Message."
   message_banner_info2: "Share the link to your Secure Message."
   message_banner_info3: "Message will Self Destruct as soon as it's read!"
@@ -17,6 +17,7 @@ en:
   message_new: "New Message"
   message_show_banner_heading: "Here is your message!"
   message_show_banner_info1: "Be sure to copy the content -- Message has already been destroyed!"
+  message_body_empty: "You need to give me something to protect!"
   messages:
     form:
       body: "What would you like me to protect for you? Enter it here"
