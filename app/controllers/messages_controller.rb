@@ -47,7 +47,7 @@ class MessagesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render :action => "error", :notice => t(:message_not_found) }
+        format.html { render :action => "error" }
         format.json { render_json_response :error, :message => t(:message_not_found_json) }
       end
     end
