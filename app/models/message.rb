@@ -44,6 +44,7 @@ private
       self.body = CeloxCrypto.encrypt(APP_CIPHER, @key, body)
       self.stub = CeloxCrypto.hash_key(key)
       self.created_at = Time.now
+      self.expires_at = Time.now + 15.days
       self.sender_ip = remote_ip if APP_TRACK_IP
    rescue
      return false
