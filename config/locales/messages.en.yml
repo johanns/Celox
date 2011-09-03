@@ -11,21 +11,28 @@ en:
     topbar:
       menu_new_message: "New Secure Message"
 
-    banner:
-      heading: "Secure, Self-Destructing, Single Serving Message"
-      info1: "Create a secure message "
-      info2: "Share the link to your Secure Message."
-      info3: "Message will Self Destruct as soon as it's read!"
+    new:
+      heading: "Secure, Self-Destructing, Single Serve Message."
+      info1: ""
+
+    form:
+      body_empty: "Oops! You forgot to give me something to protect."
+      your_link: "This is your secret link:"
+      new_message: "New Secure Message"
+
+    was_read:
+      heading: "Secure, Self-Destructing, Single Serve Message."
+      info1: ""
+      new_message: "New Secure Message"
 
     error:
+      heading: "Secure, Self-Destructing, Single Serve Message."
+      info1: ""
       not_found: "Oops; I couldn't find your message! Check the link, and try again, but no promise! ;)"
+      new_message: "New Secure Message"
     
-    form:
-      body_empty: "Feed me! You need to give me something to protect, first!"
-      your_link: "This is your secret link. Copy, and Share. But remember, this is a one-time deal. Don't lose this."
-      new_message: "New Secure Message; let's do it again"
-
     show_by_stub:
-      heading: "Here is your message!"
-      info1: "Be sure to copy the content -- Message has already been destroyed!"
+      heading: "Here is your message:"
+      info1: ""
+      new_message: "New Secure Message"
 

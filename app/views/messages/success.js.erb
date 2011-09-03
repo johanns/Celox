@@ -1,4 +1,6 @@
 $("#form_error").hide();
-$("#fields").hide();
-$("#stub_link").val("<%= escape_javascript(@key_url) %>");
-$("#result").fadeIn('slow');
+
+$("#new_message").fadeOut(function() {
+	$("#stub_link").val("<%= escape_javascript(@key_url) %>");
+	$("#form_result").fadeIn('slow');
+});

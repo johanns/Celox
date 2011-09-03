@@ -1,11 +1,15 @@
-<%= render 'banner' %>
+<%= render 'banner', :heading => t('.heading'), :info1 => t('.info1') %>
 
-<div id="content" style="height: 400px">
-  <div class="container">
-    <div style="padding-top: 120px">
-      <div class="alert-message block-message info">
-        <p style="text-align: center"><%= @data %></p>
-      </div>
-    </div>
-  </div>
+<div class="container mbody">
+	<table>
+		<tr>
+			<td valign="center">
+				<div class="alert-message block-message info">
+			  	<%= @data %>
+			  </div>
+		  </td>
+	  </tr>
+  </table>
+	<input value="<%= t('.new_message') %>" class="btn large success" type="button" style="margin: 10px;" onclick="location.href='<%= escape_javascript(APP_URL) %>'" />
 </div>
+

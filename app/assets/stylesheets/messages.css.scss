@@ -10,15 +10,15 @@ section {
   padding-top: 60px;
 }
 #banner {
-  background-color: #6690CC;
+  background-color: lightgray;
   background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#6690CC));
-  background-image: -webkit-linear-gradient(#666666, #6690CC);
-  background-image: -moz-linear-gradient(#666666, #6690CC);
-  background-image: -o-linear-gradient(top, #666666, #6690CC);
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#666666), to(#6690CC));
-  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#666666', EndColorStr='#6690CC', GradientType=0);
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#6690CC', GradientType=0))";
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), to(lightgray));
+  background-image: -webkit-linear-gradient(#333333, lightgray);
+  background-image: -moz-linear-gradient(#333333, lightgray);
+  background-image: -o-linear-gradient(top, #333333, lightgray);
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#333333), to(lightgray));
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#333333', EndColorStr='lightgray', GradientType=0);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#333333', EndColorStr='lightgray', GradientType=0))";
   margin-top: 40px;
 }
 #banner div.inner {
@@ -31,12 +31,12 @@ section {
 #footer h1,
 #banner p,
 #footer p {
-  color: #fff;
+  color: white;
   text-shadow: 0 1px 1px rgba(0,0,0,.3);
 }
 #banner p a,
 #footer p a {
-  color: #fff;
+  color: white  ;
   font-weight: bold;
 }
 #banner h1,
@@ -57,9 +57,40 @@ section {
   line-height: 27px;
 }
 #main {
-  background: lightgray;
+  background: white;
+  min-height: 485px;
+  
+  .mbody {
+    vertical-align: middle;
+    padding: 10px;
+
+    table {
+      height: 100%;
+      width: 100%;
+    }
+
+    textarea {
+      background: #EEEEEE;
+      font-weight: bold;
+      font-size: 16px;
+      width: 99%;
+      height: 250px;
+      outline: large;
+    }
+  }
+  #form_error {
+    margin: auto;
+    width: 50%;
+    padding-bottom: 10px;
+  }
+  #form_result {
+    input {
+      font-color: green;
+    }
+  }
 }
 #footer{
   margin-top: 15px;
+  border: 0 transparent;
 }
 
