@@ -19,6 +19,7 @@ en:
       body_empty: "Oops! You forgot to give me something to protect."
       your_link: "This is your secret link:"
       new_message: "New Secure Message"
+      secure_message: "Secure my Message"
 
     was_read:
       heading: "Secure, Self-Destructing, Single Serve Message."
