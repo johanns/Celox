@@ -1,0 +1,39 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+es:
+  message_was_read_at: "Mensaje fue leído en %{read_at}"
+  message_was_read_at_by_ip: "Mensaje fue leído en %{read_at} por %{remote_ip}"
+
+  message_not_found_json: "¡Uy, yo no podía encontrar su mensaje!"
+
+  messages:
+    topbar:
+      menu_new_message: "Mensaje nuevo seguro"
+
+    new:
+      heading: "Seguro, la autodestrucción, el mensaje en formato individual."
+      info1: ""
+
+    form:
+      body_empty: "¡Uy, se le olvidó que me diera algo para proteger."
+      your_link: "Este es su enlace secreto:"
+      new_message: "Mensaje nuevo seguro"
+      secure_message: "Asegurar mi mensaje"
+
+    was_read:
+      heading: "Seguro, la autodestrucción, el mensaje en formato individual."
+      info1: ""
+      new_message: "Mensaje nuevo seguro"
+
+    error:
+      heading: "Seguro, la autodestrucción, el mensaje en formato individual."
+      info1: ""
+      not_found: "¡Uy, yo no podía encontrar su mensaje! Compruebe el enlace, y vuelve a intentarlo, pero la promesa no! ;)"
+      new_message: "Mensaje nuevo seguro"
+
+    show_by_stub:
+      heading: "Aquí está el mensaje:"
+      info1: ""
+      new_message: "Mensaje nuevo seguro"
+
