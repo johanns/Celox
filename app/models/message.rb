@@ -6,6 +6,9 @@ class Message < ActiveRecord::Base
   include Crypto  
 
   validates :body, :presence => true
+  validates :body, :length => { :maximum => 2048 }
+  # Extreme edge case validatation.
+  validates :stub, :uniqueness => true
   before_create :set_and_protect
 
   attr_accessor :key
