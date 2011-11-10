@@ -47,7 +47,7 @@ module Crypto
       end
 
       def generate_salt
-        # Hoping OpenSSL's implantation is superior
+        # Hoping OpenSSL's implementation is superior
         OpenSSL::Random.random_bytes(8)  
       end
 

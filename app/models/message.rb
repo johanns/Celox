@@ -1,5 +1,3 @@
-# Change the new_message; idea: before_save/create filter.
-
 require 'crypto'
 
 class Message < ActiveRecord::Base
@@ -7,7 +5,6 @@ class Message < ActiveRecord::Base
 
   validates :body, :presence => true
   validates :body, :length => { :maximum => 2048 }
-  # Extreme edge case validatation.
   validates :stub, :uniqueness => true
   before_create :set_and_protect
 
