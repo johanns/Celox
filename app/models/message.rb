@@ -25,8 +25,8 @@ class Message < ActiveRecord::Base
     else
       read = true
 
-      body = APP_TRACK_IP ? I18n.t(:message_was_read_at_by_ip, :read_at => m.read_at, :remote_ip => m.recipient_ip) : 
-                         I18n.t(:message_was_read_at, :read_at => m.read_at)
+      body = APP_TRACK_IP ? I18n.t(:message_was_read_at_by_ip, :read_at => time_ago_in_words(m.read_at), :remote_ip => m.recipient_ip) : 
+                         I18n.t(:message_was_read_at, :read_at => time_ago_in_words(m.read_at))
     end
       
     return [read, body]
