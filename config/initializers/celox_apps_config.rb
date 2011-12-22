@@ -18,4 +18,11 @@ APP_READ_MARKER = '!**READ**!'
 # Keep a record of IP addresses (sender and reader) in the database
 APP_TRACK_IP = false
 
+# Remember to change this for production or your particular environment
+if Rails.env == 'production'
+  APP_URL = 'https://celox.me/'
+else
+  APP_URL = 'http://localhost:3000'
+end
+
 APP_FROM_ADDRESS = 'noreply@celox.me'
