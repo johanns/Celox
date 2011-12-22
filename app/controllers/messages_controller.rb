@@ -32,17 +32,17 @@ class MessagesController < ApplicationController
     @message = Message.find_by_stub(CeloxCrypto.hash_key(params[:stub]))
 
     unless @message.nil?
-      read, @data = Message.retreive_message(params[:stub], @message, request.remote_ip)
+      @results = Message.retreive_message(params[:stub], @message, request.remote_ip)
       
-      unless read
+      if @results[:read]
         respond_to do |format|
-          format.html
-          format.json { render_json_response :ok, :message => @data }
+          format.html { render :action => "was_read", :notice => @results }
+          format.json { reneder_json_response :error, :messsage => @results }
         end
       else
         respond_to do |format|
-          format.html { render :action => "was_read", :notice => @data }
-          format.json { reneder_json_response :error, :messsage => @data }
+          format.html
+          format.json { render_json_response :ok, :message => @results }
         end
       end
     else

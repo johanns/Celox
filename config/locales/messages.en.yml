@@ -2,9 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  message_was_read_at: "Message was read at %{read_at}"
-  message_was_read_at_by_ip: "Message was read at %{read_at} by %{remote_ip}"
-
   message_not_found_json: "Oops; I couldn't find your message!"
 
   messages:
@@ -25,6 +22,9 @@ en:
       heading: "Secure, Self-Destructing, Single Serve Message."
       info1: ""
       new_message: "New Secure Message"
+      message_was_read_at: "This message was read %{read_at} ago."
+      message_was_read_at_by_ip: "This message was read %{read_at} ago by %{remote_ip}."
+
 
     error:
       heading: "Secure, Self-Destructing, Single Serve Message."

@@ -1,8 +1,8 @@
 <%= render 'banner', :heading => t('.heading'), :info1 => t('.info1') %>
 
 <div class="container mbody">
-  <textarea><%= @data %></textarea>
-  <div class="well" style="margin-top: 10px">
-    <input value="<%= t('.new_message') %>" class="btn large success" type="button" style="margin: 10px;" onclick="location.href='<%= escape_javascript(APP_URL) %>'" /> 
-  </div>
+	<textarea><%= @results[:body] %></textarea>
+  	<div class="well" style="margin-top: 10px">
+  		<input value="<%= t('.new_message') %>" class="btn large success" type="button" onclick="location.href='<%= escape_javascript(APP_URL) %>'" /> 
+  	</div>
 </div>

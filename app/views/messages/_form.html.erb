@@ -14,15 +14,14 @@
 		
 	</div>
 
-	<div id="form_result" class="mbody container" style="display: none">	
-		<table>
-			<tr>
-				<td valign="center">
-					<h4><%= t('.your_link') %></h4>
-					<input id="stub_link" type="text" onfocus="this.select();" style="width: 99%; height: 2.2em; font-size:2.2em" />
-				</td>
-			</tr>
-		</table>
-		<input value="<%= t('.new_message') %>" class="btn large success" type="button" style="margin: 10px;" onclick="location.href='<%= escape_javascript(APP_URL) %>'" />
+	<div id="form_result" class="container" style="Display: none">	
+		<div style="margin-top: 80px">
+			<h4><%= t('.your_link') %></h4>
+			<input id="stub_link" type="text" readonly="true" onclick="this.select();" style="width: 99%; height: 2.2em; font-size:2.2em" />
+
+		</div>
+		<div class="well" style="margin-top: 10px">
+			<input value="<%= t('.new_message') %>" class="btn large success" type="button" onclick="location.href='<%= escape_javascript(APP_URL) %>'" />
+		</div>
 	</div>
 </div>

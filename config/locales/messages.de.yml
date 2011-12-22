@@ -4,9 +4,6 @@
 # Don't blame me; Google translate didn't. 
 
 de:
-  message_was_read_at: "Nachricht wurde gelesen %{read_at}"
-  message_was_read_at_by_ip: "Die Nachricht wurde von %{remote_ip} um %{read_at} lesen"
-
   message_not_found_json: "Oops, ich konnte nicht finden, Ihre Nachricht!"
 
   messages:
@@ -27,6 +24,8 @@ de:
       heading: "Sichere, sich selbst zu zerstören, single dienen Nachricht."
       info1: ""
       new_message: "Neue Sichere Nachricht"
+      message_was_read_at: "Nachricht wurde gelesen %{read_at}"
+      message_was_read_at_by_ip: "Die Nachricht wurde von %{remote_ip} um %{read_at} lesen"
 
     error:
       heading: "Sichere, sich selbst zu zerstören, single dienen Nachricht."

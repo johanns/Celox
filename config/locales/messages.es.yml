@@ -2,9 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 es:
-  message_was_read_at: "Mensaje fue leído en %{read_at}"
-  message_was_read_at_by_ip: "Mensaje fue leído en %{read_at} por %{remote_ip}"
-
   message_not_found_json: "¡Uy, yo no podía encontrar su mensaje!"
 
   messages:
@@ -25,6 +22,8 @@ es:
       heading: "Seguro, la autodestrucción, el mensaje en formato individual."
       info1: ""
       new_message: "Mensaje nuevo seguro"
+      message_was_read_at: "Mensaje fue leído en %{read_at}"
+      message_was_read_at_by_ip: "Mensaje fue leído en %{read_at} por %{remote_ip}"
 
     error:
       heading: "Seguro, la autodestrucción, el mensaje en formato individual."

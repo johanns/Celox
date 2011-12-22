@@ -1,7 +1,7 @@
 require 'crypto'
 
 class Message < ActiveRecord::Base
-  include Crypto  
+  include Crypto
 
   validates :body, :presence => true
   validates :body, :length => { :maximum => 2048 }
@@ -11,9 +11,6 @@ class Message < ActiveRecord::Base
   attr_accessor :key
 
   def self.retreive_message(key, m, remote_ip)
-    read = false
-    body = String.new
-    
     unless m.read_at
       body = CeloxCrypto.decrypt(key, m.body)
       m.read_at = Time.now
@@ -22,14 +19,11 @@ class Message < ActiveRecord::Base
       m.recipient_ip = remote_ip if APP_TRACK_IP
 
       m.save
-    else
-      read = true
 
-      body = APP_TRACK_IP ? I18n.t(:message_was_read_at_by_ip, :read_at => time_ago_in_words(m.read_at), :remote_ip => m.recipient_ip) : 
-                         I18n.t(:message_was_read_at, :read_at => time_ago_in_words(m.read_at))
+      return { :read => false, :body => body }
     end
       
-    return [read, body]
+    return { :read => true, :read_at => m.read_at, :recipient_ip => m.recipient_ip }
   end
 
   # Override json response to limit fields returned
