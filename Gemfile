@@ -36,6 +36,6 @@ group :test do
 end
 
 #### My Gems
-gem 'pg'
+# gem 'pg'
 gem 'thin'
 gem 'locale_detector'
