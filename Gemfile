@@ -39,3 +39,4 @@ end
 # gem 'pg'
 gem 'thin'
 gem 'locale_detector'
+gem 'whenever'
