@@ -10,10 +10,10 @@
 APP_CIPHER = 'aes-256-cbc'
 
 # Specify the length of the 
-APP_KEY_LENGTH = 12
+APP_KEY_LENGTH = 16
 
 # Specify the text used replace the encrypted message once it's read
-APP_READ_MARKER = '!**READ**!'
+APP_READ_MARKER = 'DEADBEEF'
 
 # Keep a record of IP addresses (sender and reader) in the database
 APP_TRACK_IP = false
