@@ -37,6 +37,15 @@ end
 
 #### My Gems
 # gem 'pg'
-gem 'thin'
-gem 'locale_detector'
-gem 'whenever'
+
+# Application server
+gem 'thin', '>= 1.3.1'
+
+# Detects browser locale, and serves appropriate I18n translation
+gem 'locale_detector', '0.3.1'
+
+# Manage cron jobs (see /lib/tasks/cron.rake)
+gem 'whenever', '0.7.2'
+
+# Deploy automation
+gem 'capistrano', '>= 2.9.0'
