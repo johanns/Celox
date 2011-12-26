@@ -1,4 +1,4 @@
-require "capistrano_database_yml"
+require "./config/capistrano_database_yml"
 
 set :application, "Celox"
 set :repository,  "git://github.com/johanns/Celox.git"

@@ -94,11 +94,8 @@ unless Capistrano::Configuration.respond_to?(:instance)
 end
 
 Capistrano::Configuration.instance.load do
-
   namespace :deploy do
-
     namespace :db do
-
       desc <<-DESC
         Creates the database.yml configuration file in shared path.
 
@@ -115,7 +112,6 @@ Capistrano::Configuration.instance.load do
         when running deploy:setup for all stages one by one.
       DESC
       task :setup, :except => { :no_release => true } do
-
         default_template = <<-EOF
         base: &base
           adapter: sqlite3
