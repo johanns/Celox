@@ -96,6 +96,7 @@ end
 Capistrano::Configuration.instance.load do
   namespace :deploy do
     namespace :db do
+      
       desc <<-DESC
         Creates the database.yml configuration file in shared path.
 
@@ -111,6 +112,7 @@ Capistrano::Configuration.instance.load do
         capistrano-ext/multistaging to avoid multiple db:setup calls \ 
         when running deploy:setup for all stages one by one.
       DESC
+      
       task :setup, :except => { :no_release => true } do
         default_template = <<-EOF
         base: &base
@@ -143,12 +145,10 @@ Capistrano::Configuration.instance.load do
       task :symlink, :except => { :no_release => true } do
         run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml" 
       end
-
     end
 
     after "deploy:setup",           "deploy:db:setup"   unless fetch(:skip_db_setup, false)
     after "deploy:finalize_update", "deploy:db:symlink"
 
   end
-
 end
