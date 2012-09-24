@@ -3,6 +3,8 @@ require 'crypto'
 class Message < ActiveRecord::Base
   include Crypto
 
+  attr_accessible :body
+
   validates :body, :presence => true
   validates :body, :length => { :maximum => 2048 }
   validates :stub, :uniqueness => true
