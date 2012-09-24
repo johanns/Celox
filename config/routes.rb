@@ -6,9 +6,8 @@ Celox::Application.routes.draw do
     post "/n", :to => :create, :as =>  :messages
     match "/:stub", :to => :show_by_stub, :as => :stub
   end
-
-  # resources :messages, :only => [:new, :create] do
-  #   root :to => "messages#new",  :via => [:get, :post]
-  #   match '/:stub' => :show_by_stub, :as => :stub
-  # end
+  
+  # root :to => "messages#new"  
+  # resources :messages, :path => :m, :only => [:new, :create], :via => [:get, :post]
+  # match ':stub' => "messages#show_by_stub", :as => :stub, :via => [:get]
 end

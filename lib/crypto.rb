@@ -25,21 +25,21 @@ module Crypto
 
         # Encrypt and finalize the stream
         enc = cipher.update(data) + cipher.final
-
-        return Base64.encode64(Marshal.dump([cipher_name, salt, iv, enc]))
+  
+        Marshal.dump([cipher_name, salt, iv, enc])
       end
 
       def decrypt(key, data)  
         raise ArgumentError.new("Key/Data cannot be empty!") if key.empty? and data.empty?
 
-        cipher_name, salt, iv, enc = Marshal.load(Base64.decode64(data))
+        cipher_name, salt, iv, enc = Marshal.load(data)
 
         cipher = OpenSSL::Cipher::Cipher.new(cipher_name)
 
+        cipher.decrypt
+
         cipher.iv = iv
         dec = enc
-
-        cipher.decrypt
 
         cipher.key = generate_strong_key(key, salt, cipher.key_len)
         #Decrypt and return our data
@@ -60,7 +60,7 @@ module Crypto
       end
 
       def generate_strong_key(key, salt, length)
-        OpenSSL::PKCS5::pbkdf2_hmac_sha1(key, salt, 2048, length)
+        OpenSSL::PKCS5::pbkdf2_hmac(key, salt, 2048, length, 'SHA512')
       end
 
       def hash_key(key)

@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20110905230003) do
 
   create_table "messages", :force => true do |t|
-    t.text     "body"
+    t.binary   "body"
     t.string   "stub"
     t.datetime "expires_at"
     t.datetime "read_at"
