@@ -64,7 +64,7 @@ module Crypto
       end
 
       def hash_key(key)
-        (Digest::SHA2.new << key).to_s
+        (OpenSSL::Digest::SHA512.new << key).to_s.slice!(1..24)
       end
     end
   end
