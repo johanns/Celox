@@ -12,7 +12,7 @@ class Message < ActiveRecord::Base
 
   attr_accessor :key
 
-  def self.retreive_message(key, m, remote_ip)
+  def self.retrieve_message(key, m, remote_ip)
     unless m.read_at
       body = CeloxCrypto.decrypt(key, m.body)
       m.read_at = Time.now

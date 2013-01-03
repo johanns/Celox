@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
     @message = Message.find_by_stub(CeloxCrypto.hash_key(params[:stub]))
 
     unless @message.nil?
-      @results = Message.retreive_message(params[:stub], @message, request.remote_ip)
+      @results = Message.retrieve_message(params[:stub], @message, request.remote_ip)
       
       if @results[:read]
         respond_to do |format|
