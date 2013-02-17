@@ -6,7 +6,7 @@
 	<%= form_for(@message, :remote => true, :style => "form-stacked") do |f| %>
 		<%= f.text_area :body, :cols => "0", :rows => "0" %>
 			<div class="well" style="margin-top: 10px">
-				<%= f.submit :class => "btn large primary", :value => t('.secure_message') %>
+				<%= f.submit :class => "btn btn-large btn-primary", :value => t('.secure_message') %>
 			</div>
 	<% end %>
 
@@ -21,7 +21,7 @@
 
 		</div>
 		<div class="well" style="margin-top: 10px">
-			<input value="<%= t('.new_message') %>" class="btn large success" type="button" onclick="location.href='<%= escape_javascript(APP_URL) %>'" />
+			<input value="<%= t('.new_message') %>" class="btn btn-large btn-primary" type="button" onclick="location.href='<%= escape_javascript(APP_URL) %>'" />
 		</div>
 	</div>
 </div>
