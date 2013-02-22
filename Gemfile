@@ -18,7 +18,7 @@ group :test do
 end
 
 #### My Gems
-# gem 'pg'
+gem 'pg'
 
 # Application server
 gem 'thin', '>= 1.3.1'
