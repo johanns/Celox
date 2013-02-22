@@ -4,5 +4,4 @@ log/*.log
 tmp/
 .sass-cache/
 .DS_Store
-Gemfile.lock
 config/database.yml
