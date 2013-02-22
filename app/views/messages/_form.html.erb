@@ -6,7 +6,7 @@
 	<%= form_for(@message, :remote => true, :style => "form-stacked") do |f| %>
 		<%= f.text_area :body, :cols => "0", :rows => "0" %>
 			<div class="well" style="margin-top: 10px">
-				<input class="btn btn-large btn-primary" name="commit" type="submit" value="<%= t('.secure_message') %>" onclick="EncodeThis()" />
+				<input class="btn btn-large btn-primary" name="commit" type="submit" value="<%= t('.secure_message') %>" onclick="EncodeThis()" data-disable-with="Submitting..." />
 			</div>
 	<% end %>
 
