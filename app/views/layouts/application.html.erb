@@ -38,7 +38,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'images/favicon.ico', :rel => 'shortcut icon' %>
   </head>
-  <body onload="setFocus();">
+  <body onload="setFocus();DecodeThis();">
 
   <%= render 'topbar' %>
 
@@ -49,6 +49,8 @@
       </div>
     </div>
   </div>
+
+  <input type="text" id="randomEntropy" value="" style="display: none" />
 
   <%= render 'footer' %> <!-- /container -->
 

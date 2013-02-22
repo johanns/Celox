@@ -3,7 +3,7 @@ Celox::Application.routes.draw do
   controller :messages do           
     root :to => :new        
     get "/n", :to => :new
-    post "/n", :to => :create, :as =>  :messages
+    post "/n", :to => :create, :as => :messages
     match "/:stub", :to => :show_by_stub, :as => :stub
   end
   
