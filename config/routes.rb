@@ -2,7 +2,7 @@ Celox::Application.routes.draw do
   # Note: Preserve the following root, get, post, and match order.
   controller :messages do           
     root :to => :new        
-    get "/n", :to => :new
+    get "/n", :to => :new, :as => "new_message"
     post "/n", :to => :create, :as => :messages
     match "/:stub", :to => :show_by_stub, :as => :stub
   end

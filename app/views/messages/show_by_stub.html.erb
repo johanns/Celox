@@ -3,6 +3,6 @@
 <div class="container mbody">
 	<textarea onclick="this.select();" id="message_body"><%= @results[:body] %></textarea>
   	<div class="well" style="margin-top: 10px">
-  		<input value="<%= t('.new_message') %>" class="btn btn-large btn-success" type="button" onclick="location.href='<%= escape_javascript(APP_URL) %>'" /> 
+  		<input value="<%= t('.new_message') %>" class="btn btn-large btn-success" type="button" onclick="location.href='<%= new_message_path %>'" /> 
   	</div>
 </div>
