@@ -60,7 +60,7 @@ module Crypto
       end
 
       def generate_strong_key(key, salt, length)
-        OpenSSL::PKCS5::pbkdf2_hmac(key, salt, 2048, length, 'SHA512')
+        OpenSSL::PKCS5::pbkdf2_hmac_sha1(key, salt, 2048, length)
       end
 
       def hash_key(key)

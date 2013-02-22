@@ -1,1 +1,7 @@
-Celox.ME
+# Celox.ME
+
+It can easly deploy to heroku.
+
+## Cronjobs run it hourly at least
+
+rake messages:expire
