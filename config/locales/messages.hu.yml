@@ -1,0 +1,35 @@
+hu:
+  message_not_found_json: "Hoppá, nincs ilyen üzenet!"
+
+  messages:
+    topbar:
+      menu_new_message: "Új titkos üzenet"
+
+    new:
+      heading: "Biztonságos, egyszer olvasható, titkosított üzenet."
+      info1: ""
+
+    form:
+      body_empty: "Hoppá! Nem adtál meg szöveget."
+      your_link: "Ez a titkos linked az üzenethez:"
+      new_message: "Új Titkos Üzenet"
+      secure_message: "Üzenet titkosítása"
+
+    was_read:
+      heading: "Biztonságos, egyszer olvasható, titkosított üzenet."
+      info1: ""
+      new_message: "Új Titkos Üzenet"
+      message_was_read_at: "Ezt az üzenetet már elolvasták enny idővel ezelőtt: %{read_at}."
+      message_was_read_at_by_ip: "Ezt az üzenetet már elolvasták enny idővel ezelőtt: %{read_at} a következő címről: %{remote_ip}."
+
+
+    error:
+      heading: "Biztonságos, egyszer olvasható, titkosított üzenet."
+      info1: ""
+      not_found: "Hoppá, ez az üzenet nem található. Ellenőrizd a linket."
+      new_message: "Új Titkos Üzenet"
+    
+    show_by_stub:
+      heading: "Itt az üzeneted:"
+      info1: ""
+      new_message: "Új Titkos Üzenet"

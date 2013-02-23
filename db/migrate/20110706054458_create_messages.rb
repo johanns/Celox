@@ -1,7 +1,7 @@
 class CreateMessages < ActiveRecord::Migration
   def change
     create_table :messages do |t|
-      t.text :body
+      t.binary :body
       t.string :stub
       t.datetime :expires_at
       t.datetime :read_at

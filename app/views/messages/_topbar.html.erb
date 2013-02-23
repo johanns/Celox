@@ -1,10 +1,17 @@
-<div class="topbar">
-  <div class="fill">
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
     <div class="container">
-      <h3><a href="<%= APP_URL %>">Celox.<strong>ME</strong>ssage (beta)</a></h3>
-      <ul>
-        <li><a href="<%= APP_URL %>"><%= t(".menu_new_message") %></a></li>
-      </ul>
+      <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="<%= root_url %>">Celox.<strong>ME</strong>ssage (beta)</a>
+      <div class="container nav-collapse">
+        <ul class="nav">
+          <li><a href="<%= new_message_path %>"><%= t(".menu_new_message") %></a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
     </div>
   </div>
 </div>
