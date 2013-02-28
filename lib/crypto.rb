@@ -35,10 +35,9 @@ module Crypto
         cipher_name, salt, iv, enc = Marshal.load(data)
 
         cipher = OpenSSL::Cipher::Cipher.new(cipher_name)
-
         cipher.decrypt
-
         cipher.iv = iv
+
         dec = enc
 
         cipher.key = generate_strong_key(key, salt, cipher.key_len)

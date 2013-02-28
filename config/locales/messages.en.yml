@@ -6,7 +6,7 @@ en:
 
   messages:
     topbar:
-      menu_new_message: "New Secure Message"
+      menu_new_message: "New Message"
 
     new:
       heading: "Secure, Self-Destructing, Single Serve Message."
@@ -15,13 +15,13 @@ en:
     form:
       body_empty: "Oops! You forgot to give me something to protect."
       your_link: "This is your secret link:"
-      new_message: "New Secure Message"
+      new_message: "New Message"
       secure_message: "Secure my Message"
 
     was_read:
       heading: "Secure, Self-Destructing, Single Serve Message."
       info1: ""
-      new_message: "New Secure Message"
+      new_message: "New Message"
       message_was_read_at: "This message was read %{read_at} ago."
       message_was_read_at_by_ip: "This message was read %{read_at} ago by %{remote_ip}."
 
@@ -30,10 +30,10 @@ en:
       heading: "Secure, Self-Destructing, Single Serve Message."
       info1: ""
       not_found: "Oops; I couldn't find your message! Check the link, and try again, but no promise! ;)"
-      new_message: "New Secure Message"
+      new_message: "New Message"
     
     show_by_stub:
       heading: "Here is your message:"
       info1: ""
-      new_message: "New Secure Message"
+      new_message: "New Message"
 

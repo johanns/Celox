@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 group :development do
   gem 'sqlite3'
@@ -23,8 +23,7 @@ end
 #### My Gems
 gem 'pg'
 
-# Application server
-gem 'thin', '>= 1.3.1'
+gem 'unicorn'
 
 # Detects browser locale, and serves appropriate I18n translation
 gem 'locale_detector', '>= 0.3.1'
