@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
       raise "Invalid json response type: #{type}"
     end
 
-    # To keep the structure consistent, we'll build the json 
+    # To keep the structure consistent, we'll build the json
     # structure with the default properties.
     #
     # This will also help other developers understand what 
@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
       if @results[:read]
         respond_to do |format|
           format.html { render :action => "was_read", :notice => @results }
-          format.json { reneder_json_response :error, :messsage => @results }
+          format.json { render_json_response :error, :message => @results }
         end
       else
         respond_to do |format|
