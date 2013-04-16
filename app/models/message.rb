@@ -17,14 +17,14 @@ class Message < ActiveRecord::Base
       body = CeloxCrypto.decrypt(key, m.body)
       m.read_at = Time.now
       m.body = APP_READ_MARKER # => body cannot be blank
-      
+
       m.recipient_ip = remote_ip if APP_TRACK_IP
 
       m.save
 
       return { :read => false, :body => body }
     end
-      
+
     return { :read => true, :read_at => m.read_at, :recipient_ip => m.recipient_ip }
   end
 
@@ -41,11 +41,9 @@ private
       self.stub = CeloxCrypto.hash_key(key)
       self.created_at = Time.now
       self.expires_at = Time.now + 15.days
-      self.sender_ip = remote_ip if APP_TRACK_IP
-   rescue
-     return false
-   end
-
+    rescue
+      return false
+    end
     true
   end
 end

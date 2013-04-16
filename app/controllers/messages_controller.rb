@@ -12,15 +12,15 @@ class MessagesController < ApplicationController
     # To keep the structure consistent, we'll build the json
     # structure with the default properties.
     #
-    # This will also help other developers understand what 
+    # This will also help other developers understand what
     # is returned by the server by looking at this method.
-    default_json_structure = { 
-      :status => type, 
-      :html => nil, 
-      :message => nil, 
+    default_json_structure = {
+      :status => type,
+      :html => nil,
+      :message => nil,
       :to => nil }.merge(hash)
 
-    render_options = {:json => default_json_structure}  
+    render_options = {:json => default_json_structure}
     render_options[:status] = 400 if type == :error
 
     render(render_options)
@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
 
     unless @message.nil?
       @results = Message.retrieve_message(params[:stub], @message, request.remote_ip)
-      
+
       if @results[:read]
         respond_to do |format|
           format.html { render :action => "was_read", :notice => @results }
@@ -68,11 +68,12 @@ class MessagesController < ApplicationController
   # POST /n.json
   def create
     @message = Message.new(params[:message])
+    @message.sender_ip = request.remote_ip if APP_TRACK_IP
 
-    respond_to do |format|      
+    respond_to do |format|
       if @message.save
         @key_url = "#{request.protocol + request.host_with_port}/#{@message.key}"
-        
+
         format.json { render_json_response :ok, :message => @key_url }
         format.js { render :action => "success"}
       else
