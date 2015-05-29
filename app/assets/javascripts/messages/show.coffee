@@ -9,5 +9,3 @@ $(".messages.show").ready ->
     d = sjcl.decrypt(p, $("#data").html())
     $("#data").html(d)
     $("#block").addClass "uk-block-primary"
-
-  $("#block")
