@@ -9,23 +9,17 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110905230003) do
+ActiveRecord::Schema.define(version: 20150524002242) do
 
-  create_table "messages", :force => true do |t|
-    t.binary   "body"
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
     t.string   "stub"
     t.datetime "expires_at"
-    t.datetime "read_at"
-    t.string   "sender_email"
-    t.string   "sender_ip"
-    t.string   "recipient_email"
-    t.string   "recipient_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "read_at"
   end
-
-  add_index "messages", ["stub"], :name => "index_messages_on_stub"
 
 end

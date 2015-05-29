@@ -1,0 +1,15 @@
+== render partial: 'layouts/heading'
+
+.uk-container.uk-container-center
+  .uk-grid(data-uk-grid-margin)
+    .uk-width-1-1
+      h3.uk-h3
+        i.uk-icon-warning(style="padding-right: 5px")
+        | The content of this message was removed from the sever, and cannot be retrieved again!
+
+      .uk-form
+        .uk-form-row
+          textarea.uk-form.uk-width-1-1#data(style="font-size: 1.2rem; min-height: 20rem"
+                                             readonly="true"
+                                             onclick="this.select()")
+            = @message

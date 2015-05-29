@@ -1,23 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  cipher: MyString
   body: MyText
   stub: MyString
-  expires_at: 2011-07-05 22:44:58
-  read_at: 2011-07-05 22:44:58
-  sender_email: MyString
-  sender_ip: MyString
-  recipient_email: MyString
-  recipient_ip: MyString
+  expires_at: 2014-08-08 19:19:48
 
 two:
-  cipher: MyString
   body: MyText
   stub: MyString
-  expires_at: 2011-07-05 22:44:58
-  read_at: 2011-07-05 22:44:58
-  sender_email: MyString
-  sender_ip: MyString
-  recipient_email: MyString
-  recipient_ip: MyString
+  expires_at: 2014-08-08 19:19:48

@@ -1,35 +1,55 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.2.21'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.2.1'
 
-group :development do
-  gem 'sqlite3'
-end
+# Databases
+gem 'sqlite3'
 
-group :assets do
-  gem 'sass-rails',   '>= 3.1.5'
-  gem 'coffee-rails', '>= 3.1.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'twitter-bootstrap-rails', '>= 2.1.3'
-end
-
+# JavaScript / Frontend Scripting
+gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
+gem 'turbolinks'
 
-group :test do
-  # Pretty printed test output
-  gem 'turn', '~> 0.8.3', :require => false
+# RESTful
+gem 'jbuilder', '~> 2.0'
+gem 'sdoc', '~> 0.4.0', group: :doc
+
+# ActiveRecord / ActiveModel
+gem 'bcrypt', '~> 3.1.7'
+
+# Haml / HTML / CSS
+gem 'slim-rails'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'neatjson'
+gem 'font-awesome-rails'
+
+# Web Server
+gem 'puma'
+
+# Runtime
+gem 'foreman'
+
+# Better logging
+gem 'awesome_print'
+
+# Debugging
+group :development do
+  gem 'spring'
+  gem 'better_errors'
+  gem 'binding_of_caller', platforms: [:mri_19, :mri_20, :mri_21, :rbx]
+  gem 'html2haml'
+  gem 'quiet_assets'
+  gem 'meta_request'
+  gem 'syntax'
 end
 
-#### My Gems
-gem 'pg'
+group :development, :test do
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  gem 'pry-byebug'
 
-gem 'unicorn'
-
-# Detects browser locale, and serves appropriate I18n translation
-gem 'locale_detector', '>= 0.3.1'
-
-# Manage cron jobs (see /lib/tasks/cron.rake)
-gem 'whenever', '>= 0.7.2'
-
-# Deploy automation
-gem 'capistrano', '>= 2.9.0'
+  gem 'byebug'
+  gem 'web-console', '~> 2.0'
+end

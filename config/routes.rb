@@ -1,13 +1,9 @@
-Celox::Application.routes.draw do
-  # Note: Preserve the following root, get, post, and match order.
-  controller :messages do           
-    root :to => :new        
-    get "/n", :to => :new, :as => "new_message"
-    post "/n", :to => :create, :as => :messages
-    match "/:stub", :to => :show_by_stub, :as => :stub
-  end
-  
-  # root :to => "messages#new"  
-  # resources :messages, :path => :m, :only => [:new, :create], :via => [:get, :post]
-  # match ':stub' => "messages#show_by_stub", :as => :stub, :via => [:get]
+Rails.application.routes.draw do
+  root to: "messages#new"
+
+  resources :messages, path: :m, only: [:new, :create, :show]
+
+  get '/faq', controller: :static_pages, action: :faq
+  get '/:id', controller: :messages, action: :show
 end
+

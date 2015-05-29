@@ -1,0 +1,47 @@
+.uk-container.uk-container-center
+  .uk-grid(data-uk-grid-margin)
+    .uk-width-1-1
+      = form_for(@message, html: { class: "uk-form" }, remote: true) do |f|
+        #inputs
+          fieldset(data-uk-margin)
+            .uk-form-row
+              = f.text_area :body, style: 'min-height: 20rem; font-size: 1.2rem', class: 'uk-width-1-1'
+
+            .uk-form-row
+              = f.button :submit, id: 'encrypt', class: 'uk-button uk-button-large uk-button-primary' do
+                span.uk-icon-lock
+                span(style="padding-left: 5px")
+                | Encrypt
+
+              label#char_count(style="padding-left: 2rem")
+                | 2000
+
+#result(style="display: none")
+  .uk-container.uk-container-center
+    .uk-grid(data-uk-grid-margin)
+      .uk-width-1-1
+        h3.uk-h3
+          span.uk-icon-lock(style="padding-right: 5px")
+          | Copy the message retrieval address show below.
+
+        .uk-form
+          .uk-form-row
+            textarea.uk-form.uk-width-1-1#data(style="font-size: 1.5rem"
+                                               readonly="true"
+                                               onclick="this.select()")
+
+          .uk-form-row
+            button.uk-button.uk-button-primary(data-uk-modal="{target:'#rawData'}")
+              | Show All Data
+
+#rawData.uk-modal
+  .uk-modal-dialog
+    .uk-modal-close.uk-close(style="color: black;")
+
+    h4(style="color: black;")
+      | Encrypted data transmitted to the server for storage:
+    pre#clientJson.syntaxJson
+
+    h4(style="color: black;")
+      | Encrypted data stored on the server:
+    pre#serverJson.syntaxJson

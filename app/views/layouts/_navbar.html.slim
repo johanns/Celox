@@ -1,0 +1,38 @@
+nav.uk-navbar.uk-navbar-attached
+  .uk-navbar-content.uk-hidden-small(data-uk-nav)
+    a.uk-navbar-brand(href="/")
+      | Celox.
+      strong
+        | ME
+      | ssage
+
+    ul.uk-navbar-nav
+      li
+        = link_to :root do
+          i.uk-icon-lock(style="padding-right: 5px")
+          | New Message
+
+      li
+        a(href="https://github.com/johanns/Celox")
+          i.uk-icon-github(style="padding-right: 5px")
+          | Source Code
+
+  a(href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas)
+
+#offcanvas.uk-offcanvas
+  .uk-offcanvas-bar
+    ul.uk-nav.uk-nav-offcanvas(uk-offcanvas)
+      li
+        = link_to :root do
+          | Celox.
+          strong
+            | ME
+          | ssage
+      li
+        = link_to :root do
+          i.uk-icon-lock(style="padding-right: 5px")
+          | New Message
+      li
+        a(href="https://github.com/johanns/Celox")
+          i.uk-icon-github(style="padding-right: 5px")
+          | Source @ Github
