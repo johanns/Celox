@@ -1,7 +1,9 @@
 $(".messages.new").ready ->
   sjcl.random.startCollectors()
 
-  $("#message_body").val("")
+  $(document).on 'page:load', ->
+    $("#message_body").empty()
+    $("#data").empty()
 
   encryptMessage = ->
     password = generatePassword(8)
