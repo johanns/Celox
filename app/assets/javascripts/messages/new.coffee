@@ -21,7 +21,7 @@ $(".messages.new").ready ->
     $("#data").append(password)
 
   $("#encrypt").on "click", ->
-    $('#inputs').addClass 'animated fadeOutDown'
+    $('#form').addClass 'animated fadeOutDown'
     encryptMessage()
 
   updateCounter = ->
