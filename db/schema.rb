@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150531230604) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "messages", force: :cascade do |t|
     t.text     "body"
     t.string   "stub"
@@ -22,6 +25,6 @@ ActiveRecord::Schema.define(version: 20150531230604) do
     t.datetime "read_at"
   end
 
-  add_index "messages", ["stub"], name: "index_messages_on_stub"
+  add_index "messages", ["stub"], name: "index_messages_on_stub", using: :btree
 
 end

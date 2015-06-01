@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Databases
-gem 'sqlite3'
+gem 'pg'
 
 # JavaScript / Frontend Scripting
 gem 'coffee-rails', '~> 4.1.0'
