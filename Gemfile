@@ -32,6 +32,10 @@ gem 'puma'
 # Runtime
 gem 'foreman'
 
+# Background processing & scheduling
+gem 'sucker_punch', '~> 1.0'
+gem 'clockwork'
+
 # Better logging
 gem 'awesome_print'
 
