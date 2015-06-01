@@ -10,5 +10,8 @@
   "addons": [
     "scheduler",
     "heroku-postgresql"
-  ]
+  ],
+  "scripts": {
+    "postdeploy": "RAILS_ENV=production bundle exec rake db:setup"
+  }
 }
