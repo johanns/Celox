@@ -1,0 +1,13 @@
+{
+  "name": "Celox.ME",
+  "description": "A secure, self-destructing, single server message Rails app",
+  "repository": "https://github.com/johanns/Celox",
+  "keywords": [
+    "ruby",
+    "rails",
+    "cryptogpraphy"
+  ],
+  "addons": [
+    "scheduler"
+  ]
+}
