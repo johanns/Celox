@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id         :integer          not null, primary key
+#  body       :text
+#  stub       :string
+#  expires_at :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#  read_at    :datetime
+#
+# Indexes
+#
+#  index_messages_on_stub  (stub)
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

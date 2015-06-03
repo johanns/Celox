@@ -1,3 +1,14 @@
+# == Route Map
+#
+#      Prefix Verb URI Pattern      Controller#Action
+#        root GET  /                messages#new
+#    messages POST /m(.:format)     messages#create
+# new_message GET  /m/new(.:format) messages#new
+#     message GET  /m/:id(.:format) messages#show
+#         faq GET  /faq(.:format)   static_pages#faq
+#             GET  /:id(.:format)   messages#show
+#
+
 Rails.application.routes.draw do
   root to: "messages#new"
 
