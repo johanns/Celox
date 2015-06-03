@@ -3,8 +3,11 @@
     .uk-width-1-1
       = form_for(@message, html: { class: "uk-form" }, remote: true) do |f|
         fieldset(data-uk-margin)
-          .uk-form-row
+          .uk-form-row(style="display: none")
             = f.text_area :body, style: 'min-height: 20rem; font-size: 1.2rem', class: 'uk-width-1-1'
+
+          .uk-form-row
+            textarea#message_main.uk-width-1-1(style="min-height: 20rem; font-size: 1.2rem")
 
           .uk-form-row
             = f.button :submit, id: 'encrypt', class: 'uk-button uk-button-large uk-button-primary' do
@@ -29,8 +32,8 @@
                                              onclick="this.setSelectionRange(0, 9999);")
 
         .uk-form-row
-          button.uk-button.uk-button-primary(data-uk-modal="{target:'#rawData'}")
-            | Show All Data
+          button.uk-button.uk-button-large.uk-button-success(data-uk-modal="{target:'#rawData'}")
+            | Show Encrypted Data
 
 #rawData.uk-modal
   .uk-modal-dialog

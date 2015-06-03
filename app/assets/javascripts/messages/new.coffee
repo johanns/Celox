@@ -1,38 +1,53 @@
-$(".messages.new").ready ->
+$('.messages.new').ready ->
   sjcl.random.startCollectors()
 
-  $(document).on 'page:load', ->
-    $("#message_body").empty()
-    $("#data").empty()
+  resetState = ->
+    $('#message_body').empty()
+    $('#data').empty()
 
-  encryptMessage = ->
+  updateCounter = ->
+    c = 2000 - $('#message_main').val().length
+    if c <= 0
+      $('#char_count').text(c)
+      $('#encrypt').prop('disabled', true)
+    else
+      $('#char_count').text c
+      if $('#encrypt').prop('disabled')
+        $('#encrypt').prop('disabled', false)
+
+  $(document).on 'page:load', ->
+    resetState()
+
+  $('#new_message').on 'ajax:before', (e) ->
     password = generatePassword(8)
 
-    e = sjcl.encrypt(password, $("#message_body").val(), {
-      count: 2000,
-      salt: sjcl.random.randomWords(32),
-      adata: sjcl.random.randomWords(32),
-      ks: 256,
+    e = sjcl.encrypt(password, $("#message_main").val(), {
+      count: 2000
+      salt: sjcl.random.randomWords(32)
+      adata: sjcl.random.randomWords(32)
+      ks: 256
       mode: "gcm"
     })
 
-    $("#message_body").val(e)
-    $("#clientJson").html(syntaxHighlight(JSON.parse(e)))
-    $("#data").append(password)
+    $('#message_body').val(e)
+    $('#clientJson').html syntaxHighlight JSON.parse(e)
+    $('#data').append(password)
+  .on 'ajax:success', (e, data, status, xhr) ->
+    $('#form').addClass('animated zoomOut')
+    $('#form').one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+      $('#form').hide()
+      $("#result").addClass('animated zoomIn').show()
+  .on 'ajax:error', (e, status, error) ->
+    UIkit.notify {
+      message: 'Failed to store your message; try again...'
+      timeout: 0
+      status: 'danger'
+      pos: 'top-center'
+    }
 
-  $("#encrypt").on "click", ->
-    $('#form').addClass 'animated fadeOutDown'
-    encryptMessage()
+    resetState()
 
-  updateCounter = ->
-    c = 2000 - $("#message_body").val().length
-    if c <= 0
-      $("#char_count").text c
-      $("#encrypt").prop 'disabled', true
-    else
-      $("#char_count").text c
-      if $("#encrypt").prop 'disabled'
-        $("#encrypt").prop 'disabled', false
-
-  $("#message_body").on "keyup", ->
+  $('#message_main').on 'keyup', ->
+    updateCounter()
+  .on 'change', ->
     updateCounter()

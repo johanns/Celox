@@ -1,10 +1,12 @@
 @import "animate";
 
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
 @import "uikit-overload";
 @import "uikit/uikit-mixins";
 @import "uikit/uikit";
-
-@import "font-awesome";
+@import "uikit/components/notify";
 
 @import "messages";
 

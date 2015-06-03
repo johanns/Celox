@@ -21,13 +21,14 @@ class MessagesController < ApplicationController
   end
 
   private
-    def set_message
-      @message = Message.fetch_message(key: params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render_404
-    end
+  
+  def set_message
+    @message = Message.fetch_message(key: params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 
-    def message_params
-      params.require(:message).permit(:body)
-    end
+  def message_params
+    params.require(:message).permit(:body)
+  end
 end
