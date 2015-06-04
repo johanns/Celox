@@ -11,7 +11,7 @@ $('.messages.new').ready ->
       $('#char_count').text(c)
       $('#encrypt').prop('disabled', true)
     else
-      $('#char_count').text c
+      $('#char_count').text(c)
       if $('#encrypt').prop('disabled')
         $('#encrypt').prop('disabled', false)
 
@@ -19,9 +19,12 @@ $('.messages.new').ready ->
     resetState()
 
   $('#new_message').on 'ajax:before', (e) ->
+    $('#encrypt').prop('disabled', true).text('Working...')
+    $('#message_main').prop('readOnly', true)
+
     password = generatePassword(8)
 
-    e = sjcl.encrypt(password, $("#message_main").val(), {
+    e = sjcl.encrypt(password, $('#message_main').val(), {
       count: 2000
       salt: sjcl.random.randomWords(32)
       adata: sjcl.random.randomWords(32)
@@ -30,11 +33,11 @@ $('.messages.new').ready ->
     })
 
     $('#message_body').val(e)
-    $('#clientJson').html syntaxHighlight JSON.parse(e)
+    $('#clientJson').html(syntaxHighlight(JSON.parse(e)))
     $('#data').append(password)
   .on 'ajax:success', (e, data, status, xhr) ->
     $('#form').addClass('animated zoomOut')
-    $('#form').one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    .one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#form').hide()
       $("#result").addClass('animated zoomIn').show()
   .on 'ajax:error', (e, status, error) ->
