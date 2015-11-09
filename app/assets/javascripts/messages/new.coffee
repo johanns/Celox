@@ -36,10 +36,10 @@ $('.messages.new').ready ->
     $('#clientJson').html(syntaxHighlight(JSON.parse(e)))
     $('#data').append(password)
   .on 'ajax:success', (e, data, status, xhr) ->
-    $('#form').addClass('animated zoomOut')
+    $('#form').addClass('uk-animation-fade uk-animation-reverse')
     .one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#form').hide()
-      $("#result").addClass('animated zoomIn').show()
+      $("#result").addClass('uk-animation-fade').show()
   .on 'ajax:error', (e, status, error) ->
     UIkit.notify {
       message: 'Failed to store your message; try again...'
