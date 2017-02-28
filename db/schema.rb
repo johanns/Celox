@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -14,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20150531230604) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  # enable_extension "plpgsql"
 
   create_table "messages", force: :cascade do |t|
     t.text     "body"
@@ -23,8 +22,7 @@ ActiveRecord::Schema.define(version: 20150531230604) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "read_at"
+    t.index ["stub"], name: "index_messages_on_stub", using: :btree
   end
-
-  add_index "messages", ["stub"], name: "index_messages_on_stub", using: :btree
 
 end

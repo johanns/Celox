@@ -10,8 +10,18 @@ ruby '2.3.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 
-# Database
-gem 'pg'
+### Databases (uncommend desired database gem)
+
+# Postgres
+# gem 'pg'
+
+# MySQL
+# gem 'mysql2'
+
+# SQLite
+gem 'sqlite3'
+
+###
 
 # HTML / CSS
 gem 'slim-rails'
