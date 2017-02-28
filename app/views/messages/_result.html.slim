@@ -1,0 +1,19 @@
+#messageResult(style="display: none")
+  .uk-card-header
+    h3.uk-card-title 
+      | This is your secure retrieval address
+
+  .uk-card-body
+    textarea.uk-form.uk-width-1-1#messageURI(style="font-size: 1.2rem; min-height: 16rem"
+                                       readonly="true"
+                                       onclick="this.setSelectionRange(0, 9999);")
+
+  .uk-card-footer
+    button.uk-button.uk-button-default.uk-button-large(type="button" uk-toggle="target: #dataModal") 
+      | See encrypted data
+    
+#dataModal(uk-modal)
+  .uk-modal-dialog.uk-modal-body
+    h4(style="color: black;")
+      | Data transmitted to the server for storage:
+    pre#clientJson.syntaxJson

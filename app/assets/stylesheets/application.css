@@ -12,4 +12,24 @@
  *
  *= require_tree .
  *= require_self
+ *
+ *= require uikit.min
  */
+
+.syntaxJson {
+    .string {
+        color: #6ba568;
+    }
+    .number {
+        color: darkorange;
+    }
+    .boolean {
+        color: #4a57ff;
+    }
+    .null {
+        color: #ff71fc;
+    }
+    .key {
+        color: #e13333;
+    }
+}

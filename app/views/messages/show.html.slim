@@ -1,15 +1,19 @@
-== render partial: 'layouts/heading'
+- content_for :head_page do
+  meta(name="turbolinks-cache-control" content="no-cache")
 
-.uk-container.uk-container-center
-  .uk-grid(data-uk-grid-margin)
-    .uk-width-1-1
-      h3.uk-h3
-        i.uk-icon-warning(style="padding-right: 5px")
-        | The content of this message was removed from the sever, and cannot be retrieved again!
+.uk-flex.uk-flex-center.uk-flex-middle
+  .uk-container.uk-width-large.uk-width-xlarge.uk-width-xxlarge
+    .uk-card.uk-card-default
+      .uk-card-header
+        h3.uk-card-title 
+            | Your message. 
 
-      .uk-form
-        .uk-form-row
-          textarea.uk-form.uk-width-1-1#data(style="font-size: 1.2rem; min-height: 20rem"
-                                             readonly="true"
-                                             onclick="this.setSelectionRange(0, 9999);")
-            = @message
+      .uk-card-body
+        textarea.uk-form.uk-width-1-1#messageData(style="font-size: 1.2rem; min-height: 16rem"
+                                           readonly="true"
+                                           onclick="this.setSelectionRange(0, 9999);")
+          = @data
+     
+      .uk-card-footer
+        h5
+          | This message has been destroyed, and cannot be retrieved again.
