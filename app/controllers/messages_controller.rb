@@ -1,7 +1,11 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :destroy]
+  include ::ApiErrorHandlers
 
   def show
+    ms = MessagesService.new(params)
+    @data = ms.retrieve
+  rescue ActiveRecord::RecordNotFound
+    render_404
   end
 
   def new
@@ -9,24 +13,13 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
+    ms = MessagesService.new(params)
+    key = ms.store
 
-    respond_to do |format|
-      if @message.save
-        format.js { render :show_key }
-      else
-        format.html { render :new }
-      end
-    end
+    render json: { data: key }, status: :ok
   end
 
   private
-  
-  def set_message
-    @message = Message.fetch_message(key: params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render_404
-  end
 
   def message_params
     params.require(:message).permit(:body)
