@@ -1,39 +1,15 @@
-.uk-container.uk-container-center.uk-margin-top
-  #oncanvas.nav.uk-navbar(data-turbolinks-permanent)
-    .uk-navbar-content.uk-hidden-small(data-uk-nav)
-      a.uk-navbar-brand(href="/")
-        | Celox.
-        strong
-          | ME
-        | ssage
-
-      ul.uk-navbar-nav
-        li
-          = link_to :root do
-            i.uk-icon-lock(style="padding-right: 5px")
-            | New Message
-
-        li
-          a(href="https://github.com/johanns/Celox")
-            i.uk-icon-github(style="padding-right: 5px")
-            | Source @ Github
-
-    a(href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas)
-
-#offcanvas.uk-offcanvas(data-turbolinks-permanent)
-  .uk-offcanvas-bar
-    ul.uk-nav.uk-nav-offcanvas(uk-offcanvas)
+nav.uk-navbar-container(uk-navbar)
+  .uk-navbar-left
+    a.uk-navbar-item.uk-logo(href="#")
+      strong Celox.ME
+      | ssage
+      
+    ul.uk-navbar-nav
       li
-        = link_to :root do
-          | Celox.
-          strong
-            | ME
-          | ssage
+        = link_to(root_path) do
+          span.uk-icon.uk-margin-small-right(uk-icon="icon: pencil")
+          | Create
       li
-        = link_to :root do
-          i.uk-icon-lock(style="padding-right: 5px")
-          | New Message
-      li
-        a(href="https://github.com/johanns/Celox")
-          i.uk-icon-github(style="padding-right: 5px")
-          | Source @ Github
+        = link_to(faq_path) do
+          span.uk-icon.uk-margin-small-right(uk-icon="icon: question")
+          | FAQ

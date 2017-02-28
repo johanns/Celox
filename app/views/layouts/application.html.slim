@@ -6,26 +6,26 @@ html
 
     meta(name="viewport" content="width=device-width, initial-scale=1")
 
-    = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track': true)
-    = javascript_include_tag('application', 'data-turbolinks-track': true)
-
+    = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track': 'reload')
+    = javascript_include_tag('application', 'data-turbolinks-track': 'reload')
+    
     = csrf_meta_tags
 
     javascript:
-      $(document).ready(function() {
+      $(document).on('turbolinks:load', function() {
         $('#nojs').hide();
         $('#js').show();
       });
 
-  body(class="#{controller_name} #{action_name}")
-    #nojs.uk-container.uk-container-center.uk-margin-top
+  body(class="#{controller_name} #{action_name}")    
+    #nojs.uk-container.uk-container-center.uk-margin
       .uk-alert.uk-alert-danger
-        i.uk-icon-warning(style="padding-right: 5px")
+        span(uk-icon="icon: warning")
         | This site requires JavaScript! Please enable JavaScript, and refresh the page.
 
-    == render partial: 'layouts/navbar'
-
-    #js.uk-height-1-1(style="display: none")
-      == yield
-
-    == render partial: 'layouts/footer'
+    #js      
+      == render partial: 'layouts/navbar'
+      .uk-section.uk-section-muted(uk-height-viewport="expand: true")
+        == yield
+      .uk-section.uk-section-secondary
+        == render partial: 'layouts/footer'
