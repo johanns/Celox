@@ -15,6 +15,5 @@ Rails.application.routes.draw do
   resources :messages, path: :m, only: [:new, :create, :show]
 
   get '/faq', controller: :static_pages, action: :faq
-  get '/:id', controller: :messages, action: :show
+  get '/r', controller: :static_pages, action: :retrieve
 end
-

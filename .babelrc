@@ -1,0 +1,28 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browser": "since 2016",
+          "uglify": true
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "react"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-object-rest-spread", ["transform-runtime", {
+      "regenerator": true
+    }],
+    [
+      "transform-class-properties",
+      {
+        "spec": true
+      }
+    ]
+  ]
+}
