@@ -1,15 +1,12 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.6.5'
 
-### Core
-gem 'bootsnap', '>= 1.1.0', require: false
-gem 'dotenv-rails', groups: %i[development test]
+gem 'rails', '~> 6.0.0'
+
+gem 'bcrypt', '~> 3.1.7'
 gem 'foreman'
-gem 'rails', '~> 5.2.0'
 
 ### Databases
 
@@ -26,54 +23,33 @@ gem 'sqlite3'
 gem 'puma', '~> 3.11'
 
 ### Asset Pipeline
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'webpacker'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
-
-### JavaScript
-gem 'turbolinks', require: false
+gem 'jbuilder', '~> 2.7'
+gem 'sass-rails', '~> 5'
+gem 'turbolinks', '~> 5'
+gem 'webpacker', '~> 4.0'
 
 ### Templating
-gem 'fast_jsonapi'
 gem 'slim'
 
-### AAA / Security
-gem 'bcrypt', '~> 3.1.7'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-oauth2'
-gem 'pundit'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.4.2', require: false
 
-### Storage
-gem 'aws-sdk-s3', require: false
-gem 'mini_magick', '~> 4.8'
-gem 'shrine'
+### JSON parser
+gem 'oj'
+gem 'oj_mimic_json'
 
 ### Job Processing
-gem 'sidekiq'
-
-### Deployment
-gem 'capistrano-rails', group: :development
-
-### Console
-gem 'pry-rails'
+gem 'sucker_punch'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'byebug', platforms: %i[mri]
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.2'
-
+  gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -83,7 +59,35 @@ group :development do
 
   # Eager loading helper (speedy sql queries)
   gem 'bullet'
+
+  gem 'awesome_print'
+  gem 'brakeman'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+
+  # Static Analyzer & Linter
+  gem 'rubocop'
+  gem 'rubocop-gitlab-security'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+
+  # Language Server
+  gem 'solargraph'
+
+  gem 'bundler-audit'
+  gem 'slim_lint'
+end
+
+group :test do
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara', '>= 2.15'
+  gem 'selenium-webdriver'
+  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

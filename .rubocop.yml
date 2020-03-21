@@ -1,0 +1,49 @@
+# require: rubocop-rspec
+
+require: 
+  - rubocop-gitlab-security
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  Include:
+    - Rakefile
+    - app/**/*.rb
+    - config/**/*.rb
+    - lib/**/*.rb
+    - utils/**/*.rake
+
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*.rb'
+    - 'tmp/**/*'
+    - 'vendor/**/*.rb'
+
+  TargetRubyVersion: 2.6
+
+BlockLength:
+  Max: 70
+
+Layout/HeredocIndentation:
+  EnforcedStyle: powerpack
+
+MethodLength:
+  Max: 40
+
+Metrics/AbcSize:
+   Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
