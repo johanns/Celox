@@ -1,10 +1,5 @@
 const { environment } = require('@rails/webpacker')
+const typescript =  require('./loaders/typescript')
 
+environment.loaders.prepend('typescript', typescript)
 module.exports = environment
-
-environment.loaders.get('sass').use.splice(-1, 0, {
-  loader: 'resolve-url-loader',
-  options: {
-    attempts: 1
-  }
-});

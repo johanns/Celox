@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "jsx": "react",
+        "lib": ["es6", "dom"],
+        "module": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "target": "es5"
+    },
+    "compileOnSave": false,
+    "exclude": ["**/*.spec.ts", "node_modules", "public", "vendor"],
+    "include": [
+        "app/javascript/**/*.jsx",
+        "app/javascript/**/*.js",
+        "app/javascript/**/*.ts",
+        "app/javascript/**/*.tsx"
+    ],
+}
