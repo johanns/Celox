@@ -48,7 +48,7 @@ gem 'sdoc', '~> 1.0.0.rc1', group: :doc
 gem 'sidekiq', '>= 4.2.9'
 
 # Web Server
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 3.12'
 gem 'foreman'
 
 # Authentication / Authorization / OAuth
