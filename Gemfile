@@ -64,6 +64,13 @@ group :development, :test do
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
   gem "shoulda-matchers"
 
+  # Linters
+
+  gem "erb_lint", require: false
+  gem "better_html"
+
+  gem "erb-formatter", require: false
+
   gem "rubocop", require: false
   gem "rubocop-erb", require: false
   gem "rubocop-factory_bot", require: false
