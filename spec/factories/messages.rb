@@ -19,7 +19,7 @@
 FactoryBot.define do
   factory :message do
     body { Faker::Lorem.paragraph(sentence_count: 2) }
-    expires_at { 1.hour.from_now }
+    expiration_duration { :one_hour }
 
     # Don't set stub directly - let the model generate it
     # Don't set read_at by default - messages should be unread when created
@@ -28,12 +28,8 @@ FactoryBot.define do
       read_at { 1.minute.ago }
     end
 
-    trait :expired do
-      expires_at { 1.hour.ago }
-    end
-
-    trait :expiring_soon do
-      expires_at { 5.minutes.from_now }
+    trait :unread do
+      read_at { nil }
     end
 
     trait :with_short_body do
@@ -44,11 +40,35 @@ FactoryBot.define do
       body { Faker::Lorem.paragraph(sentence_count: 10) }
     end
 
-    # Factory for testing scopes that need messages without expiration
-    # Uses after(:create) to bypass the validation
-    trait :without_expiration do
+    # Expiration duration traits
+    trait :five_minutes do
+      expiration_duration { :five_minutes }
+    end
+
+    trait :one_hour do
+      expiration_duration { :one_hour }
+    end
+
+    trait :six_hours do
+      expiration_duration { :six_hours }
+    end
+
+    trait :one_day do
+      expiration_duration { :one_day }
+    end
+
+    trait :no_expiration do
+      expiration_duration { nil }
+    end
+
+    # Create an expired message by setting creation time in the past
+    trait :expired do
+      expiration_duration { :five_minutes }
+      created_at { 10.minutes.ago }
+
       after(:create) do |message|
-        message.update_column(:expires_at, nil)
+        # Manually set expires_at to be in the past
+        message.update_column(:expires_at, 5.minutes.ago)
       end
     end
   end
