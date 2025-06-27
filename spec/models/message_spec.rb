@@ -29,7 +29,7 @@ RSpec.describe Message do
       it "includes error message for blank body" do
         message = build(:message, body: nil)
         message.valid?
-        expect(message.errors[:body]).to include(I18n.t('activerecord.errors.messages.blank'))
+        expect(message.errors[:body]).to include(I18n.t("activerecord.errors.messages.blank"))
       end
 
       it "allows valid expiration_duration values" do
@@ -53,7 +53,9 @@ RSpec.describe Message do
       it "includes error message for invalid expiration_duration" do
         invalid_message = build(:message, expiration_duration: :invalid_duration)
         invalid_message.valid?
-        expect(invalid_message.errors[:expiration_duration]).to include(I18n.t('activerecord.errors.messages.inclusion'))
+        expect(invalid_message.errors[:expiration_duration]).to include(
+          I18n.t("activerecord.errors.messages.inclusion")
+        )
       end
 
       # NOTE: stub validation is complex due to the generate_stub callback
@@ -63,7 +65,9 @@ RSpec.describe Message do
         # This test verifies that the uniqueness validation exists
         # We can't easily test it in isolation due to the generate_stub callback
         # but we can verify the validation is present by checking the model's validators
-        uniqueness_validators = described_class.validators_on(:stub).select { |v| v.is_a?(ActiveRecord::Validations::UniquenessValidator) }
+        uniqueness_validators = described_class.validators_on(:stub).select do |v|
+          v.is_a?(ActiveRecord::Validations::UniquenessValidator)
+        end
         expect(uniqueness_validators).not_to be_empty
       end
     end
@@ -79,7 +83,7 @@ RSpec.describe Message do
       it "includes error message when stub is changed" do
         message.stub = "new_stub"
         message.valid?
-        expect(message.errors[:stub]).to include(I18n.t('models.message.errors.stub_cannot_be_changed'))
+        expect(message.errors[:stub]).to include(I18n.t("models.message.errors.stub_cannot_be_changed"))
       end
     end
   end
@@ -119,7 +123,9 @@ RSpec.describe Message do
 
         new_message = build(:message, stub: nil)
 
-        expect { new_message.valid? }.to raise_error(I18n.t('models.message.errors.stub_generation_failed', attempts: 6))
+        expect do
+          new_message.valid?
+        end.to raise_error(I18n.t("models.message.errors.stub_generation_failed", attempts: 6))
       end
     end
 
