@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 BetterHtml.configure do |config|
-  config.allow_single_quoted_attributes = false
+  config.allow_single_quoted_attributes = true
 end
