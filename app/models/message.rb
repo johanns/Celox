@@ -44,7 +44,7 @@ class Message < ApplicationRecord
 
   # Validations
 
-  validates(:body, presence: true)
+  validates(:body, presence: true, length: { maximum: 5_000 })
 
   with_options(on: :create) do
     validates(:expires_at, presence: true)
@@ -76,7 +76,7 @@ class Message < ApplicationRecord
     return if read_at.present?
 
     self.read_at = Time.current
-    self.body = "This message has been read and its content have been removed from the server."
+    self.body = I18n.t("models.message.read_notification")
     save!
   end
 
@@ -96,18 +96,18 @@ class Message < ApplicationRecord
 
       retry_count += 1
 
-      raise "Failed to generate unique stub after #{retry_count} attempts" if retry_count > 5
+      raise I18n.t("models.message.errors.stub_generation_failed", attempts: retry_count) if retry_count > 5
     end
   end
 
   def set_expires_at
-    return if expiration_duration.blank?
+    duration_key = expiration_duration || :one_hour
+    duration = EXPIRATION_OPTIONS[duration_key]
 
-    duration = EXPIRATION_OPTIONS[expiration_duration]
     self.expires_at = Time.current + duration if duration
   end
 
   def prevent_stub_change
-    errors.add(:stub, "cannot be changed once set")
+    errors.add(:stub, I18n.t("models.message.errors.stub_cannot_be_changed"))
   end
 end

@@ -28,4 +28,25 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        blank: "is required"
+        inclusion: "selected option is not valid"
+        invalid: "is not valid"
+        taken: "is already in use"
+        too_long: "is too long (maximum is %{count} characters)"
+        too_short: "is too short (minimum is %{count} characters)"
+  controllers:
+    application:
+      flash:
+        alert: "The message you are looking for does not exist or has expired."
+  messages:
+    create:
+      success: "Message successfully created."
+  models:
+    message:
+      read_notification: "This message has been read and its content have been removed from the server."
+      errors:
+        stub_generation_failed: "failed to generate unique stub after %{attempts} attempts"
+        stub_cannot_be_changed: "cannot be changed once set"

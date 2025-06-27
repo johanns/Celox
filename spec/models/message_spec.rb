@@ -29,7 +29,7 @@ RSpec.describe Message do
       it "includes error message for blank body" do
         message = build(:message, body: nil)
         message.valid?
-        expect(message.errors[:body]).to include("can't be blank")
+        expect(message.errors[:body]).to include(I18n.t('activerecord.errors.messages.blank'))
       end
 
       it "allows valid expiration_duration values" do
@@ -53,7 +53,7 @@ RSpec.describe Message do
       it "includes error message for invalid expiration_duration" do
         invalid_message = build(:message, expiration_duration: :invalid_duration)
         invalid_message.valid?
-        expect(invalid_message.errors[:expiration_duration]).to include("is not included in the list")
+        expect(invalid_message.errors[:expiration_duration]).to include(I18n.t('activerecord.errors.messages.inclusion'))
       end
 
       # NOTE: stub validation is complex due to the generate_stub callback
@@ -79,7 +79,7 @@ RSpec.describe Message do
       it "includes error message when stub is changed" do
         message.stub = "new_stub"
         message.valid?
-        expect(message.errors[:stub]).to include("cannot be changed once set")
+        expect(message.errors[:stub]).to include(I18n.t('models.message.errors.stub_cannot_be_changed'))
       end
     end
   end
@@ -119,7 +119,7 @@ RSpec.describe Message do
 
         new_message = build(:message, stub: nil)
 
-        expect { new_message.valid? }.to raise_error("Failed to generate unique stub after 6 attempts")
+        expect { new_message.valid? }.to raise_error(I18n.t('models.message.errors.stub_generation_failed', attempts: 6))
       end
     end
 
@@ -127,6 +127,14 @@ RSpec.describe Message do
       it "sets expires_at based on expiration_duration" do
         freeze_time do
           message = create(:message, expiration_duration: :one_hour)
+          expect(message.expires_at).to be_within(1.second).of(1.hour.from_now)
+        end
+      end
+
+      it "defaults to one_hour when expiration_duration is blank" do
+        freeze_time do
+          message = build(:message, expiration_duration: nil)
+          message.send(:set_expires_at)
           expect(message.expires_at).to be_within(1.second).of(1.hour.from_now)
         end
       end
