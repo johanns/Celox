@@ -17,9 +17,23 @@
 #  index_messages_on_stub  (stub) UNIQUE
 #
 class Message < ApplicationRecord
+  # Attributes
+
+  attr_accessor(:expiration_duration)
+
+  # Constants
+
+  EXPIRATION_OPTIONS = {
+    five_minutes: 5.minutes,
+    one_hour: 1.hour,
+    six_hours: 6.hours,
+    one_day: 1.day
+  }.freeze
+
   # Callbacks
 
   before_validation(:generate_stub, on: :create)
+  before_validation(:set_expires_at, on: :create)
 
   # Scopes
 
@@ -29,10 +43,11 @@ class Message < ApplicationRecord
   scope(:unread, -> { where(read_at: nil) })
 
   # Validations
-  #
+
+  validates(:body, presence: true)
+
   with_options(on: :create) do
-    validates(:body, presence: true, on: :create)
-    validates(:expires_at, presence: true)
+    validates(:expiration_duration, inclusion: { in: EXPIRATION_OPTIONS.keys }, allow_nil: true)
     validates(
       :stub,
       presence: true,
@@ -42,8 +57,12 @@ class Message < ApplicationRecord
 
   with_options(on: :update) do
     validate(:prevent_stub_change, if: -> { stub_changed? })
+  end
 
-    validates(:read_at, presence: true)
+  # Class methods
+
+  def self.remove_expired!
+    where("expires_at IS NOT NULL AND expires_at <= ?", Time.current).find_each(&:destroy)
   end
 
   # Instance methods
@@ -56,6 +75,7 @@ class Message < ApplicationRecord
     return if read_at.present?
 
     self.read_at = Time.current
+    self.body = "This message has been read and its content have been removed from the server."
     save!
   end
 
@@ -77,6 +97,13 @@ class Message < ApplicationRecord
 
       raise "Failed to generate unique stub after #{retry_count} attempts" if retry_count > 5
     end
+  end
+
+  def set_expires_at
+    return if expiration_duration.blank?
+
+    duration = EXPIRATION_OPTIONS[expiration_duration]
+    self.expires_at = Time.current + duration if duration
   end
 
   def prevent_stub_change
