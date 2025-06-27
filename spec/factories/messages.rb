@@ -68,7 +68,8 @@ FactoryBot.define do
 
       after(:create) do |message|
         # Manually set expires_at to be in the past
-        message.update_column(:expires_at, 5.minutes.ago)
+        message.expires_at = 5.minutes.ago
+        message.save!(validate: false)
       end
     end
   end
