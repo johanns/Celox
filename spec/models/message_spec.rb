@@ -20,27 +20,39 @@ require "rails_helper"
 
 RSpec.describe Message do
   describe "validations" do
-    context "on create" do
+    context "when created" do
       it "validates presence of body" do
         message = build(:message, body: nil)
         expect(message).not_to be_valid
+      end
+
+      it "includes error message for blank body" do
+        message = build(:message, body: nil)
+        message.valid?
         expect(message.errors[:body]).to include("can't be blank")
       end
 
-      it "validates inclusion of expiration_duration" do
+      it "allows valid expiration_duration values" do
         valid_durations = %i[five_minutes one_hour six_hours one_day]
         valid_durations.each do |duration|
           message = build(:message, expiration_duration: duration)
           expect(message).to be_valid
         end
+      end
 
-        # Test that nil is allowed
+      it "allows nil expiration_duration" do
         message = build(:message, expiration_duration: nil)
         expect(message).to be_valid
+      end
 
-        # Test that invalid values are rejected
+      it "rejects invalid expiration_duration values" do
         invalid_message = build(:message, expiration_duration: :invalid_duration)
         expect(invalid_message).not_to be_valid
+      end
+
+      it "includes error message for invalid expiration_duration" do
+        invalid_message = build(:message, expiration_duration: :invalid_duration)
+        invalid_message.valid?
         expect(invalid_message.errors[:expiration_duration]).to include("is not included in the list")
       end
 
@@ -56,12 +68,17 @@ RSpec.describe Message do
       end
     end
 
-    context "on update" do
+    context "when updated" do
       let(:message) { create(:message) }
 
       it "prevents stub from being changed" do
         message.stub = "new_stub"
         expect(message).not_to be_valid
+      end
+
+      it "includes error message when stub is changed" do
+        message.stub = "new_stub"
+        message.valid?
         expect(message.errors[:stub]).to include("cannot be changed once set")
       end
     end
@@ -73,6 +90,11 @@ RSpec.describe Message do
         message = build(:message, stub: nil)
         message.valid?
         expect(message.stub).to be_present
+      end
+
+      it "generates a stub of correct length" do
+        message = build(:message, stub: nil)
+        message.valid?
         expect(message.stub.length).to eq(8)
       end
 
@@ -109,12 +131,16 @@ RSpec.describe Message do
         end
       end
 
-      it "sets different expires_at for different durations" do
+      it "sets expires_at for five minutes duration" do
         freeze_time do
           five_min_message = create(:message, expiration_duration: :five_minutes)
-          one_day_message = create(:message, expiration_duration: :one_day)
-
           expect(five_min_message.expires_at).to be_within(1.second).of(5.minutes.from_now)
+        end
+      end
+
+      it "sets expires_at for one day duration" do
+        freeze_time do
+          one_day_message = create(:message, expiration_duration: :one_day)
           expect(one_day_message.expires_at).to be_within(1.second).of(1.day.from_now)
         end
       end
@@ -134,29 +160,41 @@ RSpec.describe Message do
     let!(:unread_message) { create(:message, :unread) }
 
     describe ".active" do
-      it "returns messages that are not expired" do
+      it "includes active messages" do
         expect(described_class.active).to include(active_message, no_expiry_message)
+      end
+
+      it "excludes expired messages" do
         expect(described_class.active).not_to include(expired_message)
       end
     end
 
     describe ".expired" do
-      it "returns messages that are expired" do
+      it "includes expired messages" do
         expect(described_class.expired).to include(expired_message)
+      end
+
+      it "excludes active messages" do
         expect(described_class.expired).not_to include(active_message, no_expiry_message)
       end
     end
 
     describe ".read" do
-      it "returns messages with read_at set" do
+      it "includes read messages" do
         expect(described_class.read).to include(read_message)
+      end
+
+      it "excludes unread messages" do
         expect(described_class.read).not_to include(unread_message)
       end
     end
 
     describe ".unread" do
-      it "returns messages without read_at" do
+      it "includes unread messages" do
         expect(described_class.unread).to include(unread_message)
+      end
+
+      it "excludes read messages" do
         expect(described_class.unread).not_to include(read_message)
       end
     end
@@ -218,10 +256,19 @@ RSpec.describe Message do
       expect(Message::EXPIRATION_OPTIONS.keys).to match_array(expected_keys)
     end
 
-    it "has correct duration values" do
+    it "has correct five minutes duration value" do
       expect(Message::EXPIRATION_OPTIONS[:five_minutes]).to eq(5.minutes)
+    end
+
+    it "has correct one hour duration value" do
       expect(Message::EXPIRATION_OPTIONS[:one_hour]).to eq(1.hour)
+    end
+
+    it "has correct six hours duration value" do
       expect(Message::EXPIRATION_OPTIONS[:six_hours]).to eq(6.hours)
+    end
+
+    it "has correct one day duration value" do
       expect(Message::EXPIRATION_OPTIONS[:one_day]).to eq(1.day)
     end
   end
