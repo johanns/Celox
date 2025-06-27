@@ -66,10 +66,8 @@ group :development, :test do
 
   # Linters
 
-  gem "erb_lint", require: false
   gem "better_html"
-
-  gem "erb-formatter", require: false
+  gem "erb_lint", require: false
 
   gem "rubocop", require: false
   gem "rubocop-erb", require: false

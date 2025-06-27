@@ -54,8 +54,8 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
   Include:
-    - "app/**/*"
-    - "config/**/*"
-    - "lib/**/*"
-    - "spec/**/*"
+    - "app/**/*.{rb,erb}"
+    - "config/**/*.rb"
+    - "lib/**/*.rb"
+    - "spec/**/*.rb"
     - "Gemfile"
