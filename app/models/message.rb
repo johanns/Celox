@@ -47,7 +47,8 @@ class Message < ApplicationRecord
   validates(:body, presence: true)
 
   with_options(on: :create) do
-    validates(:expiration_duration, inclusion: { in: EXPIRATION_OPTIONS.keys }, allow_nil: true)
+    validates(:expires_at, presence: true)
+    validates(:expiration_duration, inclusion: { in: EXPIRATION_OPTIONS.keys })
     validates(
       :stub,
       presence: true,

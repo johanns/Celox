@@ -40,9 +40,9 @@ RSpec.describe Message do
         end
       end
 
-      it "allows nil expiration_duration" do
+      it "disallows nil expiration_duration" do
         message = build(:message, expiration_duration: nil)
-        expect(message).to be_valid
+        expect(message).not_to be_valid
       end
 
       it "rejects invalid expiration_duration values" do
@@ -145,9 +145,11 @@ RSpec.describe Message do
         end
       end
 
-      it "does not set expires_at when expiration_duration is nil" do
-        message = create(:message, expiration_duration: nil)
-        expect(message.expires_at).to be_nil
+      it "sets expires_at even when expiration_duration is provided" do
+        freeze_time do
+          message = create(:message, expiration_duration: :six_hours)
+          expect(message.expires_at).to be_within(1.second).of(6.hours.from_now)
+        end
       end
     end
   end
@@ -155,13 +157,12 @@ RSpec.describe Message do
   describe "scopes" do
     let!(:active_message) { create(:message, :one_hour) }
     let!(:expired_message) { create(:message, :expired) }
-    let!(:no_expiry_message) { create(:message, :no_expiration) }
     let!(:read_message) { create(:message, :read) }
     let!(:unread_message) { create(:message, :unread) }
 
     describe ".active" do
       it "includes active messages" do
-        expect(described_class.active).to include(active_message, no_expiry_message)
+        expect(described_class.active).to include(active_message)
       end
 
       it "excludes expired messages" do
@@ -175,7 +176,7 @@ RSpec.describe Message do
       end
 
       it "excludes active messages" do
-        expect(described_class.expired).not_to include(active_message, no_expiry_message)
+        expect(described_class.expired).not_to include(active_message)
       end
     end
 
@@ -209,11 +210,6 @@ RSpec.describe Message do
 
       it "returns false for active messages" do
         message = create(:message, :one_hour)
-        expect(message.expired?).to be false
-      end
-
-      it "returns false for messages with no expiration" do
-        message = create(:message, :no_expiration)
         expect(message.expired?).to be false
       end
     end
