@@ -73,11 +73,20 @@ class Message < ApplicationRecord
   end
 
   def read!
-    return if read_at.present?
+    return [ nil, read_at ] if read_at.present?
 
-    self.read_at = Time.current
+    pre_body = body
+    pre_read_at = read_at
+
     self.body = I18n.t("models.message.read_notification")
+    self.read_at = Time.current
     save!
+
+    [ pre_body, pre_read_at ]
+  end
+
+  def read?
+    read_at.present?
   end
 
   def unread?

@@ -26,6 +26,7 @@ FactoryBot.define do
 
     trait :read do
       read_at { 1.minute.ago }
+      body { I18n.t("models.message.read_notification") }
     end
 
     trait :unread do
