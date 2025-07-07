@@ -1,0 +1,67 @@
+<%# locals: (message:) %>
+
+<div
+  class="space-y-6 hidden animate-fadeIn"
+  data-message-encryption-target="successView">
+  <!-- Success header -->
+  <div class="text-center mb-6">
+    <h3 class="text-xl font-bold text-success mb-2">
+      <%= t(".title") %>
+    </h3>
+
+    <p class="text-base-content/70 text-sm">
+      <%= t(".subtitle") %>
+    </p>
+  </div>
+
+  <div>
+    <label class="form-label">
+      <%= icon("link", class: "h-4 w-4 text-accent") %>
+      <%= t(".retrieval_link_label") %>
+    </label>
+
+    <div
+      class="form-input-wrapper"
+      data-controller="clipboard"
+      data-clipboard-success-class="btn-success"
+      data-clipboard-disabled-class="btn-disabled">
+
+      <input
+        autocomplete="off"
+        class="form-input"
+        data-clipboard-target="source"
+        data-message-encryption-target="retrievalLink"
+        name="message-retrieval-link"
+        readonly
+        type="text">
+
+      <button
+        type="button"
+        class="btn-square-primary"
+        data-clipboard-target="button"
+        data-action="click->clipboard#copy">
+        <!-- Copy Icon -->
+        <%= icon("clipboard-document", class: "h-5 w-5 transition-all duration-200", data: { clipboard_target: "icon" }) %>
+        <!-- Checkmark Icon -->
+        <%= icon("check", class: "h-5 w-5 hidden transition-all duration-200", data: { clipboard_target: "checkmark" }) %>
+      </button>
+    </div>
+    <!-- Security notice -->
+    <div class="security-notice bg-warning/10 border border-warning/20">
+      <div class="security-notice-wrapper">
+        <%= icon("exclamation-triangle", class: "security-notice-icon text-warning") %>
+        <div class="security-notice-text text-warning">
+          <strong><%= t(".security_notice_title") %></strong>
+          <%= t(".security_notice") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <%= link_to root_path, class: "btn-outline-primary-full" do %>
+      <%= icon("plus", class: "h-5 w-5 mr-2") %>
+      <%= t(".create_new_message") %>
+    <% end %>
+  </div>
+</div>

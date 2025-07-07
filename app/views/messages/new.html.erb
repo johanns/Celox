@@ -1,0 +1,17 @@
+<% turbo_exempts_page_from_cache %>
+
+<div class="page-container">
+  <div class="card-wrapper">
+    <div
+      class="card-content"
+      data-controller="message-encryption"
+      data-message-encryption-encryption-failed-message-value='<%= t("messages.encryption.failed") %>'
+      data-message-encryption-connection-error-message-value='<%= t("messages.errors.connection_failed") %>'
+      data-message-encryption-server-error-message-value='<%= t("messages.errors.server_error") %>'
+      data-message-encryption-generic-error-message-value='<%= t("messages.errors.generic") %>'
+      data-message-encryption-unexpected-error-message-value='<%= t("messages.errors.unexpected") %>'>
+      <%= render(partial: "form", locals: { message: @message }) %>
+      <%= render(partial: "success", locals: { message: @message }) %>
+    </div>
+  </div>
+</div>

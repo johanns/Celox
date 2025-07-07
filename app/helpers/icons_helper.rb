@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module IconsHelper
   def icon(name, options = {})
     # Read the SVG file from the assets pipeline
-    file = File.read(Rails.root.join("app", "assets", "icons", "#{name}.svg"))
+    file = Rails.root.join("app", "assets", "icons", "#{name}.svg").read
     # Create a new Nokogiri document from the SVG file
     doc = Nokogiri::HTML::DocumentFragment.parse(file)
     # Get the svg element
