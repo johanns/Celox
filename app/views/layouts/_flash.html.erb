@@ -1,7 +1,12 @@
+<%# locals: () %>
 <% if flash.any? %>
   <div class="toast toast-top toast-center z-50">
     <% flash.each do |type, message| %>
-      <div class="alert <%= flash_class(type) %> shadow-lg" data-controller="flash" data-flash-auto-dismiss-value="true" data-flash-delay-value="5000">
+      <div
+        class="alert <%= flash_class(type) %> shadow-lg"
+        data-controller="flash"
+        data-flash-auto-dismiss-value="true"
+        data-flash-delay-value="5000">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 shrink-0 stroke-current"
