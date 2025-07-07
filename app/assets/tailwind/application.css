@@ -5,6 +5,108 @@
 @source "../../../app/views/**/*";
 
 @plugin "./daisyui.js" {
-  themes: emerald --default, night --prefersdark;
+  themes: night --default;
 }
-@plugin "./daisyui-theme.js";
+/* @plugin "./daisyui-theme.js"; */
+
+@layer components {
+  .btn-primary-full {
+    @apply btn btn-primary w-full h-14 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 bg-gradient-to-r from-primary to-primary/80 border-0;
+  }
+
+  .btn-outline-primary-full {
+    @apply btn btn-outline btn-primary w-full h-12 font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300;
+  }
+
+  .page-container {
+    @apply min-h-screen w-full flex justify-center items-center px-4 sm:px-6 lg:px-8;
+  }
+
+  .card-wrapper {
+    @apply w-full min-w-80 max-w-md sm:max-w-lg lg:max-w-xl mx-auto relative z-10;
+  }
+
+  .card-content {
+    @apply relative p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-base-100 to-base-200 rounded-2xl shadow-2xl border border-base-300;
+  }
+
+  .card-header {
+    @apply text-center mb-8 relative;
+  }
+
+  .card-header-icon-wrapper {
+    @apply mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 relative z-10;
+  }
+
+  .card-header-title {
+    @apply text-3xl font-bold bg-gradient-to-r bg-clip-text text-transparent mb-2;
+  }
+
+  .card-header-subtitle {
+    @apply text-base-content/70 text-sm max-w-md mx-auto;
+  }
+
+  .decorative-circle-tl {
+    @apply absolute -top-2 -left-2 w-16 h-16 rounded-full blur-xl;
+  }
+
+  .decorative-circle-tr {
+    @apply absolute -top-1 -right-1 w-12 h-12 rounded-full blur-lg;
+  }
+
+  .alert-container {
+    @apply alert;
+  }
+
+  .alert-icon-wrapper {
+    @apply flex-shrink-0;
+  }
+
+  .alert-icon-container {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+  }
+
+  .alert-icon {
+    @apply h-6 w-6;
+  }
+
+  .alert-title {
+    @apply font-bold flex items-center gap-2;
+  }
+
+  .alert-message {
+    @apply text-sm mt-1;
+  }
+
+  .btn-square-primary {
+    @apply btn btn-primary btn-square shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300;
+  }
+
+  .form-label {
+    @apply font-semibold flex items-center gap-2 mb-2;
+  }
+
+  .form-input-wrapper {
+    @apply flex gap-3 p-4 bg-base-200/50 rounded-xl border border-base-300;
+  }
+
+  .form-input {
+    @apply input flex-1 bg-base-100 font-mono text-sm;
+  }
+
+  .security-notice {
+    @apply mt-3 p-3 rounded-lg;
+  }
+
+  .security-notice-wrapper {
+    @apply flex items-start gap-2;
+  }
+
+  .security-notice-icon {
+    @apply h-4 w-4 mt-0.5 flex-shrink-0;
+  }
+
+  .security-notice-text {
+    @apply text-xs;
+  }
+}
