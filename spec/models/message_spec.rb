@@ -229,21 +229,68 @@ RSpec.describe Message do
     end
 
     describe "#read!" do
-      let(:message) { create(:message, read_at: nil) }
+      let(:original_body) { "This is a secret message." }
+      let!(:message) { create(:message, body: original_body, read_at: nil) }
 
-      it "sets read_at to current time" do
-        freeze_time do
+      context "when message is unread" do
+        it "sets read_at to the current time" do
+          freeze_time do
+            message.read!
+            expect(message.read_at).to be_within(1.second).of(Time.current)
+          end
+        end
+
+        it "updates the body to the read notification" do
           message.read!
-          expect(message.read_at).to be_within(1.second).of(Time.current)
+          expect(message.body).to eq(I18n.t("models.message.read_notification"))
+        end
+
+        it "returns the original body and nil read_at" do
+          pre_body, pre_read_at = message.read!
+          expect(pre_body).to eq(original_body)
+          expect(pre_read_at).to be_nil
+        end
+
+        it "persists the changes" do
+          message.read!
+          message.reload
+          expect(message.read?).to be true
+          expect(message.body).to eq(I18n.t("models.message.read_notification"))
         end
       end
 
-      it "does not change read_at if already read" do
-        original_time = 1.hour.ago
-        message.update!(read_at: original_time)
+      context "when message is already read" do
+        let!(:read_message) { create(:message, :read, body: "already read") }
+        let(:original_read_at) { read_message.read_at }
 
-        message.read!
-        expect(message.reload.read_at).to be_within(1.second).of(original_time)
+        it "does not change read_at" do
+          read_message.read!
+          expect(read_message.reload.read_at).to be_within(1.second).of(original_read_at)
+        end
+
+        it "does not change the body" do
+          original_body = read_message.body
+          read_message.read!
+          expect(read_message.reload.body).to eq(original_body)
+        end
+
+        it "returns nil for the body and the original read_at time" do
+          pre_body, pre_read_at = read_message.read!
+          expect(pre_body).to be_nil
+          expect(pre_read_at).to eq(original_read_at)
+        end
+      end
+    end
+
+    describe "#read?" do
+      it "returns true when read_at is set" do
+        message = create(:message, read_at: Time.current)
+        expect(message.read?).to be true
+      end
+
+      it "returns false when read_at is nil" do
+        message = create(:message, read_at: nil)
+        expect(message.read?).to be false
       end
     end
 
