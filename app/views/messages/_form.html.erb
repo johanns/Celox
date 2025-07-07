@@ -1,0 +1,131 @@
+<%# locals: (message:) %>
+
+<div class="card-header">
+  <!-- Decorative circles -->
+  <div class="decorative-circle-tl bg-primary/10"></div>
+  <div class="decorative-circle-tr bg-secondary/10"></div>
+  <!-- Lock icon -->
+  <div class="card-header-icon-wrapper bg-primary/20">
+    <%= icon("lock-closed", class: "h-8 w-8 text-primary") %>
+  </div>
+
+  <h2 class="card-header-title from-primary to-secondary">
+    <%= t(".title") %>
+  </h2>
+  <p class="card-header-subtitle">
+    <%= t(".subtitle") %>
+  </p>
+</div>
+
+<div
+  class="space-y-6"
+  data-message-encryption-target="formView"
+  data-message-encryption-class="hidden">
+  <%= form_with(
+        model: message,
+        url: messages_path,
+        class: "space-y-6",
+        local: true,
+        method: :post,
+        data: {
+          message_encryption_target: "form"
+        }
+      ) do |form| %>
+    <!-- Enhanced Error Alert -->
+    <div
+      class="
+        alert-container alert-error shadow-lg border-l-4 border-error hidden
+      "
+      data-message-encryption-target="errorAlert">
+      <div class="alert-icon-wrapper">
+        <%= icon("x-circle", class: "stroke-current alert-icon") %>
+      </div>
+      <div>
+        <h3 class="font-bold"><%= t(".errors.title") %></h3>
+        <ul
+          class="list-disc list-inside mt-1"
+          data-message-encryption-target="errorList">
+          <!-- Error messages will be injected here by JavaScript -->
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :body, class: "cursor-pointer font-semibold flex items-center gap-2 mb-2" do %>
+        <%= icon("chat-bubble-left-right", class: "h-4 w-4 text-primary") %>
+        <%= t(".body_label") %>
+      <% end %>
+
+      <div class="relative">
+        <%= form.text_area(
+              :body,
+              class:
+                field_class_with_errors(
+                  message,
+                  :body,
+                  "textarea w-full resize-none transition-all duration-300 min-h-32 bg-base-100/50 backdrop-blur-sm"
+                ),
+              rows: 6,
+              placeholder: t(".placeholder"),
+              data: {
+                message_encryption_target: "body",
+                action: "input->message-encryption#updateCharacterCount"
+              }
+            ) %>
+
+        <div
+          class="
+            absolute bottom-2 right-2 text-xs text-base-content/50 bg-base-100/80 px-2 py-1
+            rounded
+          ">
+          <span data-message-encryption-target="charCount">0</span>
+          <%= t(".character_label") %>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :expiration_duration, class: "cursor-pointer font-semibold flex items-center gap-2 mb-2" do %>
+        <%= icon("clock", class: "h-4 w-4 text-secondary") %>
+        <%= t(".expiration_label") %>
+      <% end %>
+
+      <%= form.select(
+            :expiration_duration,
+            options_for_select(expiration_duration_options),
+            {},
+            {
+              class:
+                field_class_with_errors(
+                  message,
+                  :expiration_duration,
+                  "select w-full transition-all duration-300 bg-base-100/50 backdrop-blur-sm"
+                ),
+              data: {
+                message_encryption_target: "expiration"
+              }
+            }
+          ) %>
+    </div>
+
+    <div class="mt-8">
+      <button
+        type="button"
+        class="btn-primary-full"
+        data-action="click->message-encryption#encryptAndSubmit"
+        data-message-encryption-target="submitButton">
+        <%= icon("shield-check", class: "h-5 w-5 mr-2") %>
+        <%= t(".submit_button") %>
+      </button>
+
+      <button
+        type="button"
+        class="btn-primary-full hidden"
+        disabled
+        data-message-encryption-target="loadingButton">
+        <span class="loading loading-spinner loading-md mr-2"></span>
+        <%= t(".encrypting_title") %>
+      </button>
+    </div>
+  <% end %>
+</div>
