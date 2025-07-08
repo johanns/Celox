@@ -115,13 +115,24 @@
                   data-clipboard-target="button"
                   data-action="click->clipboard#copy">
                   <!-- Copy Icon -->
-                  <%= icon("clipboard-document", class: "h-5 w-5 transition-all duration-200", data: { clipboard_target: "icon" }) %>
+                  <%= icon(
+                        "clipboard-document",
+                        class: "h-5 w-5 transition-all duration-200",
+                        data: {
+                          clipboard_target: "icon"
+                        }
+                      ) %>
                   <!-- Checkmark Icon -->
-                  <%= icon("check", class: "h-5 w-5 hidden transition-all duration-200", data: { clipboard_target: "checkmark" }) %>
+                  <%= icon(
+                        "check",
+                        class: "h-5 w-5 hidden transition-all duration-200",
+                        data: {
+                          clipboard_target: "checkmark"
+                        }
+                      ) %>
                 </button>
               </div>
             </div>
-
             <!-- Security notice -->
             <div class="p-3 bg-info/10 border border-info/20 rounded-lg">
               <div class="flex items-start gap-2">
@@ -135,7 +146,6 @@
               </div>
             </div>
           </div>
-
           <!-- Enhanced No Key Available Alert -->
           <div class="hidden space-y-6" data-message-decryption-target="noKeyAlert">
             <div class="alert-container shadow-lg border-l-4 border-warning bg-warning/10">
@@ -155,7 +165,6 @@
               </div>
             </div>
           </div>
-
           <!-- Enhanced Loading State -->
           <div class="mt-6" data-message-decryption-target="loadingContainer">
             <div class="flex flex-col items-center justify-center gap-4 py-12">
