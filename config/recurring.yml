@@ -1,10 +1,11 @@
-# production:
-#   periodic_cleanup:
-#     class: CleanSoftDeletedRecordsJob
-#     queue: background
-#     args: [ 1000, { batch_size: 500 } ]
-#     schedule: every hour
-#   periodic_command:
-#     command: "SoftDeletedRecord.due.delete_all"
-#     priority: 2
-#     schedule: at 5am every day
+development:
+  cleanup_expired_messages:
+    class: CleanupExpiredMessagesJob
+    queue: default
+    schedule: every 2 minutes
+
+production:
+  cleanup_expired_messages:
+    class: CleanupExpiredMessagesJob
+    queue: default
+    schedule: every 5 minutes

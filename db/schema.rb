@@ -13,13 +13,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 20_250_626_000_138) do
-  create_table 'messages', force: :cascade do |t|
-    t.string 'stub', null: false
-    t.string 'body', null: false
-    t.datetime 'read_at'
-    t.datetime 'expires_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['stub'], name: 'index_messages_on_stub', unique: true
+  create_table "messages", force: :cascade do |t|
+    t.string "stub", null: false
+    t.string "body", null: false
+    t.datetime "read_at"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index [ "stub" ], name: "index_messages_on_stub", unique: true
   end
 end
