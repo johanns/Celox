@@ -41,9 +41,21 @@
         data-clipboard-target="button"
         data-action="click->clipboard#copy">
         <!-- Copy Icon -->
-        <%= icon("clipboard-document", class: "h-5 w-5 transition-all duration-200", data: { clipboard_target: "icon" }) %>
+        <%= icon(
+              "clipboard-document",
+              class: "h-5 w-5 transition-all duration-200",
+              data: {
+                clipboard_target: "icon"
+              }
+            ) %>
         <!-- Checkmark Icon -->
-        <%= icon("check", class: "h-5 w-5 hidden transition-all duration-200", data: { clipboard_target: "checkmark" }) %>
+        <%= icon(
+              "check",
+              class: "h-5 w-5 hidden transition-all duration-200",
+              data: {
+                clipboard_target: "checkmark"
+              }
+            ) %>
       </button>
     </div>
     <!-- Security notice -->
