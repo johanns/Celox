@@ -424,7 +424,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ### Reporting Security Issues
 
-If you discover a security vulnerability, please email security@celox.app instead of creating a public issue.
+If you discover a security vulnerability, please email security@celox.me instead of creating a public issue.
 
 ### Security Best Practices
 
