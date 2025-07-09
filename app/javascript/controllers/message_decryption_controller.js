@@ -10,28 +10,38 @@ export default class extends Controller {
         "messageContainer",
         "decryptedMessage",
         "noKeyAlert",
-        "loadingContainer"
+        "loadingContainer",
+        "challengeForm",
+        "challengeAnswer"
     ];
 
     static values = {
         minLoadingTime: { type: Number, default: 600 },
         autoDecryptDelay: { type: Number, default: 100 },
-        // Localized error messages
-        decryptionFailedMessage: {
-            type: String,
-            default: "Failed to decrypt the message. The decryption key may be invalid or corrupted."
-        }
+        fetchUrl: String,
+        // Localized error messages (passed from Rails view)
+        decryptionFailedMessage: String,
+        challengeMissingAnswerMessage: String,
+        challengeMissingKeyMessage: String,
+        challengeVerificationFailedMessage: String,
+        challengeNetworkErrorMessage: String
     };
 
     connect() {
         console.log("MessageDecryptionController connected");
-        this.scheduleAutoDecryption();
+        this.showChallengeForm();
     }
 
     // Lifecycle Management
-    scheduleAutoDecryption() {
-        if (this.hasEncryptedDataTarget) {
-            setTimeout(() => this.attemptDecryption(), this.autoDecryptDelayValue);
+    showChallengeForm() {
+        this.hideLoadingState();
+        if (this.hasChallengeFormTarget) {
+            this.challengeFormTarget.classList.remove("hidden");
+        }
+        // Clear any previous answer
+        if (this.hasChallengeAnswerTarget) {
+            this.challengeAnswerTarget.value = "";
+            this.challengeAnswerTarget.focus();
         }
     }
 
@@ -45,6 +55,11 @@ export default class extends Controller {
     showError(message) {
         this.errorMessageTarget.textContent = message;
         this.errorAlertTarget.classList.remove("hidden");
+    }
+
+    hideError() {
+        this.errorAlertTarget.classList.add("hidden");
+        this.errorMessageTarget.textContent = "";
     }
 
     showDecryptedMessage(decryptedText) {
@@ -81,7 +96,105 @@ export default class extends Controller {
         setTimeout(callback, delay);
     }
 
-    // Main Decryption Flow
+    handleEnterKey(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            this.verifyChallengeAndDecrypt();
+        }
+    }
+
+    // Challenge Verification Flow
+    async verifyChallengeAndDecrypt() {
+        const answer = this.challengeAnswerTarget.value;
+        const encryptionKey = this.retrieveEncryptionKey();
+
+        if (!answer) {
+            this.showError(this.challengeMissingAnswerMessageValue);
+            return;
+        }
+
+        if (!encryptionKey) {
+            this.showError(this.challengeMissingKeyMessageValue);
+            return;
+        }
+
+        // Hide any previous errors and the challenge form
+        this.hideError();
+        this.hideChallengeForm();
+        this.showLoadingState();
+
+        const startTime = Date.now();
+
+        try {
+            const response = await fetch(this.fetchUrlValue, {
+                headers: {
+                    "X-Challenge-Answer": answer,
+                    Accept: "application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Challenge verified successfully, now attempt decryption
+                await this.handleSuccessfulChallenge(encryptionKey, data.body, startTime);
+            } else {
+                // Use server error message if available, fallback to local message
+                const errorMessage = data.error || this.challengeVerificationFailedMessageValue;
+                this.handleChallengeError(errorMessage, startTime);
+            }
+        } catch {
+            this.handleChallengeError(this.challengeNetworkErrorMessageValue, startTime);
+        }
+    }
+
+    async handleSuccessfulChallenge(encryptionKey, encryptedData, startTime) {
+        try {
+            const decryptedMessage = await this.decryptMessage(encryptedData, encryptionKey);
+
+            this.scheduleCallback(() => {
+                this.hideLoadingState();
+                this.showDecryptedMessage(decryptedMessage);
+                this.cleanupEncryptionKey();
+            }, startTime);
+        } catch (error) {
+            console.error("Decryption failed:", error);
+
+            this.scheduleCallback(() => {
+                this.hideLoadingState();
+                this.showError(this.decryptionFailedMessageValue);
+            }, startTime);
+        }
+    }
+
+    hideChallengeForm() {
+        if (this.hasChallengeFormTarget) {
+            this.challengeFormTarget.classList.add("hidden");
+        }
+    }
+
+    showLoadingState() {
+        if (this.hasLoadingContainerTarget) {
+            this.loadingContainerTarget.classList.remove("hidden");
+        }
+    }
+
+    handleChallengeError(message, startTime) {
+        this.scheduleCallback(() => {
+            this.hideLoadingState();
+            this.showChallengeForm();
+            this.showError(message);
+        }, startTime);
+    }
+
+    // Legacy methods for backward compatibility
+    handleMissingKey(startTime) {
+        this.scheduleCallback(() => {
+            this.hideLoadingState();
+            this.showNoKeyAlert();
+        }, startTime);
+    }
+
     async attemptDecryption() {
         const startTime = Date.now();
 
@@ -93,37 +206,22 @@ export default class extends Controller {
                 return;
             }
 
-            await this.performDecryption(encryptionKey, startTime);
+            const encryptedData = this.encryptedDataTarget.value;
+            const decryptedMessage = await this.decryptMessage(encryptedData, encryptionKey);
+
+            this.scheduleCallback(() => {
+                this.hideLoadingState();
+                this.showDecryptedMessage(decryptedMessage);
+                this.cleanupEncryptionKey();
+            }, startTime);
         } catch (error) {
-            this.handleDecryptionError(error, startTime);
+            console.error("Decryption failed:", error);
+
+            this.scheduleCallback(() => {
+                this.hideLoadingState();
+                this.showError(this.decryptionFailedMessageValue);
+            }, startTime);
         }
-    }
-
-    handleMissingKey(startTime) {
-        this.scheduleCallback(() => {
-            this.hideLoadingState();
-            this.showNoKeyAlert();
-        }, startTime);
-    }
-
-    async performDecryption(encryptionKey, startTime) {
-        const encryptedData = this.encryptedDataTarget.value;
-        const decryptedMessage = await this.decryptMessage(encryptedData, encryptionKey);
-
-        this.scheduleCallback(() => {
-            this.hideLoadingState();
-            this.showDecryptedMessage(decryptedMessage);
-            this.cleanupEncryptionKey();
-        }, startTime);
-    }
-
-    handleDecryptionError(error, startTime) {
-        console.error("Decryption failed:", error);
-
-        this.scheduleCallback(() => {
-            this.hideLoadingState();
-            this.showError(this.decryptionFailedMessageValue);
-        }, startTime);
     }
 
     // Cryptographic Operations

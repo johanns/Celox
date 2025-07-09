@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module IconsHelper
+  # rubocop:disable Metrics/AbcSize
   def icon(name, options = {})
     # Read the SVG file from the assets pipeline
     file = Rails.root.join("app", "assets", "icons", "#{name}.svg").read
@@ -20,6 +21,10 @@ module IconsHelper
     end
 
     # Return the svg element as a string
+
+    # rubocop:disable Rails/OutputSafety
     doc.to_html.html_safe
+    # rubocop:enable Rails/OutputSafety
   end
+  # rubocop:enable Metrics/AbcSize
 end

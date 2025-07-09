@@ -21,8 +21,8 @@
         </p>
       </div>
 
-      <% if @message_read_at.present? %>
-        <!-- Enhanced Message Already Read Alert -->
+      <% if @message.read? %>
+        <!-- Message Already Read Alert -->
         <div class="alert-container bg-warning/10 border border-warning/20">
           <div class="alert-icon-wrapper">
             <div class="alert-icon-container bg-warning/20">
@@ -37,21 +37,66 @@
             <p class="alert-message text-warning/80">
               <%= t(
                     ".already_read_message_html",
-                    read_at: @message_read_at.strftime("%B %d, %Y at %I:%M %p")
+                    read_at: @message.read_at.strftime("%B %d, %Y at %I:%M %p")
                   ) %>
             </p>
           </div>
         </div>
       <% else %>
-        <!-- Enhanced Message Decryption Section -->
-        <div
-          data-controller="message-decryption"
-          data-message-decryption-decryption-failed-message-value="<%= t("messages.decryption.failed") %>">
+        <!-- Message Decryption Section -->
+        <div <%= html_attributes(message_decryption_data_attributes(@message)) %>>
           <!-- Hidden encrypted data -->
           <input
             type="hidden"
             value="<%= @message_body %>"
             data-message-decryption-target="encryptedData">
+          <!-- Captcha Challenge Form -->
+          <div class="space-y-6" data-message-decryption-target="challengeForm">
+            <div class="text-center mb-6">
+              <h3 class="text-xl font-bold text-primary mb-2">
+                <%= icon("shield-check", class: "inline h-5 w-5 mr-2") %>
+                <%= t(".verify_human_title") %>
+              </h3>
+              <p class="text-base-content/70 text-sm">
+                <%= t(".verify_human_subtitle") %>
+              </p>
+            </div>
+
+            <div class="bg-base-200/50 rounded-xl border border-base-300 p-6">
+              <div class="flex items-center justify-center mb-4">
+                <div class="bg-primary/10 rounded-lg p-4">
+                  <span class="text-2xl font-mono font-bold text-primary">
+                    <%= @challenge[:question] %>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex gap-3 items-end">
+                <div class="flex-1">
+                  <label class="block text-sm font-medium mb-2">
+                    <%= t(".challenge_answer_label") %>
+                  </label>
+
+                  <input
+                    type="number"
+                    class="input input-bordered w-full"
+                    placeholder='<%= t(".challenge_answer_placeholder") %>'
+                    data-message-decryption-target="challengeAnswer"
+                    data-action="keydown->message-decryption#handleEnterKey">
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-action="
+                    click->message-decryption#verifyChallengeAndDecrypt
+                  ">
+                  <%= icon("check", class: "h-4 w-4 mr-2") %>
+                  <%= t(".verify_button") %>
+                </button>
+              </div>
+            </div>
+          </div>
 
           <div
             class="
@@ -63,11 +108,9 @@
             </div>
             <div>
               <h3 class="font-bold"><%= t(".decrypt_error_title") %></h3>
-              <ul
-                class="list-disc list-inside mt-1"
-                data-message-decryption-target="errorMessage">
-                <li><%= t(".decrypt_error_message") %></li>
-              </ul>
+              <div class="mt-1" data-message-decryption-target="errorMessage">
+                <!-- Error message will be inserted here dynamically -->
+              </div>
             </div>
           </div>
 
@@ -133,6 +176,7 @@
                 </button>
               </div>
             </div>
+
             <!-- Security notice -->
             <div class="p-3 bg-info/10 border border-info/20 rounded-lg">
               <div class="flex items-start gap-2">
@@ -146,7 +190,8 @@
               </div>
             </div>
           </div>
-          <!-- Enhanced No Key Available Alert -->
+
+          <!-- No Key Available Alert -->
           <div class="hidden space-y-6" data-message-decryption-target="noKeyAlert">
             <div class="alert-container shadow-lg border-l-4 border-warning bg-warning/10">
               <div class="alert-icon-wrapper">
@@ -165,7 +210,8 @@
               </div>
             </div>
           </div>
-          <!-- Enhanced Loading State -->
+
+          <!-- Loading State -->
           <div class="mt-6" data-message-decryption-target="loadingContainer">
             <div class="flex flex-col items-center justify-center gap-4 py-12">
               <div class="text-center">
