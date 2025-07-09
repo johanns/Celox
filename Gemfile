@@ -29,6 +29,8 @@ gem "thruster", require: false
 
 ### Frontend ###
 
+gem "better_html"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -66,7 +68,6 @@ group :development, :test do
 
   # Linters
 
-  gem "better_html"
   gem "erb_lint", require: false
 
   gem "erb-formatter", require: false
