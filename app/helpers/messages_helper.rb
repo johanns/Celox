@@ -28,7 +28,8 @@ module MessagesHelper
       "data-message-decryption-decryption-failed-message-value" => t("messages.decryption.failed"),
       "data-message-decryption-challenge-missing-answer-message-value" => t("messages.challenge.missing_answer"),
       "data-message-decryption-challenge-missing-key-message-value" => t("messages.challenge.missing_key"),
-      "data-message-decryption-challenge-verification-failed-message-value" => t("messages.challenge.verification_failed"),
+      "data-message-decryption-challenge-verification-failed-message-value" =>
+        t("messages.challenge.verification_failed"),
       "data-message-decryption-challenge-network-error-message-value" => t("messages.challenge.network_error")
     }
   end
