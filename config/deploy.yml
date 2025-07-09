@@ -2,12 +2,12 @@
 service: celox
 
 # Name of the container image.
-image: your-user/celox
+image: johannsg/celox
 
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - 192.168.130.21
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -19,13 +19,13 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: app.example.com
+  host: celox.me
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: your-user
+  username: johannsg
 
   # Always use an access token rather than real password when possible.
   password:
@@ -89,7 +89,7 @@ builder:
 
 # Use a different ssh user than root
 # ssh:
-#   user: app
+  # user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
 # accessories:
