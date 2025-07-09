@@ -32,6 +32,7 @@ en:
     attributes:
       message:
         body: "Message Content"
+        expires_at: "Expiration Date"
         expiration_duration: "Expires After"
 
     errors:
@@ -58,10 +59,19 @@ en:
       server_error: "Server error occurred. Please try again later."
       generic: "Failed to submit message. Please check your connection and try again."
       unexpected: "An unexpected error occurred. Please try again."
+      decryption_failed: "Failed to decrypt the message. The decryption key may be invalid or corrupted."
 
     decryption:
       failed: "Failed to decrypt the message. The decryption key may be invalid or corrupted.
         This message has been purged from the servers for security reasons. Please contact the sender to request a new link."
+
+    challenge:
+      invalid_answer: "Invalid challenge. Please refresh and try again."
+      expired: "Challenge has expired. Please refresh and try again."
+      missing_answer: "Please enter an answer to the challenge."
+      missing_key: "No decryption key found in URL."
+      verification_failed: "Challenge verification failed"
+      network_error: "Network error. Please try again."
 
     expiration_options:
       five_minutes: "5 minutes"
@@ -103,6 +113,14 @@ en:
       already_read_message_html: "This message was accessed on <strong>%{read_at}</strong> and is no longer available."
 
       new_message: "Create a New Secure Message"
+      create_new_message: "Create a New Secure Message"
+
+      # Captcha/Challenge translations
+      verify_human_title: "Human Verification Required"
+      verify_human_subtitle: "To protect your privacy and prevent automated access, please solve this simple challenge."
+      challenge_answer_label: "Your Answer"
+      challenge_answer_placeholder: "Enter your answer"
+      verify_button: "Verify & Read Message"
 
       decrypt_error_title: "Decryption Error"
       decrypt_error_message: "Failed to decrypt the message. For security reasons, this message has been purged from the server.
@@ -117,11 +135,11 @@ en:
       decrypt_key_required_message: "No decryption key was found. For security reasons, this message has been purged from the server.
         Content the sender to request a new link."
 
-      notice_title: "Security Notice:"
-      notice_message: "The content of this message has now been permanently deleted from the server .
+      notice_title: "Security Notice"
+      notice_message: "The content of this message has now been permanently deleted from the server.
         All remaining metadata will be purged within 5 minutes."
 
-      decryption_in_progress: "Decrypting your secure message..."
+      decrypt_in_progress: "Decrypting your secure message..."
       decryption_in_progress_message: "Please wait while we safely decrypt your confidential data."
 
   models:
@@ -130,3 +148,11 @@ en:
         stub_generation_failed: "failed to generate unique stub after %{attempts} attempts"
         stub_cannot_be_changed: "cannot be changed once set"
       read_notification: "This message has been read and its content has been removed from the server."
+
+  challenges:
+    errors:
+      invalid: "Invalid challenge. Please refresh and try again."
+      missing_answer: "Please enter an answer to the challenge."
+      missing_key: "No decryption key found in URL."
+      verification_failed: "Challenge verification failed"
+      network_error: "Network error. Please try again."
