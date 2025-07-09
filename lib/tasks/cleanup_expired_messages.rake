@@ -2,9 +2,9 @@
 
 desc 'Cleanup expired messages'
 task cleanup_expired_messages: :environment do
-  puts 'Starting cleanup of expired messages...'
+  Rails.logger.info 'Starting cleanup of expired messages...'
 
   deleted_count = CleanupExpiredMessagesJob.perform_now
 
-  puts "Cleanup completed. Deleted #{deleted_count} expired messages."
+  Rails.logger.info "Cleanup completed. Deleted #{deleted_count} expired messages."
 end
