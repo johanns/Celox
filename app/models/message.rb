@@ -101,7 +101,7 @@ class Message < ApplicationRecord
     loop do
       self.stub = SecureRandom.base58(8)
 
-      break if Message.where(stub: stub).empty?
+      break unless Message.exists?(stub: stub)
 
       retry_count += 1
 
