@@ -232,53 +232,64 @@ RSpec.describe Message do
       let(:original_body) { "This is a secret message." }
       let!(:message) { create(:message, body: original_body, read_at: nil) }
 
-      context "when message is unread" do
-        it "sets read_at to the current time" do
-          freeze_time do
-            message.read!
-            expect(message.read_at).to be_within(1.second).of(Time.current)
-          end
-        end
-
-        it "updates the body to the read notification" do
+      it "sets read_at to the current time for unread message" do
+        freeze_time do
           message.read!
-          expect(message.body).to eq(I18n.t("models.message.read_notification"))
-        end
-
-        it "returns the original body and nil read_at" do
-          pre_body, pre_read_at = message.read!
-          expect(pre_body).to eq(original_body)
-          expect(pre_read_at).to be_nil
-        end
-
-        it "persists the changes" do
-          message.read!
-          message.reload
-          expect(message.read?).to be true
-          expect(message.body).to eq(I18n.t("models.message.read_notification"))
+          expect(message.read_at).to be_within(1.second).of(Time.current)
         end
       end
 
-      context "when message is already read" do
-        let!(:read_message) { create(:message, :read, body: "already read") }
-        let(:original_read_at) { read_message.read_at }
+      it "updates the body to the read notification for unread message" do
+        message.read!
+        expect(message.body).to eq(I18n.t("models.message.read_notification"))
+      end
 
-        it "does not change read_at" do
-          read_message.read!
-          expect(read_message.reload.read_at).to be_within(1.second).of(original_read_at)
-        end
+      it "returns the original body for unread message" do
+        pre_body, _pre_read_at = message.read!
+        expect(pre_body).to eq(original_body)
+      end
 
-        it "does not change the body" do
-          original_body = read_message.body
-          read_message.read!
-          expect(read_message.reload.body).to eq(original_body)
-        end
+      it "returns nil read_at for unread message" do
+        _pre_body, pre_read_at = message.read!
+        expect(pre_read_at).to be_nil
+      end
 
-        it "returns nil for the body and the original read_at time" do
-          pre_body, pre_read_at = read_message.read!
-          expect(pre_body).to be_nil
-          expect(pre_read_at).to eq(original_read_at)
-        end
+      it "persists read status for unread message" do
+        message.read!
+        message.reload
+        expect(message.read?).to be true
+      end
+
+      it "persists body change for unread message" do
+        message.read!
+        message.reload
+        expect(message.body).to eq(I18n.t("models.message.read_notification"))
+      end
+    end
+
+    describe "#read! with already read message" do
+      let!(:read_message) { create(:message, :read, body: "already read") }
+      let(:original_read_at) { read_message.read_at }
+
+      it "does not change read_at" do
+        read_message.read!
+        expect(read_message.reload.read_at).to be_within(1.second).of(original_read_at)
+      end
+
+      it "does not change the body" do
+        original_body = read_message.body
+        read_message.read!
+        expect(read_message.reload.body).to eq(original_body)
+      end
+
+      it "returns nil for the body" do
+        pre_body, _pre_read_at = read_message.read!
+        expect(pre_body).to be_nil
+      end
+
+      it "returns the original read_at time" do
+        _pre_body, pre_read_at = read_message.read!
+        expect(pre_read_at).to eq(original_read_at)
       end
     end
 
