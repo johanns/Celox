@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources(:messages, only: %i[show new create], param: :stub, path: "m")
+  resources(:messages, only: %i[show new create], param: :stub, path: "m") do
+    member do
+      get :fetch
+    end
+  end
 
   get("/:stub", to: "messages#show", as: :read_message, constraints: { stub: /[a-zA-Z0-9]+/ })
 
