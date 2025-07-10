@@ -8,3 +8,18 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Prevent iOS Safari zoom on form inputs */
+input,
+textarea,
+select {
+    font-size: 16px !important;
+}
+
+@media (min-width: 768px) {
+    input,
+    textarea,
+    select {
+        font-size: inherit !important;
+    }
+}

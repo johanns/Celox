@@ -19,7 +19,8 @@
   }
 
   .page-container {
-    @apply min-h-screen w-full flex justify-center items-center px-4 sm:px-6 lg:px-8;
+    @apply w-full flex justify-center items-center px-4 sm:px-6 lg:px-8;
+    min-height: calc(100vh - 80px);
   }
 
   .card-wrapper {
