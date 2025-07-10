@@ -1,10 +1,10 @@
-# [Celox.ME](https://celox.me) 🔐
+# [Celox.ME](https://celox.me) :lock:
 
 Celox.**ME**ssage is a secure, self-destructing message application built with Ruby on Rails 8. It features client-side encryption and automatic message expiration for maximum privacy.
 
 Try the live app now at [https://celox.me](https://celox.me)
 
-## 🌟 Features
+## :star2: Features
 
 - **Client-Side Encryption**: Messages are encrypted in your browser before being sent, using AES-256-GCM encryption.
 - **Self-Destructing Messages**: Messages are automatically deleted after being read once or when they expire.
@@ -13,25 +13,29 @@ Try the live app now at [https://celox.me](https://celox.me)
 - **Secure Key Management**: Encryption keys are generated client-side and transmitted only via URL fragments.
 - **Responsive Design**: Built with Tailwind CSS and DaisyUI for a seamless experience on any device.
 
-## 📋 Table of Contents
+## :clipboard: Table of Contents
 
-- [History](#-history)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Security Model](#-security-model)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [API Reference](#-api-reference)
-- [Workflow Diagrams](#-workflow-diagrams)
-- [Technology Stack](#-technology-stack)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Features](#star2-features)
+- [History](#hourglass-history)
+- [Architecture](#hammer_and_wrench-architecture)
+- [Security Model](#lock-security-model)
+- [Installation](#rocket-installation)
+- [Usage](#dart-usage)
+- [API Reference](#satellite-api-reference)
+- [Workflow Diagrams](#bar_chart-workflow-diagrams)
+- [Technology Stack](#hammer_and_wrench-technology-stack)
+- [Testing](#test_tube-testing)
+- [Configuration](#wrench-configuration)
+- [Contributing](#handshake-contributing)
+- [License](#page_facing_up-license)
+- [Security](#shield-security)
+- [Acknowledgments](#pray-acknowledgments)
 
-## History
+## :hourglass: History
 
 Celox.ME was originally started in 2011 as a personal project to learn Ruby on Rails and to build a secure, self-destructing message service that my team and I could fully trust. The motivation was twofold: to deepen my Rails expertise, and to create a tool for sharing sensitive information via messengers and email -- without leaving traces on those systems. Rather than relying on third-party solutions, I wanted an open-source alternative with a transparent codebase and security model. Over the years, Celox has evolved with modern Rails, security best practices, and a privacy-first architecture.
 
-## 🏗️ Architecture
+## :hammer_and_wrench: Architecture
 
 Celox uses a zero-knowledge architecture with bot protection, ensuring the server never has access to plaintext message content:
 
@@ -43,7 +47,7 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 4. **Single-Read Destruction**: Messages are automatically deleted after their first successful access.
 5. **Time-Based Expiration**: Expired messages are cleaned up automatically.
 
-## 🔒 Security Model
+## :lock: Security Model
 
 ### Encryption Details
 
@@ -61,7 +65,7 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 - **Secure Random Generation**: Cryptographically secure random number generation (WebCrypto API).
 - **Fragment-Based Key Sharing**: Encryption keys never leave the client.
 
-## 🚀 Installation
+## :rocket: Installation
 
 ### Prerequisites
 
@@ -73,35 +77,39 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 ### Setup
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/celox.git
-   cd celox
-   ```
+
+    ```bash
+    git clone https://github.com/your-username/celox.git
+    cd celox
+    ```
 
 2. **Install dependencies**
-   ```bash
-   bundle install
-   npm install
-   ```
+
+    ```bash
+    bundle install
+    npm install
+    ```
 
 3. **Set up the database**
-   ```bash
-   rails db:create
-   rails db:migrate
-   rails db:seed
-   ```
+
+    ```bash
+    rails db:create
+    rails db:migrate
+    rails db:seed
+    ```
 
 4. **Start the development server**
-   ```bash
-   bin/dev
-   ```
+
+    ```bash
+    bin/dev
+    ```
 
 5. **Open the application**
-   ```
-   http://localhost:3000
-   ```
+    ```
+    http://localhost:3000
+    ```
 
-## 🎯 Usage
+## :dart: Usage
 
 ### Creating a Secure Message
 
@@ -118,7 +126,7 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 3. The message is immediately deleted from the server after viewing.
 4. One-time access only—subsequent visits will display an "already read" message.
 
-## 📡 API Reference
+## :satellite: API Reference
 
 ### Create Message
 
@@ -135,13 +143,14 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
-  "success": true,
-  "message": {
-    "stub": "abc123xyz",
-    "retrieval_url": "https://app.com/m/abc123xyz"
-  }
+    "success": true,
+    "message": {
+        "stub": "abc123xyz",
+        "retrieval_url": "https://app.com/m/abc123xyz"
+    }
 }
 ```
 
@@ -152,6 +161,7 @@ GET /m/:stub
 ```
 
 **Response:**
+
 - If unread: Returns the captcha challenge form for human verification.
 - If already read: Returns an "already read" notification.
 - If expired or not found: Returns a 404 error.
@@ -165,19 +175,21 @@ Headers:
 ```
 
 **Response (Success):**
+
 ```json
 {
-  "success": true,
-  "body": "encrypted_message_data",
-  "read_at": "2024-01-01T12:00:00Z"
+    "success": true,
+    "body": "encrypted_message_data",
+    "read_at": "2024-01-01T12:00:00Z"
 }
 ```
 
 **Response (Challenge Failed):**
+
 ```json
 {
-  "success": false,
-  "error": "Invalid challenge. Please refresh and try again."
+    "success": false,
+    "error": "Invalid challenge. Please refresh and try again."
 }
 ```
 
@@ -188,7 +200,7 @@ Headers:
 - `six_hours`: 6 hours
 - `one_day`: 1 day
 
-## 📊 Workflow Diagrams
+## :bar_chart: Workflow Diagrams
 
 ### Message Creation Flow
 
@@ -251,81 +263,84 @@ sequenceDiagram
     end
 ```
 
-### Security Architecture
+### Security & Data Flow Architecture
 
 ```mermaid
 graph TB
-    A[User Input] --> B[Client-Side Encryption]
-    B --> C[Generate Random Key]
-    B --> D[Generate Salt & IV]
-    B --> E[AES-GCM Encryption]
-
-    E --> F[Encrypted Payload]
-    C --> G[URL Fragment]
-
-    F --> H[Server Storage]
-    G --> I[Shareable Link]
-
-    H --> J[(Database)]
-    J --> K[Encrypted Data Only]
-
-    I --> L[Recipient]
-    L --> M[Extract Key from Fragment]
-    M --> N[Client-Side Decryption]
-
-    style B fill:#e1f5fe
-    style E fill:#e8f5e8
-    style K fill:#fff3e0
-    style N fill:#e8f5e8
-```
-
-### Data Flow Architecture
-
-```mermaid
-graph TB
-    subgraph "Message Creation Flow"
-        A[User Message] --> B[JavaScript Crypto]
-        B --> C[AES-GCM Encryption]
-        C --> D[Encrypted Payload]
-        B --> E[Encryption Key]
-        E --> F[URL Fragment]
+    subgraph "� Message Creation Flow"
+        A[👤 User Input] --> B[🔍 Input Validation]
+        B --> C[🔧 WebCrypto API]
+        C --> D[🔒 AES-GCM Encryption]
+        D --> E[📦 Encrypted Payload]
+        C --> F[🔑 Encryption Key]
+        F --> G[🔗 URL Fragment]
     end
 
-    subgraph "Server Processing"
-        D --> G[Rails Controller]
-        G --> H[Message Model]
-        H --> I[(Database Storage)]
-        I --> J[Encrypted Data Only]
+    subgraph "� Transport Security"
+        E --> H[🛡️ HTTPS/TLS 1.3]
+        H --> I[🔐 CSRF Protection]
+        I --> J[📋 Content Security Policy]
     end
 
-    subgraph "Message Retrieval Flow"
-        F --> K[Recipient Browser]
-        K --> L[Extract Key from URL]
-        L --> M[Fetch Encrypted Message]
-        I --> M
-        M --> N[Client-Side Decryption]
-        N --> O[Plaintext Message]
+    subgraph "⚡ Server Processing"
+        J --> K[🚀 Rails Controller]
+        K --> L[🛡️ Strong Parameters]
+        L --> M[🧹 Input Sanitization]
+        M --> N[📋 Message Model]
+        N --> O[(💾 Database Storage)]
+        O --> P[🔐 Encrypted Data Only]
     end
 
-    subgraph "Security Features"
-        P[Auto-Expiration]
-        Q[Read-Once Deletion]
-        R[Zero Knowledge Server]
-        S[Fragment-Based Keys]
+    subgraph "📨 Message Retrieval Flow"
+        G --> Q[🌐 Recipient Browser]
+        Q --> R[🔍 Extract Key from URL]
+        R --> S[🧠 Human Verification]
+        S --> T[🔢 Math Captcha]
+        T --> U[📥 Fetch Encrypted Message]
+        O --> U
+        U --> V[🔓 Client-Side Decryption]
+        V --> W[📄 Plaintext Message]
     end
 
-    I -.-> P
-    I -.-> Q
-    G -.-> R
-    F -.-> S
+    subgraph "🛡️ Security Features"
+        X[⏰ Auto-Expiration]
+        Y[🗑️ Read-Once Deletion]
+        Z[🤐 Zero Knowledge Server]
+        AA[🔗 Fragment-Based Keys]
+    end
 
-    style A fill:#e3f2fd
-    style C fill:#e8f5e8
-    style E fill:#fff9c4
-    style I fill:#fff3e0
-    style N fill:#e8f5e8
-    style O fill:#e3f2fd
-    style R fill:#ffebee
+    O -.-> X
+    O -.-> Y
+    K -.-> Z
+    G -.-> AA
+
+    style A fill:#ff6b6b,color:#fff
+    style B fill:#4ecdc4,color:#fff
+    style C fill:#45b7d1,color:#fff
+    style D fill:#96ceb4,color:#fff
+    style E fill:#feca57,color:#000
+    style F fill:#ff9ff3,color:#000
+    style G fill:#54a0ff,color:#fff
+    style H fill:#5f27cd,color:#fff
+    style I fill:#ff6348,color:#fff
+    style J fill:#2ed573,color:#fff
+    style K fill:#3742fa,color:#fff
+    style L fill:#ff3838,color:#fff
+    style M fill:#ff9f43,color:#fff
+    style N fill:#10ac84,color:#fff
+    style O fill:#ee5a52,color:#fff
+    style P fill:#0abde3,color:#fff
+    style Q fill:#feca57,color:#000
+    style R fill:#ff6b6b,color:#fff
+    style S fill:#ff9ff3,color:#000
+    style T fill:#4ecdc4,color:#fff
+    style U fill:#45b7d1,color:#fff
+    style V fill:#96ceb4,color:#fff
+    style W fill:#54a0ff,color:#fff
+    style X fill:#5f27cd,color:#fff
+    style Y fill:#ff6348,color:#fff
+    style Z fill:#2ed573,color:#fff
+    style AA fill:#3742fa,color:#fff
 ```
 
 ### Message Lifecycle
@@ -356,9 +371,10 @@ stateDiagram-v2
     note right of Purged: Zero traces remain
 ```
 
-## 🛠️ Technology Stack
+## :hammer_and_wrench: Technology Stack
 
 ### Backend
+
 - **Ruby on Rails 8.0** – Web application framework
 - **SQLite3** – Development database
 - **PostgreSQL** – Production database (recommended)
@@ -366,24 +382,27 @@ stateDiagram-v2
 - **Solid Cache** – Database-backed caching
 
 ### Frontend
+
 - **Hotwire (Turbo + Stimulus)** – Modern SPA-like interactions
 - **Tailwind CSS 4** – Utility-first CSS framework
 - **DaisyUI 5** – UI component library
 - **Web Crypto API** – Browser-native cryptography
 
 ### JavaScript Architecture
+
 - **Stimulus Controllers** – Organized, reusable JavaScript components
 - **Import Maps** – Native ES modules without bundling
 - **Web Crypto API** – Secure client-side encryption
 
 ### Development Tools
+
 - **ESLint** – JavaScript linting
 - **Prettier** – Code formatting
 - **RSpec** – Testing framework
 - **FactoryBot** – Test data generation
 - **Brakeman** – Security vulnerability scanning
 
-## 🧪 Testing
+## :test_tube: Testing
 
 Run the test suite:
 
@@ -399,7 +418,7 @@ bundle exec rspec spec/controllers/messages_controller_spec.rb
 COVERAGE=true bundle exec rspec
 ```
 
-## 🔧 Configuration
+## :wrench: Configuration
 
 ### Environment Variables
 
@@ -416,7 +435,7 @@ The application is ready for deployment with:
 - **Kamal** – Modern deployment tool
 - **Docker** – Containerization
 
-## 🤝 Contributing
+## :handshake: Contributing
 
 1. Fork the repository.
 2. Create a feature branch (`git checkout -b feature/amazing-feature`).
@@ -436,11 +455,11 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/):
 - `test:` – Test additions or changes
 - `chore:` – Maintenance tasks
 
-## 📄 License
+## :page_facing_up: License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 🛡️ Security
+## :shield: Security
 
 ### Reporting Security Issues
 
@@ -456,7 +475,7 @@ If you discover a security vulnerability, please email security@celox.me instead
 - CSRF protection is enabled.
 - Secure headers are configured.
 
-## 🙏 Acknowledgments
+## :pray: Acknowledgments
 
 - Built with [Ruby on Rails](https://rubyonrails.org/)
 - UI powered by [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/)
