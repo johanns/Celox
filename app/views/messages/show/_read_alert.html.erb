@@ -1,0 +1,21 @@
+<%# locals: (message: ) %>
+<!-- Message Already Read Alert -->
+<div class="alert-container bg-warning/10 border border-warning/20">
+  <div class="alert-icon-wrapper">
+    <div class="alert-icon-container bg-warning/20">
+      <%= icon("exclamation-triangle", class: "alert-icon text-warning") %>
+    </div>
+  </div>
+  <div>
+    <h3 class="alert-title text-warning">
+      <%= icon("eye", class: "h-4 w-4") %>
+      <%= t(".already_read_title") %>
+    </h3>
+    <p class="alert-message text-warning/80">
+      <%= t(
+            ".already_read_message_html",
+            read_at: message.read_at.strftime("%B %d, %Y at %I:%M %p")
+          ) %>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+en:
+  messages:
+    create:
+      success: "Message successfully created."
+
+    errors:
+      encryption_failed: "Encryption failed. Please try again."
+      connection_failed: "Unable to connect to server. Please check your internet connection and try again."
+      server_error: "Server error occurred. Please try again later."
+      generic: "Failed to submit message. Please check your connection and try again."
+      unexpected: "An unexpected error occurred. Please try again."
+      decryption_failed: "Failed to decrypt the message. The decryption key may be invalid or corrupted."
+
+    decryption:
+      failed: "Failed to decrypt the message. The decryption key may be invalid or corrupted.
+        This message has been purged from the servers for security reasons. Please contact the sender to request a new link."
+
+    challenge:
+      invalid_answer: "Invalid challenge. Please refresh and try again."
+      expired: "Challenge has expired. Please refresh and try again."
+      missing_answer: "Please enter an answer to the challenge."
+      missing_key: "No decryption key found in URL."
+      verification_failed: "Challenge verification failed"
+      network_error: "Network error. Please try again."
+
+    expiration_options:
+      five_minutes: "5 minutes"
+      one_day: "1 day"
+      one_hour: "1 hour"
+      six_hours: "6 hours"
+
+    new:
+      form:
+        encrypting_message: "Please wait while we secure your message..."
+        errors:
+          title: "Please correct the following errors:"
+
+        title: "Secure Self-Destructing Message"
+        subtitle: "Create a link to an encrypted message that will self-destruct after being read or when it expires."
+
+        body_label: "Your Confidential Message"
+        character_label: "characters"
+        expiration_label: "Self-Destruct After"
+
+        encrypting_title: "Encrypting Message..."
+        placeholder: "Enter your message here..."
+        submit_button: "Encrypt & Create Link"
+
+      success:
+        title: "Message Encrypted Successfully!"
+        subtitle: "Share this secure link to deliver your message"
+
+        retrieval_link_label: "Confidential Retrieval Link"
+        security_notice_title: "Security Notice:"
+        security_notice: "This message will be permanently deleted after being read once or when it expires, whichever comes first."
+
+        create_another: "Create a New Secure Message"
+
+    show:
+      header:
+        title: "Secure Message Retrieval"
+        subtitle: "Your encrypted message is ready for viewing"
+
+      read_alert:
+        already_read_title: "Message Already Read"
+        already_read_message_html: "This message was accessed on <strong>%{read_at}</strong> and is no longer available."
+
+        new_message: "Create a New Secure Message"
+        create_new_message: "Create a New Secure Message"
+
+      decryption_form:
+        # Captcha/Challenge translations
+        verify_human_title: "Human Verification Required"
+        verify_human_subtitle: "To protect your privacy and prevent automated access, please solve this simple challenge."
+        challenge_answer_label: "Your Answer"
+        challenge_answer_placeholder: "Enter your answer"
+        verify_button: "Verify & Read Message"
+
+        decrypt_error_title: "Decryption Error"
+        decrypt_error_message: "Failed to decrypt the message. For security reasons, this message has been purged from the server.
+          Please contact the sender to request a new link."
+
+        decrypt_success_title: "Message Decrypted Successfully!"
+        decrypt_success_message: "Your message has been retrieved and decrypted."
+
+        decrypt_textarea_label: "Your Secure Message"
+
+        decrypt_key_required: "Decryption Key Required"
+        decrypt_key_required_message: "No decryption key was found. For security reasons, this message has been purged from the server.
+          Content the sender to request a new link."
+
+        notice_title: "Security Notice"
+        notice_message: "The content of this message has now been permanently deleted from the server.
+          All remaining metadata will be purged within 5 minutes."
+
+        decrypt_in_progress: "Decrypting your secure message..."
+        decryption_in_progress_message: "Please wait while we safely decrypt your confidential data."

@@ -1,0 +1,18 @@
+<%# locals: () %>
+<!-- Header with decorative elements -->
+<div class="card-header">
+  <!-- Decorative circles -->
+  <div class="decorative-circle-tl bg-accent/10"></div>
+  <div class="decorative-circle-tr bg-primary/10"></div>
+  <!-- Message icon -->
+  <div class="card-header-icon-wrapper bg-accent/20">
+    <%= icon("envelope", class: "h-8 w-8 text-accent") %>
+  </div>
+
+  <h2 class="card-header-title from-accent to-primary">
+    <%= t(".title") %>
+  </h2>
+  <p class="card-header-subtitle">
+    <%= t(".subtitle") %>
+  </p>
+</div>

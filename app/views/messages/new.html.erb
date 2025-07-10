@@ -2,9 +2,11 @@
 
 <div class="page-container">
   <div class="card-wrapper">
-    <div class="card-content" <%= html_attributes(message_encryption_data_attributes) %>>
-      <%= render(partial: "form", locals: { message: @message }) %>
-      <%= render(partial: "success", locals: { message: @message }) %>
+    <div
+      class="card-content"
+      <%= html_attributes(message_encryption_data_attributes) %>>
+      <%= render(partial: "messages/new/form", locals: { message: @message }) %>
+      <%= render(partial: "messages/new/success", locals: { message: @message }) %>
     </div>
   </div>
 </div>
