@@ -2,6 +2,8 @@
 
 Celox.**ME**ssage is a secure, self-destructing message application built with Ruby on Rails 8. It features client-side encryption and automatic message expiration for maximum privacy.
 
+Try the live app now at [https://celox.me](https://celox.me)
+
 ## 🌟 Features
 
 - **Client-Side Encryption**: Messages are encrypted in your browser before being sent, using AES-256-GCM encryption.
@@ -13,6 +15,7 @@ Celox.**ME**ssage is a secure, self-destructing message application built with R
 
 ## 📋 Table of Contents
 
+- [History](#-history)
 - [Features](#-features)
 - [Architecture](#-architecture)
 - [Security Model](#-security-model)
@@ -23,6 +26,10 @@ Celox.**ME**ssage is a secure, self-destructing message application built with R
 - [Technology Stack](#-technology-stack)
 - [Contributing](#-contributing)
 - [License](#-license)
+
+## History
+
+Celox.ME was originally started in 2011 as a personal project to learn Ruby on Rails and to build a secure, self-destructing message service that my team and I could fully trust. The motivation was twofold: to deepen my Rails expertise, and to create a tool for sharing sensitive information via messengers and email -- without leaving traces on those systems. Rather than relying on third-party solutions, I wanted an open-source alternative with a transparent codebase and security model. Over the years, Celox has evolved with modern Rails, security best practices, and a privacy-first architecture.
 
 ## 🏗️ Architecture
 
@@ -40,7 +47,7 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 
 ### Encryption Details
 
-- **Algorithm**: AES-256-GCM (Galois/Counter Mode)
+- **Algorithm**: AES-GCM (Galois/Counter Mode)
 - **Key Derivation**: PBKDF2 with 1,000 iterations
 - **Salt**: 16 random bytes per message
 - **IV**: 12 random bytes per message
@@ -60,7 +67,7 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 
 - Ruby 3.4+
 - Rails 8.0+
-- Node.js 18+
+- Node.js 18+ (for ESLint and Prettier)
 - SQLite3 (development) or PostgreSQL (production)
 
 ### Setup
@@ -275,37 +282,50 @@ graph TB
 ### Data Flow Architecture
 
 ```mermaid
-graph LR
-    subgraph "Client Side"
+graph TB
+    subgraph "Message Creation Flow"
         A[User Message] --> B[JavaScript Crypto]
         B --> C[AES-GCM Encryption]
         C --> D[Encrypted Payload]
-
-        E[URL Fragment] --> F[Encryption Key]
-        F --> G[Client Decryption]
+        B --> E[Encryption Key]
+        E --> F[URL Fragment]
     end
 
-    subgraph "Server Side"
-        D --> H[Rails Controller]
-        H --> I[Message Model]
-        I --> J[(SQLite/PostgreSQL)]
-
-        J --> K[Encrypted Storage]
-        K --> L[Auto-Expiration]
-        K --> M[Read-Once Deletion]
+    subgraph "Server Processing"
+        D --> G[Rails Controller]
+        G --> H[Message Model]
+        H --> I[(Database Storage)]
+        I --> J[Encrypted Data Only]
     end
 
-    subgraph "Security Boundary"
-        N[Zero Knowledge]
-        O[No Plaintext on Server]
-        P[Fragment-Based Key Sharing]
+    subgraph "Message Retrieval Flow"
+        F --> K[Recipient Browser]
+        K --> L[Extract Key from URL]
+        L --> M[Fetch Encrypted Message]
+        I --> M
+        M --> N[Client-Side Decryption]
+        N --> O[Plaintext Message]
     end
+
+    subgraph "Security Features"
+        P[Auto-Expiration]
+        Q[Read-Once Deletion]
+        R[Zero Knowledge Server]
+        S[Fragment-Based Keys]
+    end
+
+    I -.-> P
+    I -.-> Q
+    G -.-> R
+    F -.-> S
 
     style A fill:#e3f2fd
     style C fill:#e8f5e8
-    style G fill:#e8f5e8
-    style J fill:#fff3e0
-    style N fill:#ffebee
+    style E fill:#fff9c4
+    style I fill:#fff3e0
+    style N fill:#e8f5e8
+    style O fill:#e3f2fd
+    style R fill:#ffebee
 ```
 
 ### Message Lifecycle
@@ -442,6 +462,7 @@ If you discover a security vulnerability, please email security@celox.me instead
 - UI powered by [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/)
 - Cryptography via [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
 - Icons from [Heroicons](https://heroicons.com/)
+- Contributions from the open-source community
 
 ---
 
