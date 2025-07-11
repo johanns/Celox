@@ -3,7 +3,33 @@
 module Challengeable
   extend ActiveSupport::Concern
 
+  class ::ChallengeError < StandardError; end
+
+  def validate_challenge
+    if valid_challenge?
+      clear_challenge_session
+      return true
+    end
+
+    render_challenge_error
+
+    # Halt action chain when used as before_action
+    false
+  end
+
+  # Exception-based variant - raises instead of rendering
+  def validate_challenge!
+    return clear_challenge_session if valid_challenge?
+
+    raise ChallengeError, "Invalid or expired challenge"
+  end
+
   private
+
+  def clear_challenge_session
+    session.delete(:challenge_answer)
+    session.delete(:challenge_expires_at)
+  end
 
   def generate_challenge
     a = rand(1..20)
@@ -18,6 +44,14 @@ module Challengeable
     }
   end
 
+  def render_challenge_error
+    render(json: {
+             success: false,
+             error: t("challenges.errors.invalid")
+           },
+           status: :forbidden)
+  end
+
   def setup_challenge_session
     @challenge = generate_challenge
     session[:challenge_answer] = @challenge[:answer]
@@ -30,18 +64,5 @@ module Challengeable
 
     submitted_answer = request.headers["X-Challenge-Answer"]&.to_i
     submitted_answer == session[:challenge_answer]
-  end
-
-  def clear_challenge_session
-    session.delete(:challenge_answer)
-    session.delete(:challenge_expires_at)
-  end
-
-  def render_challenge_error
-    render(json: {
-             success: false,
-             error: t("challenges.errors.invalid")
-           },
-           status: :forbidden)
   end
 end

@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   include Challengeable
 
   before_action(:set_message, only: %i[fetch show])
+  before_action(:validate_challenge, only: %i[fetch])
 
   def show
     # Check if message was already read
@@ -21,9 +22,6 @@ class MessagesController < ApplicationController
   end
 
   def fetch
-    return render_challenge_error unless valid_challenge?
-
-    clear_challenge_session
     message_body, message_read_at = @message.read!
 
     render_success_response(body: message_body, read_at: message_read_at)
