@@ -1,13 +1,13 @@
 # [Celox.ME](https://celox.me) :lock:
 
-Celox.**ME**ssage is a secure, self-destructing message application built with Ruby on Rails 8. It features client-side encryption and automatic message expiration for maximum privacy.
+Celox.**ME**ssage is a secure, self-destructing messaging application built with Ruby on Rails 8. It features client-side encryption and automatic message expiration to maximize privacy.
 
-Try the live app now at [https://celox.me](https://celox.me)
+Try the live app now at [https://celox.me](https://celox.me).
 
 ## :star2: Features
 
 - **Client-Side Encryption**: Messages are encrypted in your browser before being sent, using AES-256-GCM encryption.
-- **Self-Destructing Messages**: Messages are automatically deleted after being read once or when they expire.
+- **Self-Destructing Messages**: Messages are automatically deleted after being read once or upon expiration.
 - **Flexible Expiration**: Choose from 5 minutes, 1 hour, 6 hours, or 1 day.
 - **Zero-Knowledge Architecture**: The server never sees plaintext content.
 - **Secure Key Management**: Encryption keys are generated client-side and transmitted only via URL fragments.
@@ -17,13 +17,14 @@ Try the live app now at [https://celox.me](https://celox.me)
 
 - [Features](#star2-features)
 - [History](#hourglass-history)
+- [Deployment](#rocket-deployment)
 - [Architecture](#hammer_and_wrench-architecture)
 - [Security Model](#lock-security-model)
-- [Installation](#rocket-installation)
 - [Usage](#dart-usage)
-- [API Reference](#satellite-api-reference)
 - [Workflow Diagrams](#bar_chart-workflow-diagrams)
+- [API Reference](#satellite-api-reference)
 - [Technology Stack](#hammer_and_wrench-technology-stack)
+- [Development](#rocket-development)
 - [Testing](#test_tube-testing)
 - [Configuration](#wrench-configuration)
 - [Contributing](#handshake-contributing)
@@ -33,7 +34,80 @@ Try the live app now at [https://celox.me](https://celox.me)
 
 ## :hourglass: History
 
-Celox.ME was originally started in 2011 as a personal project to learn Ruby on Rails and to build a secure, self-destructing message service that my team and I could fully trust. The motivation was twofold: to deepen my Rails expertise, and to create a tool for sharing sensitive information via messengers and email -- without leaving traces on those systems. Rather than relying on third-party solutions, I wanted an open-source alternative with a transparent codebase and security model. Over the years, Celox has evolved with modern Rails, security best practices, and a privacy-first architecture.
+Celox.ME was originally started in 2011 as a personal project to learn Ruby on Rails and to build a secure, self-destructing message service that my team and I could fully trust. The motivation was twofold: to deepen my Rails expertise and to create a tool for sharing sensitive information via messengers and email—without leaving traces on those systems. Rather than relying on third-party solutions, I wanted an open-source alternative with a transparent codebase and security model. Over the years, Celox has evolved with modern Rails, security best practices, and a privacy-first architecture.
+
+## :rocket: Deployment
+
+Celox is designed for straightforward deployment on modern Ruby on Rails hosting platforms. It can be deployed using tools such as [Kamal](https://kamal-deploy.org/) or [Docker](https://www.docker.com/).
+
+### Prerequisites
+
+- **Ruby 3.4+**: Ensure you have the latest version of Ruby installed.
+- **Docker**: Ensure you have the latest version of Docker installed.
+- **SSH access** to your server.
+
+### Before You Start
+
+1. **Clone the repository** to your server or local machine:
+
+    ```bash
+    git clone https://github.com/johanns/celox.git
+    cd celox
+    ```
+
+2. **Install dependencies**:
+
+    ```bash
+    bundle install
+    npm install
+    ```
+
+3. **Generate the master key and credentials**:
+
+    ```bash
+    bin/setup-credentials
+    ```
+
+### Kamal Deployment
+
+Please refer to the [Kamal documentation](https://kamal-deploy.org/) for an overview of the deployment process.
+
+1. **Run the Kamal configuration setup generator**:
+
+    ```bash
+    bin/setup-kamal
+    ```
+
+2. **Prepare your server with Kamal**:
+
+    ```bash
+    kamal setup
+    ```
+
+3. **Deploy the application**:
+
+    ```bash
+    kamal deploy
+    ```
+
+### Docker Deployment
+
+> **Caution:**
+> Due to the sensitive nature of this application, it is strongly recommended to build the Docker image locally rather than pulling a prebuilt image from a third-party registry.
+
+1. **Build the Docker image**:
+
+    ```bash
+    docker build -t celox:latest .
+    ```
+
+2. **Run the Docker container**:
+
+    ```bash
+    docker run -d -p 80:80 -p 443:443 --name celox -e TLS_DOMAIN=your-domain.com celox:latest
+    ```
+
+> **Note:** Replace `your-domain.com` with your actual domain name.
 
 ## :hammer_and_wrench: Architecture
 
@@ -65,50 +139,6 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 - **Secure Random Generation**: Cryptographically secure random number generation (WebCrypto API).
 - **Fragment-Based Key Sharing**: Encryption keys never leave the client.
 
-## :rocket: Installation
-
-### Prerequisites
-
-- Ruby 3.4+
-- Rails 8.0+
-- Node.js 18+ (for ESLint and Prettier)
-- SQLite3 (development) or PostgreSQL (production)
-
-### Setup
-
-1. **Clone the repository**
-
-    ```bash
-    git clone https://github.com/your-username/celox.git
-    cd celox
-    ```
-
-2. **Install dependencies**
-
-    ```bash
-    bundle install
-    npm install
-    ```
-
-3. **Set up the database**
-
-    ```bash
-    rails db:create
-    rails db:migrate
-    rails db:seed
-    ```
-
-4. **Start the development server**
-
-    ```bash
-    bin/dev
-    ```
-
-5. **Open the application**
-    ```
-    http://localhost:3000
-    ```
-
 ## :dart: Usage
 
 ### Creating a Secure Message
@@ -126,79 +156,6 @@ Celox uses a zero-knowledge architecture with bot protection, ensuring the serve
 3. The message is immediately deleted from the server after viewing.
 4. One-time access only—subsequent visits will display an "already read" message.
 
-## :satellite: API Reference
-
-### Create Message
-
-```http
-POST /m
-Content-Type: application/json
-
-{
-  "message": {
-    "body": "Your confidential message",
-    "expiration_duration": "one_hour"
-  }
-}
-```
-
-**Response:**
-
-```json
-{
-    "success": true,
-    "message": {
-        "stub": "abc123xyz",
-        "retrieval_url": "https://app.com/m/abc123xyz"
-    }
-}
-```
-
-### Retrieve Message
-
-```http
-GET /m/:stub
-```
-
-**Response:**
-
-- If unread: Returns the captcha challenge form for human verification.
-- If already read: Returns an "already read" notification.
-- If expired or not found: Returns a 404 error.
-
-### Fetch Message (After Captcha)
-
-```http
-GET /m/:stub/fetch
-Headers:
-  X-Challenge-Answer: 42
-```
-
-**Response (Success):**
-
-```json
-{
-    "success": true,
-    "body": "encrypted_message_data",
-    "read_at": "2024-01-01T12:00:00Z"
-}
-```
-
-**Response (Challenge Failed):**
-
-```json
-{
-    "success": false,
-    "error": "Invalid challenge. Please refresh and try again."
-}
-```
-
-### Expiration Options
-
-- `five_minutes`: 5 minutes
-- `one_hour`: 1 hour (default)
-- `six_hours`: 6 hours
-- `one_day`: 1 day
 
 ## :bar_chart: Workflow Diagrams
 
@@ -263,113 +220,11 @@ sequenceDiagram
     end
 ```
 
-### Security & Data Flow Architecture
+Additional diagrams can be found in the [ADDITIONAL_DIAGRAMS.md](docs/ADDITIONAL_DIAGRAMS.md) file.
 
-```mermaid
-graph TB
-    subgraph "� Message Creation Flow"
-        A[👤 User Input] --> B[🔍 Input Validation]
-        B --> C[🔧 WebCrypto API]
-        C --> D[🔒 AES-GCM Encryption]
-        D --> E[📦 Encrypted Payload]
-        C --> F[🔑 Encryption Key]
-        F --> G[🔗 URL Fragment]
-    end
+ ## :satellite: API Reference
 
-    subgraph "� Transport Security"
-        E --> H[🛡️ HTTPS/TLS 1.3]
-        H --> I[🔐 CSRF Protection]
-        I --> J[📋 Content Security Policy]
-    end
-
-    subgraph "⚡ Server Processing"
-        J --> K[🚀 Rails Controller]
-        K --> L[🛡️ Strong Parameters]
-        L --> M[🧹 Input Sanitization]
-        M --> N[📋 Message Model]
-        N --> O[(💾 Database Storage)]
-        O --> P[🔐 Encrypted Data Only]
-    end
-
-    subgraph "📨 Message Retrieval Flow"
-        G --> Q[🌐 Recipient Browser]
-        Q --> R[🔍 Extract Key from URL]
-        R --> S[🧠 Human Verification]
-        S --> T[🔢 Math Captcha]
-        T --> U[📥 Fetch Encrypted Message]
-        O --> U
-        U --> V[🔓 Client-Side Decryption]
-        V --> W[📄 Plaintext Message]
-    end
-
-    subgraph "🛡️ Security Features"
-        X[⏰ Auto-Expiration]
-        Y[🗑️ Read-Once Deletion]
-        Z[🤐 Zero Knowledge Server]
-        AA[🔗 Fragment-Based Keys]
-    end
-
-    O -.-> X
-    O -.-> Y
-    K -.-> Z
-    G -.-> AA
-
-    style A fill:#ff6b6b,color:#fff
-    style B fill:#4ecdc4,color:#fff
-    style C fill:#45b7d1,color:#fff
-    style D fill:#96ceb4,color:#fff
-    style E fill:#feca57,color:#000
-    style F fill:#ff9ff3,color:#000
-    style G fill:#54a0ff,color:#fff
-    style H fill:#5f27cd,color:#fff
-    style I fill:#ff6348,color:#fff
-    style J fill:#2ed573,color:#fff
-    style K fill:#3742fa,color:#fff
-    style L fill:#ff3838,color:#fff
-    style M fill:#ff9f43,color:#fff
-    style N fill:#10ac84,color:#fff
-    style O fill:#ee5a52,color:#fff
-    style P fill:#0abde3,color:#fff
-    style Q fill:#feca57,color:#000
-    style R fill:#ff6b6b,color:#fff
-    style S fill:#ff9ff3,color:#000
-    style T fill:#4ecdc4,color:#fff
-    style U fill:#45b7d1,color:#fff
-    style V fill:#96ceb4,color:#fff
-    style W fill:#54a0ff,color:#fff
-    style X fill:#5f27cd,color:#fff
-    style Y fill:#ff6348,color:#fff
-    style Z fill:#2ed573,color:#fff
-    style AA fill:#3742fa,color:#fff
-```
-
-### Message Lifecycle
-
-```mermaid
-stateDiagram-v2
-    [*] --> Created: User creates message
-    Created --> Encrypted: Client-side encryption
-    Encrypted --> Stored: Server stores encrypted data
-    Stored --> Shared: Secure link generated
-    Shared --> Accessed: Recipient clicks link
-    Accessed --> Challenge: Human verification required
-    Challenge --> Verified: Math captcha solved
-    Verified --> Decrypted: Client-side decryption
-    Decrypted --> Purged: Message deleted from server
-    Purged --> [*]: Lifecycle complete
-
-    Challenge --> Failed: Incorrect answer
-    Failed --> Challenge: Retry verification
-
-    Stored --> Expired: Time limit reached
-    Expired --> AutoPurged: Cleanup job runs
-    AutoPurged --> [*]: Lifecycle complete
-
-    note right of Encrypted: AES-GCM with unique key
-    note right of Stored: Only encrypted data on server
-    note right of Challenge: Bot protection via math captcha
-    note right of Purged: Zero traces remain
-```
+See [API Reference](docs/API_REFERENCE.md) for detailed API documentation, including endpoints for creating, retrieving, and managing messages.
 
 ## :hammer_and_wrench: Technology Stack
 
@@ -401,6 +256,50 @@ stateDiagram-v2
 - **RSpec** – Testing framework
 - **FactoryBot** – Test data generation
 - **Brakeman** – Security vulnerability scanning
+
+## :rocket: Development
+
+### Prerequisites
+
+- Ruby 3.4+ (*recommend `chruby` and `ruby-install` for version management*)
+- Rails 8.0+
+- Node.js 18+ (for ESLint and Prettier)
+- SQLite3 (development) or PostgreSQL (production)
+
+### Setup (Local Development)
+
+1. **Clone the repository**:
+
+    ```bash
+    git clone https://github.com/johanns/celox.git
+    cd celox
+    ```
+
+2. **Install dependencies**:
+
+    ```bash
+    bundle install
+    npm install
+    ```
+
+3. **Set up the database**:
+
+    ```bash
+    rails db:create
+    rails db:migrate
+    rails db:seed
+    ```
+
+4. **Start the development server**:
+
+    ```bash
+    bin/dev
+    ```
+
+5. **Open the application**:
+    ```
+    http://localhost:3000
+    ```
 
 ## :test_tube: Testing
 
@@ -467,11 +366,11 @@ If you discover a security vulnerability, please email security@celox.me instead
 
 ### Security Best Practices
 
-- Messages are encrypted client-side before transmission.
+- Messages are encrypted on the client side before transmission.
 - Encryption keys never leave the client browser.
-- All inputs are validated and sanitized server-side.
+- All inputs are validated and sanitized on the server side.
 - Messages are automatically deleted after being read.
-- Unread messages expire after a set time.
+- Unread messages expire after a set period.
 - CSRF protection is enabled.
 - Secure headers are configured.
 
