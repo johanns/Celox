@@ -1,0 +1,302 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'yaml'
+require 'fileutils'
+require 'io/console'
+
+class KamalDeploySetup
+  DEPLOY_FILE = 'config/deploy.yml'
+
+  def initialize
+    @config = load_existing_config
+  end
+
+  def run
+    puts "🚀 Celox Kamal Deployment Setup"
+    puts "=" * 40
+    puts
+
+    gather_basic_info
+    gather_server_info
+    gather_registry_info
+    gather_ssl_info
+    gather_scaling_info
+
+    write_config
+    show_next_steps
+  end
+
+  private
+
+  def load_existing_config
+    if File.exist?(DEPLOY_FILE)
+      puts "⚠️  Found existing #{DEPLOY_FILE}"
+      puts "   This script will not overwrite existing deployment configurations."
+      puts "   Please backup and remove the existing file if you want to generate a new one."
+      puts
+      puts "   To backup: cp #{DEPLOY_FILE} #{DEPLOY_FILE}.backup"
+      puts "   To remove: rm #{DEPLOY_FILE}"
+      puts
+      exit(1)
+    end
+
+    # Start with template based on current config
+    {
+      'service' => 'celox',
+      'image' => nil,
+      'servers' => { 'web' => [] },
+      'proxy' => { 'ssl' => true },
+      'registry' => {},
+      'env' => {
+        'secret' => [ 'RAILS_MASTER_KEY' ],
+        'clear' => { 'SOLID_QUEUE_IN_PUMA' => true }
+      },
+      'aliases' => {
+        'console' => 'app exec --interactive --reuse "bin/rails console"',
+        'shell' => 'app exec --interactive --reuse "bash"',
+        'logs' => 'app logs -f',
+        'dbc' => 'app exec --interactive --reuse "bin/rails dbconsole"'
+      },
+      'volumes' => [ 'celox_storage:/rails/storage', 'celox_db:/rails/db' ],
+      'asset_path' => '/rails/public/assets',
+      'builder' => { 'arch' => 'amd64' }
+    }
+  end
+
+  def gather_basic_info
+    puts "📦 Basic Configuration"
+    puts
+
+    @config['service'] = prompt_with_default(
+      "Service name",
+      @config['service'] || 'celox'
+    )
+
+    puts
+  end
+
+  def gather_registry_info
+    puts "🐳 Container Registry Configuration"
+    puts
+
+    current_image = @config['image']
+    current_image = nil if current_image&.include?('your-username')
+
+    registry_type = choose_option(
+      "Container registry",
+      {
+        '1' => 'Docker Hub (docker.io)',
+        '2' => 'GitHub Container Registry (ghcr.io)',
+        '3' => 'DigitalOcean Container Registry',
+        '4' => 'Other'
+      },
+      current_image ? detect_registry_type(current_image) : '1'
+    )
+
+    case registry_type
+    when '1'
+      username = prompt("Docker Hub username")
+      @config['image'] = "#{username}/celox"
+      @config['registry']['username'] = username
+    when '2'
+      username = prompt("GitHub username")
+      @config['image'] = "ghcr.io/#{username}/celox"
+      @config['registry']['server'] = 'ghcr.io'
+      @config['registry']['username'] = username
+    when '3'
+      registry_url = prompt("DigitalOcean registry URL (e.g., registry.digitalocean.com/your-registry)")
+      @config['image'] = "#{registry_url}/celox"
+      @config['registry']['server'] = registry_url.split('/').first
+      @config['registry']['username'] = prompt("Registry username")
+    when '4'
+      @config['image'] = prompt("Full image name (e.g., registry.example.com/user/celox)")
+      @config['registry']['server'] = prompt("Registry server")
+      @config['registry']['username'] = prompt("Registry username")
+    end
+
+    @config['registry']['password'] = [ 'KAMAL_REGISTRY_PASSWORD' ]
+
+    puts
+  end
+
+  def gather_server_info
+    puts "🖥️  Server Configuration"
+    puts
+
+    web_servers = []
+
+    puts "Enter your web server IP addresses (press enter when done):"
+    loop do
+      server = prompt("Web server #{web_servers.length + 1} IP (or press enter to finish)", required: false)
+      break if server.empty?
+
+      web_servers << server
+    end
+
+    web_servers << prompt("At least one web server IP is required") if web_servers.empty?
+
+    @config['servers']['web'] = web_servers
+    puts
+  end
+
+  def gather_ssl_info
+    puts "🔒 SSL Configuration"
+    puts
+
+    domain = prompt_with_default(
+      "Domain name for your app",
+      @config.dig('proxy', 'host')
+    )
+
+    @config['proxy'] = {
+      'ssl' => true,
+      'host' => domain
+    }
+
+    puts "ℹ️  SSL certificates will be automatically generated via Let's Encrypt"
+    puts "⚠️  Remember to set Cloudflare SSL/TLS encryption mode to 'Full'" if confirm("Are you using Cloudflare?")
+
+    puts
+  end
+
+  def gather_scaling_info
+    puts "⚙️  Performance Configuration"
+    puts
+
+    if confirm("Configure performance settings? (recommended for production)")
+      # Ensure the clear env hash exists
+      @config['env']['clear'] ||= {}
+
+      puts "ℹ️  Configure worker counts based on your server resources"
+      puts "    • More workers = better concurrency but more memory usage"
+      puts "    • Start with defaults and adjust based on monitoring"
+      puts
+
+      web_concurrency = prompt_with_default(
+        "Web concurrency (Puma workers)",
+        @config.dig('env', 'clear', 'WEB_CONCURRENCY')&.to_s || '2'
+      )
+
+      job_concurrency = prompt_with_default(
+        "Job concurrency (Solid Queue workers)",
+        @config.dig('env', 'clear', 'JOB_CONCURRENCY')&.to_s || '3'
+      )
+
+      @config['env']['clear']['WEB_CONCURRENCY'] = web_concurrency.to_i
+      @config['env']['clear']['JOB_CONCURRENCY'] = job_concurrency.to_i
+
+      puts "✅ Performance settings configured: #{web_concurrency} web workers, #{job_concurrency} job workers"
+    else
+      # User chose not to configure, so remove any existing performance settings
+      # and rely on Rails defaults
+      @config['env']['clear']&.delete('WEB_CONCURRENCY')
+      @config['env']['clear']&.delete('JOB_CONCURRENCY')
+      puts "ℹ️  Using Rails default performance settings (no explicit worker counts)"
+    end
+
+    puts
+  end
+
+  def write_config
+    puts "💾 Writing configuration..."
+
+    # Ensure config directory exists
+    FileUtils.mkdir_p(File.dirname(DEPLOY_FILE))
+
+    # Write YAML with comments
+    File.open(DEPLOY_FILE, 'w') do |file|
+      file.puts "# Celox Kamal deployment configuration"
+      file.puts "# Generated on #{Time.now.strftime('%Y-%m-%d %H:%M:%S')}"
+      file.puts "#"
+      file.puts "# Deploy with: kamal deploy"
+      file.puts "# Monitor with: kamal logs -f"
+      file.puts
+      file.puts @config.to_yaml.lines[1..].join # Remove first ---
+    end
+
+    puts "✅ Configuration written to #{DEPLOY_FILE}"
+  end
+
+  def show_next_steps
+    puts
+    puts "🎉 Setup Complete!"
+    puts "=" * 40
+    puts
+    puts "Next steps:"
+    puts "1. Review the generated config/deploy.yml"
+    puts "2. Generate Rails credentials (if not already done):"
+    puts "   bin/setup-credentials"
+    puts "3. Set up secrets in .kamal/secrets file (see Kamal 2 documentation)"
+    puts "4. Build and push your image:"
+    puts "   kamal build push"
+    puts "5. Deploy your application:"
+    puts "   kamal deploy"
+    puts
+    puts "Useful commands:"
+    puts "  kamal logs -f          # Follow logs"
+    puts "  kamal console          # Rails console"
+    puts "  kamal shell            # Server shell"
+    puts "  kamal app restart      # Restart application"
+    puts
+    puts "For help: https://kamal-deploy.org/docs"
+  end
+
+  # Helper methods
+  def prompt(question, required: true)
+    loop do
+      print "#{question}: "
+      answer = gets.chomp
+      return answer if !required || !answer.empty?
+
+      puts "This field is required." if required && answer.empty?
+    end
+  end
+
+  def prompt_with_default(question, default)
+    print question
+    print " [#{default}]" if default
+    print ": "
+
+    answer = gets.chomp
+    answer.empty? ? default : answer
+  end
+
+  def choose_option(question, options, default = nil)
+    puts question
+    options.each { |key, value| puts "  #{key}. #{value}" }
+
+    loop do
+      print "Choose [#{default}]: "
+      choice = gets.chomp
+      choice = default if choice.empty? && default
+
+      return choice if options.key?(choice)
+
+      puts "Invalid choice. Please select one of: #{options.keys.join(', ')}"
+    end
+  end
+
+  def confirm(question)
+    loop do
+      print "#{question} (y/n): "
+      answer = gets.chomp.downcase
+      return true if %w[y yes].include?(answer)
+      return false if %w[n no].include?(answer)
+
+      puts "Please enter 'y' or 'n'"
+    end
+  end
+
+  def detect_registry_type(image)
+    case image
+    when /^ghcr\.io/ then '2'
+    when /digitalocean\.com/ then '3'
+    when %r{^[^/]+/[^/]+$} then '1' # username/repo format
+    else '4'
+    end
+  end
+end
+
+# Run the setup if called directly
+KamalDeploySetup.new.run if __FILE__ == $PROGRAM_NAME
