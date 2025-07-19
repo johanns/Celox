@@ -5,8 +5,8 @@ module Challengeable
 
   class ::ChallengeError < StandardError; end
 
-  def validate_challenge
-    if valid_challenge?
+  def valid_challenge?
+    if valid_challenge_answer?
       clear_challenge_session
       return true
     end
@@ -18,8 +18,8 @@ module Challengeable
   end
 
   # Exception-based variant - raises instead of rendering
-  def validate_challenge!
-    return clear_challenge_session if valid_challenge?
+  def require_challenge!
+    return clear_challenge_session if valid_challenge_answer?
 
     raise ChallengeError, "Invalid or expired challenge"
   end
@@ -58,7 +58,7 @@ module Challengeable
     session[:challenge_expires_at] = 5.minutes.from_now
   end
 
-  def valid_challenge?
+  def valid_challenge_answer?
     return false unless session[:challenge_answer] && session[:challenge_expires_at]
     return false if Time.current > session[:challenge_expires_at]
 
