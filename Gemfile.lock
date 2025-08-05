@@ -72,7 +72,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    annotaterb (4.17.0)
+    annotaterb (4.18.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
     ast (2.4.3)
