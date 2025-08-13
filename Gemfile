@@ -55,7 +55,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Test framework for Rails [https://rspec.info/]
-  gem "rspec-rails", "~> 8.0.0"
+  gem "rspec-rails", "~> 8.0.2"
 
   # Factory framework for Ruby objects [https://github.com/thoughtbot/factory_bot]
   gem "factory_bot_rails"
